@@ -2,6 +2,8 @@ package com.paymybuddy.model;
 
 import org.hibernate.annotations.DynamicUpdate;
 
+import com.paymybuddy.model.abstractmodel.PersonModel;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

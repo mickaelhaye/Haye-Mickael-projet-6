@@ -1,4 +1,4 @@
-package com.paymybuddy.model;
+package com.paymybuddy.model.abstractmodel;
 
 import jakarta.persistence.Column;
 
