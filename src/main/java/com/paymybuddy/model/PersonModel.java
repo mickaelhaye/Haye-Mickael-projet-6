@@ -2,7 +2,7 @@ package com.paymybuddy.model;
 
 import jakarta.persistence.Column;
 
-public abstract class Person {
+public abstract class PersonModel {
 
 	@Column(name = "name")
 	private String name;

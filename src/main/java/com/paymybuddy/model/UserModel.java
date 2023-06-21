@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @DynamicUpdate
 @Table(name = "user")
-public class User extends Person {
+public class UserModel extends PersonModel {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -20,17 +20,10 @@ import lombok.NoArgsConstructor;
 @Entity
 @DynamicUpdate
 @Table(name = "banking_operation")
-public class ExternBankTransfer extends BankTransfer {
+public class FriendlyBankPaymentModel extends BankPaymentModel {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "banking_operation_id")
 	private int bankingOperationId;
-
-	@Column(name = "account_number")
-	private int accountNumber;
-
-	@Column(name = "swift_code")
-	private int swiftCode;
-
 }

@@ -10,20 +10,18 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Data
-@EqualsAndHashCode(callSuper = false)
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @DynamicUpdate
-@Table(name = "banking_operation")
-public class FriendlyBankPayment extends BankPayment {
+@Table(name = "friend")
+public class FriendModel {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "banking_operation_id")
-	private int bankingOperationId;
+	@Column(name = "friend_id")
+	private int friendId;
 }

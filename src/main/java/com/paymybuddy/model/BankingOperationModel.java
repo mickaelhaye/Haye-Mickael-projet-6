@@ -2,7 +2,7 @@ package com.paymybuddy.model;
 
 import jakarta.persistence.Column;
 
-public abstract class BankingOperation {
+public abstract class BankingOperationModel {
 
 	@Column(name = "date")
 	private String date;

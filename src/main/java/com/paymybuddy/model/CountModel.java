@@ -17,18 +17,17 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @DynamicUpdate
-@Table(name = "extern_count")
-public class ExternCount {
+@Table(name = "count")
+public class CountModel {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "extern_count_id")
-	private int externCountId;
+	@Column(name = "count_id")
+	private int countId;
 
-	@Column(name = "name_bank")
-	private String nameBank;
+	@Column(name = "account_number")
+	private int accountNumber;
 
-	@Column(name = "swift_code")
-	private int swiftCode;
-
+	@Column(name = "balance")
+	private int balance;
 }
