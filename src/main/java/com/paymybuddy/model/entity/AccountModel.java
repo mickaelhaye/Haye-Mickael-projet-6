@@ -1,4 +1,4 @@
-package com.paymybuddy.model;
+package com.paymybuddy.model.entity;
 
 import java.util.ArrayList;
 import java.util.List;
