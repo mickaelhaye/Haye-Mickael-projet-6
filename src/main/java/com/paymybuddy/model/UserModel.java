@@ -5,8 +5,6 @@ import java.util.List;
 
 import org.hibernate.annotations.DynamicUpdate;
 
-import com.paymybuddy.model.abstractmodel.PersonModel;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -19,22 +17,29 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Data
-@EqualsAndHashCode(callSuper = false)
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @DynamicUpdate
 @Table(name = "user")
-public class UserModel extends PersonModel {
+public class UserModel {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "user_id")
 	private int userId;
+
+	@Column(name = "name")
+	private String name;
+
+	@Column(name = "firstname")
+	private String firstname;
+
+	@Column(name = "email")
+	private String email;
 
 	@Column(name = "birthdate")
 	private String birthdate;
@@ -47,13 +52,9 @@ public class UserModel extends PersonModel {
 
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_id")
-	private List<ExternCountModel> externCounts = new ArrayList<>();
+	private List<UserModel> userFriends = new ArrayList<>();
 
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_id")
-	private List<FriendModel> friends = new ArrayList<>();
-
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-	@JoinColumn(name = "user_id")
-	private List<CountModel> counts = new ArrayList<>();
+	private List<AccountModel> accounts = new ArrayList<>();
 }

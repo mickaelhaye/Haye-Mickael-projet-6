@@ -17,11 +17,27 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @DynamicUpdate
-@Table(name = "friend")
-public class FriendModel {
+@Table(name = "banking_operation")
+public abstract class BankingOperationModel {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "friend_id")
-	private int friendId;
+	@Column(name = "banking_operation_id")
+	private int bankingOperationId;
+
+	@Column(name = "date")
+	private String date;
+
+	@Column(name = "hour")
+	private String hour;
+
+	@Column(name = "amount")
+	private int amount;
+
+	@Column(name = "description")
+	private String description;
+
+	@Column(name = "type_transaction")
+	private String typeTransaction;
+
 }

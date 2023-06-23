@@ -3,9 +3,9 @@ package com.paymybuddy.repository;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import com.paymybuddy.model.ExternBankTransferModel;
+import com.paymybuddy.model.BankingOperationModel;
 
 @Repository
-public interface ExternBankTransferRepository extends CrudRepository<ExternBankTransferModel, Integer> {
+public interface BankingOperationRepository extends CrudRepository<BankingOperationModel, Integer> {
 
 }

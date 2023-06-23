@@ -3,9 +3,9 @@ package com.paymybuddy.repository;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import com.paymybuddy.model.CountModel;
+import com.paymybuddy.model.AccountModel;
 
 @Repository
-public interface CountRepository extends CrudRepository<CountModel, Integer> {
+public interface AccountRepository extends CrudRepository<AccountModel, Integer> {
 
 }

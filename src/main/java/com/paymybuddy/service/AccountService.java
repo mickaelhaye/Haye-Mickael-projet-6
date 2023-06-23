@@ -1,5 +1,5 @@
 package com.paymybuddy.service;
 
-public interface FriendService {
+public interface AccountService {
 
 }
