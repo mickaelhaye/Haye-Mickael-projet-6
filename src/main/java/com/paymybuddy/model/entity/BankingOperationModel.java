@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @DynamicUpdate
 @Table(name = "banking_operation")
-public abstract class BankingOperationModel {
+public class BankingOperationModel {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
