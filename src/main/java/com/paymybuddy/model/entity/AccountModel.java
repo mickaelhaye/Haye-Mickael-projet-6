@@ -39,6 +39,9 @@ public class AccountModel {
 	@Column(name = "balance")
 	private int balance;
 
+	@Column(name = "user_id")
+	private int userId;
+
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinTable(name = "account_banking_operation_produit", joinColumns = @JoinColumn(name = "account_id"), inverseJoinColumns = @JoinColumn(name = "banking_operation_id"))
 	private List<BankingOperationModel> bankingOperations = new ArrayList<>();
