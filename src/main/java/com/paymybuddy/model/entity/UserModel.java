@@ -58,9 +58,5 @@ public class UserModel {
 
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_id")
-	private List<UserModel> userFriends = new ArrayList<>();
-
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-	@JoinColumn(name = "user_id")
 	private List<AccountModel> accounts = new ArrayList<>();
 }
