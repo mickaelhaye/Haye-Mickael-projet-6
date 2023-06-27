@@ -59,4 +59,9 @@ public class UserModel {
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_id")
 	private List<AccountModel> accounts = new ArrayList<>();
+
+	public void setAccountToList(AccountModel account) {
+		this.accounts.add(account);
+	}
+
 }
