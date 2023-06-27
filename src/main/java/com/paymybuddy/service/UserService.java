@@ -14,4 +14,6 @@ public interface UserService {
 
 	public void delUser(UserModel user);
 
+	UserModel getUserByNameAndFirstname(String name, String firstname);
+
 }

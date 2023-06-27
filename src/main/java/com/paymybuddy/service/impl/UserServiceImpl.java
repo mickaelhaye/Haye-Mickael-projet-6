@@ -26,6 +26,13 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	public UserModel getUserByNameAndFirstname(String name, String firstname) {
+		Optional<UserModel> optUserModel = Optional.of(userRepository.findByNameAndFirstname(name, firstname));
+		UserModel userModelId1 = optUserModel.get();
+		return userModelId1;
+	}
+
+	@Override
 	public UserModel addUser(UserModel user) {
 		return userRepository.save(user);
 	}

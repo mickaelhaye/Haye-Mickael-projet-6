@@ -6,14 +6,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.paymybuddy.model.entity.AccountModel;
+import com.paymybuddy.model.entity.UserModel;
 import com.paymybuddy.repository.AccountRepository;
 import com.paymybuddy.service.AccountService;
+import com.paymybuddy.service.UserService;
 
 @Service
 public class AccountServiceImpl implements AccountService {
 
 	@Autowired
 	private AccountRepository accountRepository;
+
+	@Autowired
+	private UserService userService;
 
 	@Override
 	public Iterable<AccountModel> getAccounts() {
@@ -33,6 +38,14 @@ public class AccountServiceImpl implements AccountService {
 	@Override
 	public void delAccount(AccountModel account) {
 		accountRepository.delete(account);
+
+	}
+
+	@Override
+	public void addAccountToUser(AccountModel account, String name, String firstName) {
+		UserModel user = userService.getUserByNameAndFirstname(name, firstName);
+		user.setAccountToList(account);
+		userService.addUser(user);
 
 	}
 
