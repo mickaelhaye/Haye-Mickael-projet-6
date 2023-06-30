@@ -28,7 +28,7 @@ CREATE TABLE `account` (
   `balance` int NOT NULL,
   `user_id` int NOT NULL,
   PRIMARY KEY (`account_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -37,7 +37,7 @@ CREATE TABLE `account` (
 
 LOCK TABLES `account` WRITE;
 /*!40000 ALTER TABLE `account` DISABLE KEYS */;
-INSERT INTO `account` VALUES (8,123458,300,0);
+INSERT INTO `account` VALUES (8,123458,300,0),(10,987656,500,1),(11,987656,500,1);
 /*!40000 ALTER TABLE `account` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -79,7 +79,7 @@ CREATE TABLE `banking_operation` (
   `description` varchar(500) NOT NULL,
   `type_transaction` varchar(100) NOT NULL,
   PRIMARY KEY (`banking_operation_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -103,12 +103,13 @@ CREATE TABLE `user` (
   `user_id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
   `firstname` varchar(50) NOT NULL,
-  `email` varchar(100) NOT NULL,
   `birthdate` varchar(10) NOT NULL,
   `address` varchar(100) NOT NULL,
-  `password` varchar(10) NOT NULL,
+  `password` varchar(15) NOT NULL,
+  `role` varchar(10) NOT NULL,
+  `email` varchar(100) NOT NULL,
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -117,8 +118,30 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'John','mickael','mickael.haye@hotmail.fr','31/08/1977','19 square de begrolles 49300 cholet','0241585915'),(2,'haye','morgane','morgane.haye@hotmail.fr','10/08/2004','39 square de begrolles 49300 cholet','02415');
+INSERT INTO `user` VALUES (1,'John','mickael','31/08/1977','19 square de begrolles 49300 cholet','0241585915','',''),(2,'quemere','morgane','10/08/2004','39 square de begrolles 49300 cholet','02415','',''),(9,'Fortineau','Julie','25/06/2026','hoihouigo','310877','',''),(10,'gilbert','haye','2023-06-21','iuguy','ihoiuh','',''),(11,'','','','','','',''),(12,'','','','','','',''),(13,'','','','','','',''),(14,'','','','','','',''),(15,'John','body','2023-06-16','jhbuygy','310877','',''),(16,'hdfhghtdfg','hgfgjh','2023-06-08','jhk;jh;','hgdfghf','','');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `user_user`
+--
+
+DROP TABLE IF EXISTS `user_user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `user_user` (
+  `user_id` int NOT NULL,
+  `user2_id` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_user`
+--
+
+LOCK TABLES `user_user` WRITE;
+/*!40000 ALTER TABLE `user_user` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user_user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -130,4 +153,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-06-26 16:39:42
+-- Dump completed on 2023-06-30 10:03:15
