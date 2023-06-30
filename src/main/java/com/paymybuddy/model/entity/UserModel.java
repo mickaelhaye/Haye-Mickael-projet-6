@@ -52,6 +52,9 @@ public class UserModel {
 	@Column(name = "password")
 	private String password;
 
+	@Column(name = "role")
+	private String role;
+
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinTable(name = "user_user", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "user2_id"))
 	private List<BankingOperationModel> bankingOperations = new ArrayList<>();
