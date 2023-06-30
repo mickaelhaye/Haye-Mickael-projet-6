@@ -63,12 +63,12 @@ public class SecurityConfiguration {
 	 */
 
 	@Bean
-	public UserDetailsService userDetailsService(PasswordEncoder encoder) {
+	public UserDetailsService userDetailsService() {
 
 		List<UserDetails> userDetails = new ArrayList<UserDetails>();
 		for (UserModel userModel : userService.getUsers()) {
-			userDetails.add(User.withUsername(userModel.getEmail()).password(encoder.encode(userModel.getPassword()))
-					.roles("USER").build());
+			userDetails.add(User.withUsername(userModel.getEmail())
+					.password(passwordEncoder().encode(userModel.getPassword())).roles("USER").build());
 		}
 		return new InMemoryUserDetailsManager(userDetails);
 
@@ -78,9 +78,11 @@ public class SecurityConfiguration {
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
 		return http.csrf().disable().authorizeHttpRequests().requestMatchers("/user").permitAll().and()
-				.authorizeHttpRequests().requestMatchers("/account").authenticated().and().authorizeHttpRequests()
-				.requestMatchers("/bankingOperation").authenticated().and().oauth2Login().and().formLogin().and()
-				.build();
+				.authorizeHttpRequests().requestMatchers("/paymybuddy").permitAll().and().authorizeHttpRequests()
+				.requestMatchers("/users/new").permitAll().and().authorizeHttpRequests().requestMatchers("/users")
+				.permitAll().and().authorizeHttpRequests().requestMatchers("/account").authenticated().and()
+				.authorizeHttpRequests().requestMatchers("/bankingOperation").authenticated().and().oauth2Login().and()
+				.formLogin().and().build();
 
 	}
 
