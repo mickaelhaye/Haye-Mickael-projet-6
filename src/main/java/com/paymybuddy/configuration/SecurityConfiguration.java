@@ -24,8 +24,7 @@ public class SecurityConfiguration {
 				.requestMatchers("/paymybuddy").permitAll().and().authorizeHttpRequests().requestMatchers("/users/new")
 				.permitAll().and().authorizeHttpRequests().requestMatchers("/users").permitAll().and()
 				.authorizeHttpRequests().requestMatchers("/account").authenticated().and().authorizeHttpRequests()
-				.requestMatchers("/bankingOperation").authenticated().and().oauth2Login().and().formLogin().and()
-				.authenticationProvider(authenticationProvider);
+				.requestMatchers("/bankingOperation").authenticated().and().oauth2Login().and().formLogin();
 
 		return http.build();
 
