@@ -3,6 +3,7 @@ package com.paymybuddy.service.impl;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.paymybuddy.model.entity.UserModel;
@@ -14,6 +15,9 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserRepository userRepository;
+
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	@Override
 	public Iterable<UserModel> getUsers() {
@@ -34,6 +38,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserModel addUser(UserModel user) {
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		return userRepository.save(user);
 	}
 
