@@ -37,9 +37,17 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public UserModel addUser(UserModel user) {
+	public UserModel addUser(UserModel user) throws Exception {
+		if (emailExists(user.getEmail())) {
+			throw new Exception("There is an account with that email address: " + user.getEmail());
+		}
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		return userRepository.save(user);
+	}
+
+	@Override
+	public boolean emailExists(String email) {
+		return userRepository.findByEmail(email).isPresent();
 	}
 
 	@Override

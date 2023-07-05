@@ -22,12 +22,12 @@ public class UserControllerOld {
 	}
 
 	@PostMapping("/user")
-	public void addUser(@RequestBody UserModel user) {
+	public void addUser(@RequestBody UserModel user) throws Exception {
 		userService.addUser(user);
 	}
 
 	@PatchMapping("/user")
-	public void updateUser(@RequestBody UserModel user) {
+	public void updateUser(@RequestBody UserModel user) throws Exception {
 		userService.addUser(user);
 	}
 

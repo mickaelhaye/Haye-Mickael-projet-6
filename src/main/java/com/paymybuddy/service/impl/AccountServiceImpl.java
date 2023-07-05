@@ -45,7 +45,12 @@ public class AccountServiceImpl implements AccountService {
 	public void addAccountToUser(AccountModel account, String name, String firstName) {
 		UserModel user = userService.getUserByNameAndFirstname(name, firstName);
 		user.setAccountToList(account);
-		userService.addUser(user);
+		try {
+			userService.addUser(user);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 

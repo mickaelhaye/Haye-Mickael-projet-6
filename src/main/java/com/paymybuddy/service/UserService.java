@@ -8,7 +8,7 @@ public interface UserService {
 
 	public Iterable<UserModel> getUsers();
 
-	public UserModel addUser(UserModel user);
+	public UserModel addUser(UserModel user) throws Exception;
 
 	public Optional<UserModel> getUserById(Integer id);
 
@@ -16,4 +16,5 @@ public interface UserService {
 
 	UserModel getUserByNameAndFirstname(String name, String firstname);
 
+	public boolean emailExists(String email);
 }

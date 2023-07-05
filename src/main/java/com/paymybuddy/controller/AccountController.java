@@ -40,7 +40,7 @@ public class AccountController {
 
 	@PostMapping("/accountToUser")
 	public void addAccountToUser(@RequestParam(name = "name") String name,
-			@RequestParam(name = "firstname") String firstname, @RequestBody AccountModel account) {
+			@RequestParam(name = "firstname") String firstname, @RequestBody AccountModel account) throws Exception {
 		accountService.addAccountToUser(account, name, firstname);
 	}
 

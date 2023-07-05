@@ -32,7 +32,13 @@ public class UserController {
 
 	@PostMapping("/users")
 	public String saveUser(@ModelAttribute("user") UserModel user) {
-		userService.addUser(user);
+		try {
+			userService.addUser(user);
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			return "homepage";
+		}
 
 		return "redirect:/paymybuddy";
 
