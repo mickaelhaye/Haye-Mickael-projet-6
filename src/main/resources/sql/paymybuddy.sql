@@ -37,7 +37,6 @@ CREATE TABLE `account` (
 
 LOCK TABLES `account` WRITE;
 /*!40000 ALTER TABLE `account` DISABLE KEYS */;
-INSERT INTO `account` VALUES (8,123458,300,0),(10,987656,500,1),(11,987656,500,1);
 /*!40000 ALTER TABLE `account` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -60,7 +59,6 @@ CREATE TABLE `account_banking_operation` (
 
 LOCK TABLES `account_banking_operation` WRITE;
 /*!40000 ALTER TABLE `account_banking_operation` DISABLE KEYS */;
-INSERT INTO `account_banking_operation` VALUES (8,2);
 /*!40000 ALTER TABLE `account_banking_operation` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -88,7 +86,6 @@ CREATE TABLE `banking_operation` (
 
 LOCK TABLES `banking_operation` WRITE;
 /*!40000 ALTER TABLE `banking_operation` DISABLE KEYS */;
-INSERT INTO `banking_operation` VALUES (2,'30/12/2004','12:30:26',356,'essais','transaction');
 /*!40000 ALTER TABLE `banking_operation` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -105,11 +102,11 @@ CREATE TABLE `user` (
   `firstname` varchar(50) NOT NULL,
   `birthdate` varchar(10) NOT NULL,
   `address` varchar(100) NOT NULL,
-  `password` varchar(15) NOT NULL,
+  `password` varchar(100) NOT NULL,
   `role` varchar(10) NOT NULL,
   `email` varchar(100) NOT NULL,
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -118,7 +115,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'John','mickael','31/08/1977','19 square de begrolles 49300 cholet','0241585915','',''),(2,'quemere','morgane','10/08/2004','39 square de begrolles 49300 cholet','02415','',''),(9,'Fortineau','Julie','25/06/2026','hoihouigo','310877','',''),(10,'gilbert','haye','2023-06-21','iuguy','ihoiuh','',''),(11,'','','','','','',''),(12,'','','','','','',''),(13,'','','','','','',''),(14,'','','','','','',''),(15,'John','body','2023-06-16','jhbuygy','310877','',''),(16,'hdfhghtdfg','hgfgjh','2023-06-08','jhk;jh;','hgdfghf','','');
+INSERT INTO `user` VALUES (56,'aa','','','','$2a$10$hvKFFHDanEAikpVHfd6Q2uYb.rkBlj8D.1NOuCsQhBO8rPenlA7Wq','user','a@a'),(57,'dsfqf','','','','$2a$10$7JhtDtJoe0lPf3f4hV6tgOPW6uwV4c.mKQdp4ToRJm7sWMzgoia46','user','a@a'),(58,'sedf','','','','$2a$10$5f5VB7XHXWawCLfUyfDxc.sR02vZrg9AONzPzhyM.zLfggY4.Q9ay','user','z@z');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -153,4 +150,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-06-30 10:03:15
+-- Dump completed on 2023-07-05 13:01:32
