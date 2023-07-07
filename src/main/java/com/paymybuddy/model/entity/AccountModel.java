@@ -33,8 +33,8 @@ public class AccountModel {
 	@Column(name = "account_id")
 	private int accountId;
 
-	@Column(name = "account_number")
-	private int accountNumber;
+	@Column(name = "name")
+	private String name;
 
 	@Column(name = "balance")
 	private int balance;
