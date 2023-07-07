@@ -21,13 +21,18 @@ public class UserController {
 		return "paymybuddy";
 	}
 
+	@GetMapping("/homepage")
+	public String homepage() {
+		return "homepage";
+	}
+
 	@GetMapping("/users/new")
 	public String createUserForm(Model model) {
 
 		// create user object to hold user form data
 		UserModel user = new UserModel();
 		model.addAttribute("user", user);
-		return "create_user";
+		return "user_create";
 	}
 
 	@PostMapping("/users")
@@ -37,10 +42,10 @@ public class UserController {
 		} catch (Exception e) {
 
 			e.printStackTrace();
-			return "homepage";
+			return "user_already_exist";
 		}
 
-		return "redirect:/paymybuddy";
+		return "user_create_successfull";
 
 	}
 }
