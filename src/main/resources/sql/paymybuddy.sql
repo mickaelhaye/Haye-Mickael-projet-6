@@ -24,7 +24,7 @@ DROP TABLE IF EXISTS `account`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `account` (
   `account_id` int NOT NULL AUTO_INCREMENT,
-  `account_number` int NOT NULL,
+  `name` varchar(50) NOT NULL,
   `balance` int NOT NULL,
   `user_id` int NOT NULL,
   PRIMARY KEY (`account_id`)
@@ -106,7 +106,7 @@ CREATE TABLE `user` (
   `role` varchar(10) NOT NULL,
   `email` varchar(100) NOT NULL,
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=73 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -115,7 +115,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (56,'aa','','','','$2a$10$hvKFFHDanEAikpVHfd6Q2uYb.rkBlj8D.1NOuCsQhBO8rPenlA7Wq','user','a@a'),(57,'dsfqf','','','','$2a$10$7JhtDtJoe0lPf3f4hV6tgOPW6uwV4c.mKQdp4ToRJm7sWMzgoia46','user','a@a'),(58,'sedf','','','','$2a$10$5f5VB7XHXWawCLfUyfDxc.sR02vZrg9AONzPzhyM.zLfggY4.Q9ay','user','z@z');
+INSERT INTO `user` VALUES (68,'essais','','','','$2a$10$OSYJEeuHMFy8Jl.SMY8fb.NT8XC3q8Xe25ImiCNhDgoe1k31oXbvy','user','a@a'),(69,'qzesrfz','','','','$2a$10$JF.ssbfgsujHPCfg4Fbonuqnhi7/vdGpll2r1nx8oIhWky/0Fs0ka','user','b@b'),(70,'frrr','','','','$2a$10$ocbMMsapDH2ngCrEeduid.HWVroBLbg0XXktNIzUVu0YcPEHxSIjW','user','c@c'),(71,'zeaze','','','','$2a$10$WdEJ.ARPT4RVdY5kE8ZH2OLrJ5n.JYb4RaacmpauwqDAznPlLwuNu','user','d@d'),(72,'rezt','','','','$2a$10$CsdllKdN8NIiiOIT00YLoevrwt/X23Mjy6EXSVv9Xdb5WxEv.ESoe','user','m@m');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -150,4 +150,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-07-05 13:01:32
+-- Dump completed on 2023-07-07 16:26:16
