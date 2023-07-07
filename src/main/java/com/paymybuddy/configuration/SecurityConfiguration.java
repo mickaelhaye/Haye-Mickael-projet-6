@@ -28,8 +28,10 @@ public class SecurityConfiguration {
                                 .requestMatchers("/users").permitAll()
                                 .requestMatchers("/logout").permitAll()
                                 .requestMatchers("/account").authenticated()
+                                .requestMatchers("/homepage").authenticated()
                                 .requestMatchers("/bankingOperation").authenticated()
                 )
+                .oauth2Login(withDefaults())
                 .formLogin(withDefaults());
                 
 		return http.build();
