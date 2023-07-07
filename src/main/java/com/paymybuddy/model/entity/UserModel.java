@@ -27,7 +27,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Builder
+@Builder // à valider
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
