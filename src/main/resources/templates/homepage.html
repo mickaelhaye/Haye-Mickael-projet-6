@@ -4,7 +4,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>user_already_exist</title>
+	<title>homepage</title>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
 		integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 </head>
@@ -27,33 +27,33 @@
 
 		<div class="container" style="width:400px;">
 			<div class="col mt-5 text-center">
-				<a th:href="@{/paymybuddy}" class="btn btn-primary btn-sl w-100"> add money </a>
+				<a th:href="@{/user_add_money}" class="btn btn-primary btn-sl w-100"> add money </a>
 			</div>
 			<div class="col mt-2 text-center">
-				<a th:href="@{/paymybuddy}" class="btn btn-primary btn-sl w-100"> send money </a>
+				<a th:href="@{/user_send_money}" class="btn btn-primary btn-sl w-100"> send money </a>
 			</div>
 			<div class="row">
 				<div class="col mt-5 text-end">
-					<a th:href="@{/paymybuddy}" class="btn btn-primary btn-sl w-100"> add account </a>
+					<a th:href="@{/user_add_account}" class="btn btn-primary btn-sl w-100"> add account </a>
 				</div>
 				<div class="col mt-5 text-start">
-					<a th:href="@{/paymybuddy}" class="btn btn-primary btn-sl w-100"> del account </a>
+					<a th:href="@{/user_del_account}" class="btn btn-primary btn-sl w-100"> del account </a>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col mt-2 text-end">
-					<a th:href="@{/paymybuddy}" class="btn btn-primary btn-sl w-100"> add buddy </a>
+					<a th:href="@{/user_add_buddy}" class="btn btn-primary btn-sl w-100"> add buddy </a>
 				</div>
 				<div class="col mt-2 text-start">
-					<a th:href="@{/paymybuddy}" class="btn btn-primary btn-sl w-100"> del buddy </a>
+					<a th:href="@{/user_del_buddy}" class="btn btn-primary btn-sl w-100"> del buddy </a>
 				</div>
 			</div>
 
 			<div class="col mt-5 text-center ">
-				<a th:href="@{/paymybuddy}" class="btn btn-primary btn-sl w-100"> history </a>
+				<a th:href="@{/user_history}" class="btn btn-primary btn-sl w-100"> history </a>
 			</div>
 			<div class="col mt-2 text-center">
-				<a th:href="@{/paymybuddy}" class="btn btn-primary btn-sl w-100"> update my profil </a>
+				<a th:href="@{/user_update_my_profil}" class="btn btn-primary btn-sl w-100"> update my profil </a>
 			</div>
 			
 		</div>
