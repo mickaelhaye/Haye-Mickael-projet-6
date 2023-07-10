@@ -17,12 +17,12 @@ public class AccountControler {
 	@Autowired
 	private AccountService accountService;
 
-	@GetMapping("/account/user_add_account")
+	@GetMapping("/account/account_create")
 	public String userAddAccount(Model model) {
 		// create account object to hold user form data
 		AccountModel account = new AccountModel();
 		model.addAttribute("account", account);
-		return "/account/user_add_account";
+		return "/account/account_create";
 	}
 
 	@PostMapping("/accounts") // à valider

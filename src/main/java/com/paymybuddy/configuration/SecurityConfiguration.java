@@ -27,7 +27,7 @@ public class SecurityConfiguration {
                                 .requestMatchers("/users").permitAll()
                                 .requestMatchers("/logout").permitAll()
                                 .requestMatchers("/homepage").authenticated()
-                                .requestMatchers("/account/user_add_account").authenticated()
+                                .requestMatchers("/account/account_create").authenticated()
                                 .requestMatchers("/accounts").authenticated()
                                 .requestMatchers("/account").authenticated()
                                 .requestMatchers("/user").authenticated()
