@@ -36,7 +36,11 @@ public class SecurityConfiguration {
                                 .requestMatchers("/bankingOperation").permitAll()
                 )
                 .oauth2Login(withDefaults())
-                .formLogin(withDefaults());
+                .formLogin(withDefaults())
+                .rememberMe(withDefaults())
+                .logout((logout) ->
+ 				logout.deleteCookies("remove").logoutSuccessUrl("/paymybuddy"));
+ 					
                 
 		return http.build();
 		//@formatter:on
