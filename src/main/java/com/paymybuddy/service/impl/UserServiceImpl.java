@@ -49,6 +49,36 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	public void addBuddy(String buddyEmail, String userEmail) throws Exception {
+
+		if (!emailExists(buddyEmail)) {
+			throw new Exception("This user doesn't exit: " + buddyEmail);
+		}
+
+		if (buddyEmail.equals(userEmail)) {
+			throw new Exception("you are this user");
+		}
+
+		Optional<UserModel> OptUser = userRepository.findByEmail(userEmail);
+		UserModel user = OptUser.get();
+
+		if (buddyExists(buddyEmail, user)) {
+			throw new Exception("This email is already your buddy");
+		}
+
+		Optional<UserModel> OptBuddy = userRepository.findByEmail(buddyEmail);
+		UserModel buddy = OptBuddy.get();
+
+		user.setBoddyToUserList(buddy);
+		try {
+			updateUser(user);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	@Override
 	public boolean emailExists(String email) {
 		return userRepository.findByEmail(email).isPresent();
 	}
@@ -57,4 +87,20 @@ public class UserServiceImpl implements UserService {
 	public void delUser(UserModel user) {
 		userRepository.delete(user);
 	}
+
+	@Override
+	public void addBuddy(String emailBuddy) throws Exception {
+		// TODO Auto-generated method stub
+
+	}
+
+	public boolean buddyExists(String buddyEmail, UserModel user) {
+		for (UserModel userTest : user.getUsers()) {
+			if (userTest.getEmail().equals(buddyEmail)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 }

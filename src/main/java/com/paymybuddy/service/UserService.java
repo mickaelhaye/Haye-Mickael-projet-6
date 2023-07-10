@@ -19,4 +19,8 @@ public interface UserService {
 	public Optional<UserModel> getUserByEmail(String email);
 
 	public UserModel updateUser(UserModel user);
+
+	public void addBuddy(String emailBuddy) throws Exception;
+
+	public void addBuddy(String buddyEmail, String userEmail) throws Exception;
 }

@@ -63,7 +63,7 @@ public class UserModel implements UserDetails {
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinTable(name = "user_user", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "user2_id"))
-	private List<BankingOperationModel> bankingOperations = new ArrayList<>();
+	private List<UserModel> users = new ArrayList<>();
 
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_id")
@@ -71,6 +71,10 @@ public class UserModel implements UserDetails {
 
 	public void setAccountToList(AccountModel account) {
 		this.accounts.add(account);
+	}
+
+	public void setBoddyToUserList(UserModel user) {
+		this.users.add(user);
 	}
 
 	@Override

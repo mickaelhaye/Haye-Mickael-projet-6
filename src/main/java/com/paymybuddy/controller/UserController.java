@@ -1,12 +1,14 @@
 package com.paymybuddy.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.paymybuddy.model.entity.RecupValueModel;
 import com.paymybuddy.model.entity.UserModel;
 import com.paymybuddy.service.UserService;
 
@@ -46,6 +48,29 @@ public class UserController {
 		}
 
 		return "/user/user_create_successfull";
+
+	}
+
+	@GetMapping("/user/user_add_buddy")
+	public String userAddBody(Model model) {
+		// add buddy
+		RecupValueModel recupValue = new RecupValueModel();
+		model.addAttribute("recupValue", recupValue);
+		return "/user/user_add_buddy";
+	}
+
+	@PostMapping("/buddys")
+	public String saveUser(@ModelAttribute("recupValue") RecupValueModel recupValue, Authentication authentification) {
+
+		try {
+			userService.addBuddy(recupValue.getStringValue(), authentification.getName());
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			return "/user/user_bad_buddy";
+		}
+
+		return "/user/user_buddy_add_successfull";
 
 	}
 }
