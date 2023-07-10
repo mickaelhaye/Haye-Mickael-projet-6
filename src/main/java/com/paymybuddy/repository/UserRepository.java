@@ -10,8 +10,6 @@ import com.paymybuddy.model.entity.UserModel;
 @Repository
 public interface UserRepository extends CrudRepository<UserModel, Integer> {
 
-	Optional<UserModel> findByNameAndFirstname(String name, String firstname);
-
 	Optional<UserModel> findByEmail(String email);
 
 }

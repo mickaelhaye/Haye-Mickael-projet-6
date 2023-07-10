@@ -23,13 +23,14 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests((authorizeHttpRequests) ->
                         authorizeHttpRequests
                                 .requestMatchers("/paymybuddy").permitAll()
-                                .requestMatchers("/user_create").permitAll()
+                                .requestMatchers("/user/user_create").permitAll()
                                 .requestMatchers("/users").permitAll()
                                 .requestMatchers("/logout").permitAll()
                                 .requestMatchers("/homepage").authenticated()
-                                .requestMatchers("/user_add_account").permitAll()
+                                .requestMatchers("/account/user_add_account").authenticated()
+                                .requestMatchers("/accounts").authenticated()
                                 .requestMatchers("/account").authenticated()
-                                .requestMatchers("/user").permitAll()
+                                .requestMatchers("/user").authenticated()
                                 .requestMatchers("/bankingOperation").authenticated()
                 )
                 .oauth2Login(withDefaults())

@@ -14,7 +14,9 @@ public interface UserService {
 
 	public void delUser(UserModel user);
 
-	UserModel getUserByNameAndFirstname(String name, String firstname);
-
 	public boolean emailExists(String email);
+
+	public Optional<UserModel> getUserByEmail(String email);
+
+	public UserModel updateUser(UserModel user);
 }

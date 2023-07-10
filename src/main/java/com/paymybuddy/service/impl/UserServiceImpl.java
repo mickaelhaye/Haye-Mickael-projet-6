@@ -30,10 +30,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public UserModel getUserByNameAndFirstname(String name, String firstname) {
-		Optional<UserModel> optUserModel = userRepository.findByNameAndFirstname(name, firstname);
-		UserModel userModelId1 = optUserModel.get();
-		return userModelId1;
+	public Optional<UserModel> getUserByEmail(String email) {
+		return userRepository.findByEmail(email);
 	}
 
 	@Override
@@ -42,6 +40,11 @@ public class UserServiceImpl implements UserService {
 			throw new Exception("There is an account with that email address: " + user.getEmail());
 		}
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
+		return userRepository.save(user);
+	}
+
+	@Override
+	public UserModel updateUser(UserModel user) {
 		return userRepository.save(user);
 	}
 

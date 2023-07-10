@@ -42,11 +42,17 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	@Override
-	public void addAccountToUser(AccountModel account, String name, String firstName) {
-		UserModel user = userService.getUserByNameAndFirstname(name, firstName);
+	public void addAccountToUser(AccountModel account, String email) throws Exception {
+		Optional<UserModel> OptUser = userService.getUserByEmail(email);
+		UserModel user = OptUser.get();
+
+		if (AccountExistFromUser(account.getName(), user.getUserId())) {
+			throw new Exception("This account aleady exist: " + account.getName() + " " + user.getUserId());
+		}
+
 		user.setAccountToList(account);
 		try {
-			userService.addUser(user);
+			userService.updateUser(user);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -54,4 +60,8 @@ public class AccountServiceImpl implements AccountService {
 
 	}
 
+	@Override
+	public boolean AccountExistFromUser(String nameAccount, int userId) {
+		return accountRepository.findByNameAndUserId(nameAccount, userId).isPresent();
+	}
 }

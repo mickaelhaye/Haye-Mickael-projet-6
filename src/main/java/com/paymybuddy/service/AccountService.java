@@ -14,6 +14,8 @@ public interface AccountService {
 
 	public void delAccount(AccountModel account);
 
-	public void addAccountToUser(AccountModel account, String name, String firstName) throws Exception;
+	public void addAccountToUser(AccountModel account, String email) throws Exception;
+
+	public boolean AccountExistFromUser(String nameAccount, int userId);
 
 }
