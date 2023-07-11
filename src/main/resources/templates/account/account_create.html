@@ -33,9 +33,9 @@
 
 			<form th:action="@{/accounts}" th:object="${account}" method="POST">
 				<div class="form-group mt-2 ">
-					<label> User Name </label>
+					<label> Account Name </label>
 					<input type="text" name="name" th:field="*{name}" class="form-control "
-						placeholder="Enter User Name" required=true maxlength="50" />
+						placeholder="Enter Account Name" required=true maxlength="50" />
 				</div>
 				<div class="col text-center mt-4">
 					<button type="submit" class="btn btn-primary">
