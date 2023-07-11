@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.paymybuddy.model.entity.RecupValueModel;
@@ -23,6 +24,7 @@ public class UserController {
 		return "/paymybuddy";
 	}
 
+	// est ce nécessaire?
 	@GetMapping("/homepage")
 	public String homepage() {
 		return "/homepage";
@@ -69,8 +71,19 @@ public class UserController {
 			e.printStackTrace();
 			return "/user/user_bad_buddy";
 		}
-
 		return "/user/user_buddy_add_successfull";
-
 	}
+
+	@GetMapping("/user/user_del_buddy")
+	public String userDelBuddy(Model model, Authentication authentification) {
+		model.addAttribute("buddys", userService.buddyListfromUser(authentification.getName()));
+		return "/user/user_del_buddy";
+	}
+
+	@GetMapping("/user/user_del_buddy/delete/{email}")
+	public String userDelBuddyDelete(@PathVariable String email, Authentication authentification) {
+		userService.delBuddy(email, authentification.getName());
+		return "redirect:/user/user_del_buddy";
+	}
+
 }

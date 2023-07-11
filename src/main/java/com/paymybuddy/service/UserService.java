@@ -1,5 +1,6 @@
 package com.paymybuddy.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import com.paymybuddy.model.entity.UserModel;
@@ -20,7 +21,11 @@ public interface UserService {
 
 	public UserModel updateUser(UserModel user);
 
-	public void addBuddy(String emailBuddy) throws Exception;
-
 	public void addBuddy(String buddyEmail, String userEmail) throws Exception;
+
+	public boolean buddyExists(String buddyEmail, UserModel user);
+
+	public List<UserModel> buddyListfromUser(String userEmail);
+
+	public void delBuddy(String buddyEmail, String userEmail);
 }

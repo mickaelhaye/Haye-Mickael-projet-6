@@ -30,6 +30,8 @@ public class SecurityConfiguration {
                                 .requestMatchers("/account/account_create").authenticated()
                                 .requestMatchers("/accounts").authenticated()
                                 .requestMatchers("/user/user_add_buddy").authenticated()
+                                .requestMatchers("/user/user_del_buddy").authenticated()
+                                .requestMatchers("/user/user_del_buddy/delete/{email}").authenticated()
                                 .requestMatchers("/buddys").authenticated()
                                 .requestMatchers("/account").permitAll()
                                 .requestMatchers("/user").permitAll()

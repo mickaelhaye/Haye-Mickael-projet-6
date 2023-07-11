@@ -1,5 +1,6 @@
 package com.paymybuddy.service.impl;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,6 +80,28 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	public void delBuddy(String buddyEmail, String userEmail) {
+		Optional<UserModel> OptUser = userRepository.findByEmail(userEmail);
+		UserModel user = OptUser.get();
+
+		Optional<UserModel> OptBuddy = userRepository.findByEmail(buddyEmail);
+		UserModel buddy = OptBuddy.get();
+
+		for (UserModel userTest : user.getUsers()) {
+			if (userTest.getEmail().equals(buddyEmail)) {
+				user.removeBoddyToUserList(userTest);
+				break;
+			}
+		}
+		try {
+			updateUser(user);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	@Override
 	public boolean emailExists(String email) {
 		return userRepository.findByEmail(email).isPresent();
 	}
@@ -89,11 +112,6 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void addBuddy(String emailBuddy) throws Exception {
-		// TODO Auto-generated method stub
-
-	}
-
 	public boolean buddyExists(String buddyEmail, UserModel user) {
 		for (UserModel userTest : user.getUsers()) {
 			if (userTest.getEmail().equals(buddyEmail)) {
@@ -103,4 +121,10 @@ public class UserServiceImpl implements UserService {
 		return false;
 	}
 
+	@Override
+	public List<UserModel> buddyListfromUser(String userEmail) {
+		Optional<UserModel> OptUser = userRepository.findByEmail(userEmail);
+		UserModel user = OptUser.get();
+		return user.getUsers();
+	}
 }

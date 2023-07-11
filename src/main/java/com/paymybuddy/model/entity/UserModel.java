@@ -77,6 +77,10 @@ public class UserModel implements UserDetails {
 		this.users.add(user);
 	}
 
+	public void removeBoddyToUserList(UserModel user) {
+		this.users.remove(user);
+	}
+
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return List.of(new SimpleGrantedAuthority(role));
