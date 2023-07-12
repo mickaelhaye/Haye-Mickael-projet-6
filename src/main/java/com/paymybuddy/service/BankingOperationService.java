@@ -14,4 +14,7 @@ public interface BankingOperationService {
 
 	public void delBankingOperation(BankingOperationModel bankingOperation);
 
+	public void addBankingOperationToAccount(BankingOperationModel bankingOperation, float amount, String description,
+			String userEmail);
+
 }

@@ -31,6 +31,8 @@ public class SecurityConfiguration {
                                 .requestMatchers("/accounts").authenticated()
                                 .requestMatchers("/account/account_del").authenticated()
                                 .requestMatchers("/account/account_del_account/delete/{name}").authenticated()
+                                .requestMatchers("/bankingOperation/bankingOperation_add_money").authenticated()
+                                .requestMatchers("/bankingOperation_add_money").authenticated()
                                 .requestMatchers("/user/user_add_buddy").authenticated()
                                 .requestMatchers("/user/user_del_buddy").authenticated()
                                 .requestMatchers("/user/user_del_buddy/delete/{email}").authenticated()

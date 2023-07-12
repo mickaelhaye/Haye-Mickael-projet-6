@@ -32,7 +32,7 @@ public class BankingOperationModel {
 	private String hour;
 
 	@Column(name = "amount")
-	private int amount;
+	private float amount;
 
 	@Column(name = "description")
 	private String description;

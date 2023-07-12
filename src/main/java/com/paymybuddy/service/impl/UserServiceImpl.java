@@ -70,7 +70,7 @@ public class UserServiceImpl implements UserService {
 		Optional<UserModel> OptBuddy = userRepository.findByEmail(buddyEmail);
 		UserModel buddy = OptBuddy.get();
 
-		user.setBoddyToUserList(buddy);
+		user.setBuddyToUserList(buddy);
 		try {
 			updateUser(user);
 		} catch (Exception e) {
@@ -86,7 +86,7 @@ public class UserServiceImpl implements UserService {
 
 		for (UserModel userTest : user.getUsers()) {
 			if (userTest.getEmail().equals(buddyEmail)) {
-				user.removeBoddyToUserList(userTest);
+				user.removeBuddyToUserList(userTest);
 				break;
 			}
 		}

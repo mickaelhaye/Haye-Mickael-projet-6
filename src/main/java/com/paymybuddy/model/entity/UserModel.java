@@ -73,11 +73,11 @@ public class UserModel implements UserDetails {
 		this.accounts.add(account);
 	}
 
-	public void setBoddyToUserList(UserModel user) {
+	public void setBuddyToUserList(UserModel user) {
 		this.users.add(user);
 	}
 
-	public void removeBoddyToUserList(UserModel user) {
+	public void removeBuddyToUserList(UserModel user) {
 		this.users.remove(user);
 	}
 

@@ -65,7 +65,7 @@ public class UserController {
 	public String saveUser(@ModelAttribute("recupValue") RecupValueModel recupValue, Authentication authentification) {
 
 		try {
-			userService.addBuddy(recupValue.getStringValue(), authentification.getName());
+			userService.addBuddy(recupValue.getStringValue1(), authentification.getName());
 		} catch (Exception e) {
 
 			e.printStackTrace();

@@ -13,7 +13,7 @@ import com.paymybuddy.model.entity.AccountModel;
 import com.paymybuddy.service.AccountService;
 
 @Controller
-public class AccountControler {
+public class AccountController {
 
 	@Autowired
 	private AccountService accountService;

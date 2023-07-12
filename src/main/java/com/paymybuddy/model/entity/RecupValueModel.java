@@ -9,7 +9,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RecupValueModel {
 
-	private String stringValue;
-	private int intValue;
+	private String stringValue1;
+	private String stringValue2;
+	private int intValue1;
+	private int intValue2;
+	private float floatValue1;
+	private float floatValue2;
 
 }

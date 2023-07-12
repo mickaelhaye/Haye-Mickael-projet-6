@@ -23,4 +23,10 @@ public interface AccountService {
 
 	public void delAccount(String accountName, String userEmail);
 
+	public boolean userHaveAccount(String userEmail);
+
+	public void addMoney(float money, String userEmail);
+
+	public float balance(String userEmail);
+
 }

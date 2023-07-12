@@ -86,6 +86,36 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	@Override
+	public boolean userHaveAccount(String userEmail) {
+		Optional<UserModel> OptUser = userService.getUserByEmail(userEmail);
+		UserModel user = OptUser.get();
+		if (user.getAccounts().isEmpty()) {
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public void addMoney(float money, String userEmail) {
+		Optional<UserModel> OptUser = userService.getUserByEmail(userEmail);
+		UserModel user = OptUser.get();
+
+		AccountModel account = user.getAccounts().get(0);
+		account.setBalance(account.getBalance() + money);
+		addAccount(account);
+
+	}
+
+	@Override
+	public float balance(String userEmail) {
+		Optional<UserModel> OptUser = userService.getUserByEmail(userEmail);
+		UserModel user = OptUser.get();
+
+		AccountModel account = user.getAccounts().get(0);
+		return account.getBalance();
+	}
+
+	@Override
 	public List<AccountModel> accountListfromUser(String userEmail) {
 		Optional<UserModel> OptUser = userService.getUserByEmail(userEmail);
 		UserModel user = OptUser.get();
