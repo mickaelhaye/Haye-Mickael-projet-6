@@ -68,6 +68,8 @@ public class UserModel implements UserDetails {
 	private List<AccountModel> accounts = new ArrayList<>();
 
 	public void setAccountToList(AccountModel account) {
+		// est ce normal?
+		account.setUserId(getUserId());
 		this.accounts.add(account);
 	}
 
