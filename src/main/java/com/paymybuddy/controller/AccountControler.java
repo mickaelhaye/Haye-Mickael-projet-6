@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.paymybuddy.model.entity.AccountModel;
@@ -37,6 +38,18 @@ public class AccountControler {
 
 		return "/account/account_create_successfull";
 
+	}
+
+	@GetMapping("/account/account_del")
+	public String accountDel(Model model, Authentication authentification) {
+		model.addAttribute("accounts", accountService.accountListfromUser(authentification.getName()));
+		return "/account/account_del";
+	}
+
+	@GetMapping("/account/account_del_account/delete/{name}")
+	public String accountDelete(@PathVariable String name, Authentication authentification) {
+		accountService.delAccount(name, authentification.getName());
+		return "redirect:/account/account_del";
 	}
 
 }

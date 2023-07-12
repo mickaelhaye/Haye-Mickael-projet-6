@@ -1,5 +1,6 @@
 package com.paymybuddy.service.impl;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,7 +62,33 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	@Override
+	public void delAccount(String accountName, String userEmail) {
+		Optional<UserModel> OptUser = userService.getUserByEmail(userEmail);
+		UserModel user = OptUser.get();
+
+		for (AccountModel accountTest : user.getAccounts()) {
+			if (accountTest.getName().equals(accountName)) {
+				user.removeAccountToAccountList(accountTest);
+				break;
+			}
+		}
+
+		try {
+			userService.updateUser(user);
+		} catch (Exception e) { // TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	@Override
 	public boolean AccountExistFromUser(String nameAccount, int userId) {
 		return accountRepository.findByNameAndUserId(nameAccount, userId).isPresent();
+	}
+
+	@Override
+	public List<AccountModel> accountListfromUser(String userEmail) {
+		Optional<UserModel> OptUser = userService.getUserByEmail(userEmail);
+		UserModel user = OptUser.get();
+		return user.getAccounts();
 	}
 }

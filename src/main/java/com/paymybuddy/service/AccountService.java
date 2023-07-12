@@ -1,5 +1,6 @@
 package com.paymybuddy.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import com.paymybuddy.model.entity.AccountModel;
@@ -17,5 +18,9 @@ public interface AccountService {
 	public void addAccountToUser(AccountModel account, String email) throws Exception;
 
 	public boolean AccountExistFromUser(String nameAccount, int userId);
+
+	public List<AccountModel> accountListfromUser(String userEmail);
+
+	public void delAccount(String accountName, String userEmail);
 
 }

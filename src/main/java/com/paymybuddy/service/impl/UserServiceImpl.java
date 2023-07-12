@@ -84,9 +84,6 @@ public class UserServiceImpl implements UserService {
 		Optional<UserModel> OptUser = userRepository.findByEmail(userEmail);
 		UserModel user = OptUser.get();
 
-		Optional<UserModel> OptBuddy = userRepository.findByEmail(buddyEmail);
-		UserModel buddy = OptBuddy.get();
-
 		for (UserModel userTest : user.getUsers()) {
 			if (userTest.getEmail().equals(buddyEmail)) {
 				user.removeBoddyToUserList(userTest);

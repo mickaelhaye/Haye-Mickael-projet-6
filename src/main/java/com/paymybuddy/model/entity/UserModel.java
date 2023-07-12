@@ -22,12 +22,10 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Builder // à valider
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -79,6 +77,10 @@ public class UserModel implements UserDetails {
 
 	public void removeBoddyToUserList(UserModel user) {
 		this.users.remove(user);
+	}
+
+	public void removeAccountToAccountList(AccountModel account) {
+		this.accounts.remove(account);
 	}
 
 	@Override
