@@ -7,8 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.paymybuddy.model.dto.BankingOperationAddMoneyModel;
+import com.paymybuddy.model.dto.BankingOperationSendMoneyModel;
 import com.paymybuddy.model.entity.BankingOperationModel;
-import com.paymybuddy.model.entity.RecupValueModel;
 import com.paymybuddy.service.AccountService;
 import com.paymybuddy.service.BankingOperationService;
 import com.paymybuddy.service.UserService;
@@ -33,19 +34,20 @@ public class BankingOperationController {
 		if (!accountService.userHaveAccount(userController.getUserEmailSession())) {
 			return "/bankingOperation/bankingOperation_account_not_created";
 		}
-		RecupValueModel recupValue = new RecupValueModel();
-		recupValue.setFloatValue1(10);
-		recupValue.setFloatValue2(accountService.balance(userController.getUserEmailSession()));
-		model.addAttribute("recupValue", recupValue);
+		BankingOperationAddMoneyModel bankingOperationAddMoney = new BankingOperationAddMoneyModel();
+		bankingOperationAddMoney.setMoney(10);
+		bankingOperationAddMoney.setBalance(accountService.balance(userController.getUserEmailSession()));
+		model.addAttribute("bankingOperationAddMoney", bankingOperationAddMoney);
 		return "/bankingOperation/bankingOperation_add_money";
 	}
 
 	@PostMapping("bankingOperation_add_money")
-	public String saveBankingOperationAddMoney(@ModelAttribute("recupValue") RecupValueModel recupValue) {
-		accountService.addMoney(recupValue.getFloatValue1(), userController.getUserEmailSession());
+	public String saveBankingOperationAddMoney(
+			@ModelAttribute("bankingOperationAddMoney") BankingOperationAddMoneyModel bankingOperationAddMoney) {
+		accountService.addMoney(bankingOperationAddMoney.getMoney(), userController.getUserEmailSession());
 		BankingOperationModel bankingOperation = new BankingOperationModel();
-		bankingOperationService.addBankingOperationToAccount(bankingOperation, recupValue.getFloatValue1(),
-				recupValue.getStringValue1(), userController.getUserEmailSession(), "add money");
+		bankingOperationService.addBankingOperationToAccount(bankingOperation, bankingOperationAddMoney.getMoney(),
+				bankingOperationAddMoney.getDescription(), userController.getUserEmailSession(), "add money");
 		return "redirect:/bankingOperation/bankingOperation_add_money";
 	}
 
@@ -54,36 +56,37 @@ public class BankingOperationController {
 		if (!accountService.userHaveAccount(userController.getUserEmailSession())) {
 			return "/bankingOperation/bankingOperation_account_not_created";
 		}
-		RecupValueModel recupValue = new RecupValueModel();
-		recupValue.setFloatValue1(10);
-		recupValue.setFloatValue2(accountService.balance(userController.getUserEmailSession()));
-		model.addAttribute("recupValue", recupValue);
+		BankingOperationSendMoneyModel bankingOperationSendMoney = new BankingOperationSendMoneyModel();
+		bankingOperationSendMoney.setMoney(10);
+		bankingOperationSendMoney.setBalance(accountService.balance(userController.getUserEmailSession()));
+		model.addAttribute("bankingOperationSendMoney", bankingOperationSendMoney);
 		return "/bankingOperation/bankingOperation_send_money";
 	}
 
 	@PostMapping("bankingOperation_send_money")
-	public String saveBankingOperationSendMoney(@ModelAttribute("recupValue") RecupValueModel recupValue) {
+	public String saveBankingOperationSendMoney(
+			@ModelAttribute("bankingOperationSendMoney") BankingOperationSendMoneyModel bankingOperationSendMoney) {
 
-		if (recupValue.getFloatValue1() > accountService.balance(userController.getUserEmailSession())) {
+		if (bankingOperationSendMoney.getMoney() > accountService.balance(userController.getUserEmailSession())) {
 			return "/bankingOperation/bankingOperation_not_enough_money";
 		}
 
-		if (!userService.buddyExists(recupValue.getStringValue2(), userController.getUserEmailSession())) {
+		if (!userService.buddyExists(bankingOperationSendMoney.getBuddy(), userController.getUserEmailSession())) {
 			return "/bankingOperation/bankingOperation_not_your_buddy";
 		}
 
-		accountService.delMoney(recupValue.getFloatValue1(), userController.getUserEmailSession());
-		accountService.addMoney(recupValue.getFloatValue1(), recupValue.getStringValue2());
+		accountService.delMoney(bankingOperationSendMoney.getMoney(), userController.getUserEmailSession());
+		accountService.addMoney(bankingOperationSendMoney.getMoney(), bankingOperationSendMoney.getBuddy());
 
 		BankingOperationModel sendBankingOperation = new BankingOperationModel();
-		bankingOperationService.addBankingOperationToAccount(sendBankingOperation, recupValue.getFloatValue1(),
-				recupValue.getStringValue1(), userController.getUserEmailSession(),
-				"send money to " + recupValue.getStringValue2());
+		bankingOperationService.addBankingOperationToAccount(sendBankingOperation, bankingOperationSendMoney.getMoney(),
+				bankingOperationSendMoney.getDescription(), userController.getUserEmailSession(),
+				"send money to " + bankingOperationSendMoney.getBuddy());
 
 		BankingOperationModel receiveBankingOperation = new BankingOperationModel();
-		bankingOperationService.addBankingOperationToAccount(receiveBankingOperation, recupValue.getFloatValue1(),
-				recupValue.getStringValue1(), recupValue.getStringValue2(),
-				"receive money from " + userController.getUserEmailSession());
+		bankingOperationService.addBankingOperationToAccount(receiveBankingOperation,
+				bankingOperationSendMoney.getMoney(), bankingOperationSendMoney.getDescription(),
+				bankingOperationSendMoney.getBuddy(), "receive money from " + userController.getUserEmailSession());
 
 		return "/bankingOperation/bankingOperation_successfull";
 	}

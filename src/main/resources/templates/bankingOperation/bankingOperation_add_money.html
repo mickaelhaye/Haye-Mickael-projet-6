@@ -29,13 +29,13 @@
 		</div>
 
 		<div class="container">
-			<form th:action="@{/bankingOperation_add_money}" th:object="${recupValue}" method="POST">
+			<form th:action="@{/bankingOperation_add_money}" th:object="${bankingOperationAddMoney}" method="POST">
 				<div class="row  mt-5">
 					<div class="col form-group">
 						<h4 class="text-white text-start">balance:</h4>
 					</div>
 					<div class="col form-group">
-						<input th:field="*{FloatValue2}" class="form-control w-100 bg-success bg-opacity-25 bg-gradient"
+						<input th:field="*{balance}" class="form-control w-100 bg-success bg-opacity-25 bg-gradient"
 							disabled />
 					</div>
 					<div class="col">
@@ -48,7 +48,7 @@
 				</div>
 				<div class="row mt-1">
 					<div class="col form-group ">
-						<input type="number" step="any" th:field="*{FloatValue1}" min="0" max="9999"
+						<input type="number" step="any" th:field="*{money}" min="0" max="9999"
 							class="form-control w-100" />
 
 					</div>
@@ -72,7 +72,7 @@
 				</div>
 				<div class="row  mt-1">
 					<div class="col form-group">
-						<input th:field="*{StringValue1}" class="form-control" />
+						<input th:field="*{description}" class="form-control" />
 					</div>
 				</div>
 			</form>

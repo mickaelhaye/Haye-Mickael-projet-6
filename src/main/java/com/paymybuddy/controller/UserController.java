@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.paymybuddy.model.entity.RecupValueModel;
+import com.paymybuddy.model.dto.HomepageModel;
+import com.paymybuddy.model.dto.UserAddBuddyModel;
 import com.paymybuddy.model.entity.UserModel;
 import com.paymybuddy.service.AccountService;
 import com.paymybuddy.service.UserService;
@@ -44,9 +45,9 @@ public class UserController {
 	@GetMapping("/homepage")
 	public String homepage(Model model, Authentication authentification) {
 		setUserEmailSession(authentification.getName());
-		RecupValueModel recupValue = new RecupValueModel();
-		recupValue.setStringValue1("user :" + this.UserEmailSession);
-		model.addAttribute("recupValue", recupValue);
+		HomepageModel homepage = new HomepageModel();
+		homepage.setUserEmailSession("user :" + this.UserEmailSession);
+		model.addAttribute("homepage", homepage);
 		return "/homepage";
 	}
 
@@ -76,24 +77,24 @@ public class UserController {
 	@GetMapping("/user/user_add_buddy")
 	public String userAddBody(Model model) {
 		// add buddy
-		RecupValueModel recupValue = new RecupValueModel();
-		model.addAttribute("recupValue", recupValue);
+		UserAddBuddyModel userAddBuddy = new UserAddBuddyModel();
+		model.addAttribute("userAddBuddy", userAddBuddy);
 		return "/user/user_add_buddy";
 	}
 
 	@PostMapping("/buddys")
-	public String saveUser(@ModelAttribute("recupValue") RecupValueModel recupValue) {
+	public String saveUser(@ModelAttribute("recupValue") UserAddBuddyModel userAddBuddy) {
 
-		if (!userService.emailExists(recupValue.getStringValue1())) {
+		if (!userService.emailExists(userAddBuddy.getBudddyEmail())) {
 			return "user/user_buddy_no_exist";
 		}
 
-		if (!accountService.userHaveAccount(recupValue.getStringValue1())) {
+		if (!accountService.userHaveAccount(userAddBuddy.getBudddyEmail())) {
 			return "user/user_buddy_no_account";
 		}
 
 		try {
-			userService.addBuddy(recupValue.getStringValue1(), this.UserEmailSession);
+			userService.addBuddy(userAddBuddy.getBudddyEmail(), this.UserEmailSession);
 		} catch (Exception e) {
 
 			e.printStackTrace();
