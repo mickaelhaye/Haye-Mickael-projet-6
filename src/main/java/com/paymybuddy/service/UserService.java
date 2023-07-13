@@ -28,4 +28,6 @@ public interface UserService {
 	public List<UserModel> buddyListfromUser(String userEmail);
 
 	public void delBuddy(String buddyEmail, String userEmail);
+
+	public boolean buddyExists(String buddyEmail, String userEmail);
 }

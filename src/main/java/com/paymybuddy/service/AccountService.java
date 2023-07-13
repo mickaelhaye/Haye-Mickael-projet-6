@@ -29,4 +29,6 @@ public interface AccountService {
 
 	public float balance(String userEmail);
 
+	public void delMoney(float money, String userEmail);
+
 }

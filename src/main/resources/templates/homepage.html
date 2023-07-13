@@ -10,12 +10,33 @@
 </head>
 
 <body>
+
 	<div class="container bg-success bg-opacity-25  bg-gradient border rounded-2 mt-5"
 		style="height:600px; width:600px;">
 
+		<div class="row mt-2">
+			<div class="col">
+				<a th:href="@{/paymybuddy}" class="btn btn-primary btn-sl"> back </a>
+			</div>
+			
+			<div class="col">
+			</div>
+			<div class="col">
+			</div>
+			<div class="col">
+			</div>
+			<div class="col">
+			</div>
+			<div class="col mt-2">
+				<h6 class="text-end">User =</h6>
+			</div>
+				
+			<div th:object="${recupValue}" class="col form-group ">
+					
+					<input th:field="*{StringValue1}" class=" form-control w-100 bg-success bg-opacity-25 bg-gradient"
+						disabled />
+				</div>
 
-		<div class="col mt-2">
-			<a th:href="@{/paymybuddy}" class="btn btn-primary btn-sl"> back </a>
 		</div>
 
 
@@ -27,10 +48,12 @@
 
 		<div class="container" style="width:400px;">
 			<div class="col mt-5 text-center">
-				<a th:href="@{/bankingOperation/bankingOperation_add_money}" class="btn btn-primary btn-sl w-100" > add money </a>
+				<a th:href="@{/bankingOperation/bankingOperation_add_money}" class="btn btn-primary btn-sl w-100"> add
+					money </a>
 			</div>
 			<div class="col mt-2 text-center">
-				<a th:href="@{/user_send_money}" class="btn btn-primary btn-sl w-100"> send money </a>
+				<a th:href="@{/bankingOperation/bankingOperation_send_money}" class="btn btn-primary btn-sl w-100"> send
+					money </a>
 			</div>
 			<div class="row">
 				<div class="col mt-5 text-end">

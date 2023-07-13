@@ -26,7 +26,10 @@ public class UserController {
 
 	// est ce nécessaire?
 	@GetMapping("/homepage")
-	public String homepage() {
+	public String homepage(Model model, Authentication authentification) {
+		RecupValueModel recupValue = new RecupValueModel();
+		recupValue.setStringValue1(authentification.getName());
+		model.addAttribute("recupValue", recupValue);
 		return "/homepage";
 	}
 

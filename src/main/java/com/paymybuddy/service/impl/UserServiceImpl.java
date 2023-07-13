@@ -119,6 +119,19 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	public boolean buddyExists(String buddyEmail, String userEmail) {
+		Optional<UserModel> OptUser = userRepository.findByEmail(userEmail);
+		UserModel user = OptUser.get();
+
+		for (UserModel userTest : user.getUsers()) {
+			if (userTest.getEmail().equals(buddyEmail)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	@Override
 	public List<UserModel> buddyListfromUser(String userEmail) {
 		Optional<UserModel> OptUser = userRepository.findByEmail(userEmail);
 		UserModel user = OptUser.get();

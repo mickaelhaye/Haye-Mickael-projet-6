@@ -107,6 +107,17 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	@Override
+	public void delMoney(float money, String userEmail) {
+		Optional<UserModel> OptUser = userService.getUserByEmail(userEmail);
+		UserModel user = OptUser.get();
+
+		AccountModel account = user.getAccounts().get(0);
+		account.setBalance(account.getBalance() - money);
+		addAccount(account);
+
+	}
+
+	@Override
 	public float balance(String userEmail) {
 		Optional<UserModel> OptUser = userService.getUserByEmail(userEmail);
 		UserModel user = OptUser.get();

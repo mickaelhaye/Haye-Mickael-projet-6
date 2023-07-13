@@ -52,12 +52,12 @@ public class BankingOperationServiceImpl implements BankingOperationService {
 
 	@Override
 	public void addBankingOperationToAccount(BankingOperationModel bankingOperation, float amount, String description,
-			String userEmail) {
+			String userEmail, String typeTransation) {
 		bankingOperation.setAmount(amount);
 		bankingOperation.setDescription(description);
 		bankingOperation.setDate(calendarService.getDate());
 		bankingOperation.setHour(calendarService.getHour());
-		bankingOperation.setTypeTransaction("Money Deposit");
+		bankingOperation.setTypeTransaction(typeTransation);
 
 		Optional<UserModel> OptUser = userService.getUserByEmail(userEmail);
 		UserModel user = OptUser.get();
@@ -72,5 +72,4 @@ public class BankingOperationServiceImpl implements BankingOperationService {
 		}
 
 	}
-
 }
