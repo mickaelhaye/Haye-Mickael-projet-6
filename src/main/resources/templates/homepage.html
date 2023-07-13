@@ -19,28 +19,16 @@
 				<a th:href="@{/paymybuddy}" class="btn btn-primary btn-sl"> back </a>
 			</div>
 			
-			<div class="col">
+
+			<div th:object="${recupValue}" class="col form-group text-end  w-100">
+
+				<input th:field="*{StringValue1}" class=" form-control bg-success bg-opacity-25 bg-gradient" disabled />
 			</div>
-			<div class="col">
-			</div>
-			<div class="col">
-			</div>
-			<div class="col">
-			</div>
-			<div class="col mt-2">
-				<h6 class="text-end">User =</h6>
-			</div>
-				
-			<div th:object="${recupValue}" class="col form-group ">
-					
-					<input th:field="*{StringValue1}" class=" form-control w-100 bg-success bg-opacity-25 bg-gradient"
-						disabled />
-				</div>
 
 		</div>
 
 
-		<div class="col text-center ">
+		<div class="col text-center mt-2">
 
 			<h1 class=" text-white bg-success bg-opacity-50 bg-gradient border rounded-3  text-center d-inline">Pay
 				My Buddy</h1>
