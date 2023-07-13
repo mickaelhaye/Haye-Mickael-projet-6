@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.paymybuddy.model.entity.AccountModel;
 import com.paymybuddy.service.AccountService;
+import com.paymybuddy.service.UserService;
 
 @Controller
 public class AccountController {
@@ -18,11 +19,11 @@ public class AccountController {
 	private AccountService accountService;
 
 	@Autowired
-	private UserController userController;
+	private UserService userService;
 
 	@GetMapping("/account/account_create")
 	public String userAddAccount(Model model) {
-		if (accountService.userHaveAccount(userController.getUserEmailSession())) {
+		if (accountService.userHaveAccount(userService.getUserEmailSession())) {
 			return "account/account_already";
 		}
 
@@ -35,7 +36,7 @@ public class AccountController {
 	@PostMapping("/accounts") // à valider
 	public String saveAccount(@ModelAttribute("account") AccountModel account) {
 		try {
-			accountService.addAccountToUser(account, userController.getUserEmailSession());
+			accountService.addAccountToUser(account, userService.getUserEmailSession());
 		} catch (Exception e) {
 
 			e.printStackTrace();
@@ -48,13 +49,13 @@ public class AccountController {
 
 	@GetMapping("/account/account_del")
 	public String accountDel(Model model) {
-		model.addAttribute("accounts", accountService.accountListfromUser(userController.getUserEmailSession()));
+		model.addAttribute("accounts", accountService.accountListfromUser(userService.getUserEmailSession()));
 		return "/account/account_del";
 	}
 
 	@GetMapping("/account/account_del_account/delete/{name}")
 	public String accountDelete(@PathVariable String name) {
-		accountService.delAccount(name, userController.getUserEmailSession());
+		accountService.delAccount(name, userService.getUserEmailSession());
 		return "redirect:/account/account_del";
 	}
 

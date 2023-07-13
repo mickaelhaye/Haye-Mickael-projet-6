@@ -26,17 +26,14 @@ public class BankingOperationController {
 	@Autowired
 	private UserService userService;
 
-	@Autowired
-	private UserController userController;
-
 	@GetMapping("/bankingOperation/bankingOperation_add_money")
 	public String bankingOperationAddMoney(Model model) {
-		if (!accountService.userHaveAccount(userController.getUserEmailSession())) {
+		if (!accountService.userHaveAccount(userService.getUserEmailSession())) {
 			return "/bankingOperation/bankingOperation_account_not_created";
 		}
 		BankingOperationAddMoneyModel bankingOperationAddMoney = new BankingOperationAddMoneyModel();
 		bankingOperationAddMoney.setMoney(10);
-		bankingOperationAddMoney.setBalance(accountService.balance(userController.getUserEmailSession()));
+		bankingOperationAddMoney.setBalance(accountService.balance(userService.getUserEmailSession()));
 		model.addAttribute("bankingOperationAddMoney", bankingOperationAddMoney);
 		return "/bankingOperation/bankingOperation_add_money";
 	}
@@ -44,21 +41,21 @@ public class BankingOperationController {
 	@PostMapping("bankingOperation_add_money")
 	public String saveBankingOperationAddMoney(
 			@ModelAttribute("bankingOperationAddMoney") BankingOperationAddMoneyModel bankingOperationAddMoney) {
-		accountService.addMoney(bankingOperationAddMoney.getMoney(), userController.getUserEmailSession());
+		accountService.addMoney(bankingOperationAddMoney.getMoney(), userService.getUserEmailSession());
 		BankingOperationModel bankingOperation = new BankingOperationModel();
 		bankingOperationService.addBankingOperationToAccount(bankingOperation, bankingOperationAddMoney.getMoney(),
-				bankingOperationAddMoney.getDescription(), userController.getUserEmailSession(), "add money");
+				bankingOperationAddMoney.getDescription(), userService.getUserEmailSession(), "add money");
 		return "redirect:/bankingOperation/bankingOperation_add_money";
 	}
 
 	@GetMapping("/bankingOperation/bankingOperation_send_money")
 	public String bankingOperationSendMoney(Model model) {
-		if (!accountService.userHaveAccount(userController.getUserEmailSession())) {
+		if (!accountService.userHaveAccount(userService.getUserEmailSession())) {
 			return "/bankingOperation/bankingOperation_account_not_created";
 		}
 		BankingOperationSendMoneyModel bankingOperationSendMoney = new BankingOperationSendMoneyModel();
 		bankingOperationSendMoney.setMoney(10);
-		bankingOperationSendMoney.setBalance(accountService.balance(userController.getUserEmailSession()));
+		bankingOperationSendMoney.setBalance(accountService.balance(userService.getUserEmailSession()));
 		model.addAttribute("bankingOperationSendMoney", bankingOperationSendMoney);
 		return "/bankingOperation/bankingOperation_send_money";
 	}
@@ -67,26 +64,26 @@ public class BankingOperationController {
 	public String saveBankingOperationSendMoney(
 			@ModelAttribute("bankingOperationSendMoney") BankingOperationSendMoneyModel bankingOperationSendMoney) {
 
-		if (bankingOperationSendMoney.getMoney() > accountService.balance(userController.getUserEmailSession())) {
+		if (bankingOperationSendMoney.getMoney() > accountService.balance(userService.getUserEmailSession())) {
 			return "/bankingOperation/bankingOperation_not_enough_money";
 		}
 
-		if (!userService.buddyExists(bankingOperationSendMoney.getBuddy(), userController.getUserEmailSession())) {
+		if (!userService.buddyExists(bankingOperationSendMoney.getBuddy(), userService.getUserEmailSession())) {
 			return "/bankingOperation/bankingOperation_not_your_buddy";
 		}
 
-		accountService.delMoney(bankingOperationSendMoney.getMoney(), userController.getUserEmailSession());
+		accountService.delMoney(bankingOperationSendMoney.getMoney(), userService.getUserEmailSession());
 		accountService.addMoney(bankingOperationSendMoney.getMoney(), bankingOperationSendMoney.getBuddy());
 
 		BankingOperationModel sendBankingOperation = new BankingOperationModel();
 		bankingOperationService.addBankingOperationToAccount(sendBankingOperation, bankingOperationSendMoney.getMoney(),
-				bankingOperationSendMoney.getDescription(), userController.getUserEmailSession(),
+				bankingOperationSendMoney.getDescription(), userService.getUserEmailSession(),
 				"send money to " + bankingOperationSendMoney.getBuddy());
 
 		BankingOperationModel receiveBankingOperation = new BankingOperationModel();
 		bankingOperationService.addBankingOperationToAccount(receiveBankingOperation,
 				bankingOperationSendMoney.getMoney(), bankingOperationSendMoney.getDescription(),
-				bankingOperationSendMoney.getBuddy(), "receive money from " + userController.getUserEmailSession());
+				bankingOperationSendMoney.getBuddy(), "receive money from " + userService.getUserEmailSession());
 
 		return "/bankingOperation/bankingOperation_successfull";
 	}

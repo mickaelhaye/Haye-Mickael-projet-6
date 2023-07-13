@@ -1,7 +1,6 @@
 package com.paymybuddy.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,17 +18,6 @@ import com.paymybuddy.service.UserService;
 @Controller
 public class UserController {
 
-	private String UserEmailSession;
-
-	@Bean
-	public String getUserEmailSession() {
-		return UserEmailSession;
-	}
-
-	public void setUserEmailSession(String userEmailSession) {
-		UserEmailSession = userEmailSession;
-	}
-
 	@Autowired
 	private UserService userService;
 
@@ -44,9 +32,9 @@ public class UserController {
 	// est ce nécessaire?
 	@GetMapping("/homepage")
 	public String homepage(Model model, Authentication authentification) {
-		setUserEmailSession(authentification.getName());
+		userService.setUserEmailSession(authentification.getName());
 		HomepageModel homepage = new HomepageModel();
-		homepage.setUserEmailSession("user :" + this.UserEmailSession);
+		homepage.setUserEmailSession("user :" + userService.getUserEmailSession());
 		model.addAttribute("homepage", homepage);
 		return "/homepage";
 	}
@@ -94,7 +82,7 @@ public class UserController {
 		}
 
 		try {
-			userService.addBuddy(userAddBuddy.getBudddyEmail(), this.UserEmailSession);
+			userService.addBuddy(userAddBuddy.getBudddyEmail(), userService.getUserEmailSession());
 		} catch (Exception e) {
 
 			e.printStackTrace();
@@ -105,13 +93,13 @@ public class UserController {
 
 	@GetMapping("/user/user_del_buddy")
 	public String userDelBuddy(Model model) {
-		model.addAttribute("buddys", userService.buddyListfromUser(this.UserEmailSession));
+		model.addAttribute("buddys", userService.buddyListfromUser(userService.getUserEmailSession()));
 		return "/user/user_del_buddy";
 	}
 
 	@GetMapping("/user/user_del_buddy/delete/{email}")
 	public String userDelBuddyDelete(@PathVariable String email) {
-		userService.delBuddy(email, this.UserEmailSession);
+		userService.delBuddy(email, userService.getUserEmailSession());
 		return "redirect:/user/user_del_buddy";
 	}
 

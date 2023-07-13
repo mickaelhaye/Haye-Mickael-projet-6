@@ -20,6 +20,18 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
+	private String UserEmailSession;
+
+	@Override
+	public String getUserEmailSession() {
+		return UserEmailSession;
+	}
+
+	@Override
+	public void setUserEmailSession(String userEmailSession) {
+		UserEmailSession = userEmailSession;
+	}
+
 	@Override
 	public Iterable<UserModel> getUsers() {
 		return userRepository.findAll();

@@ -30,4 +30,8 @@ public interface UserService {
 	public void delBuddy(String buddyEmail, String userEmail);
 
 	public boolean buddyExists(String buddyEmail, String userEmail);
+
+	public String getUserEmailSession();
+
+	public void setUserEmailSession(String userEmailSession);
 }
