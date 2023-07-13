@@ -1,6 +1,7 @@
 package com.paymybuddy.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,13 +12,28 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.paymybuddy.model.entity.RecupValueModel;
 import com.paymybuddy.model.entity.UserModel;
+import com.paymybuddy.service.AccountService;
 import com.paymybuddy.service.UserService;
 
 @Controller
 public class UserController {
 
+	private String UserEmailSession;
+
+	@Bean
+	public String getUserEmailSession() {
+		return UserEmailSession;
+	}
+
+	public void setUserEmailSession(String userEmailSession) {
+		UserEmailSession = userEmailSession;
+	}
+
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private AccountService accountService;
 
 	@GetMapping("/paymybuddy")
 	public String start() {
@@ -27,8 +43,9 @@ public class UserController {
 	// est ce nécessaire?
 	@GetMapping("/homepage")
 	public String homepage(Model model, Authentication authentification) {
+		setUserEmailSession(authentification.getName());
 		RecupValueModel recupValue = new RecupValueModel();
-		recupValue.setStringValue1(authentification.getName());
+		recupValue.setStringValue1("user :" + this.UserEmailSession);
 		model.addAttribute("recupValue", recupValue);
 		return "/homepage";
 	}
@@ -65,10 +82,18 @@ public class UserController {
 	}
 
 	@PostMapping("/buddys")
-	public String saveUser(@ModelAttribute("recupValue") RecupValueModel recupValue, Authentication authentification) {
+	public String saveUser(@ModelAttribute("recupValue") RecupValueModel recupValue) {
+
+		if (!userService.emailExists(recupValue.getStringValue1())) {
+			return "user/user_buddy_no_exist";
+		}
+
+		if (!accountService.userHaveAccount(recupValue.getStringValue1())) {
+			return "user/user_buddy_no_account";
+		}
 
 		try {
-			userService.addBuddy(recupValue.getStringValue1(), authentification.getName());
+			userService.addBuddy(recupValue.getStringValue1(), this.UserEmailSession);
 		} catch (Exception e) {
 
 			e.printStackTrace();
@@ -78,14 +103,14 @@ public class UserController {
 	}
 
 	@GetMapping("/user/user_del_buddy")
-	public String userDelBuddy(Model model, Authentication authentification) {
-		model.addAttribute("buddys", userService.buddyListfromUser(authentification.getName()));
+	public String userDelBuddy(Model model) {
+		model.addAttribute("buddys", userService.buddyListfromUser(this.UserEmailSession));
 		return "/user/user_del_buddy";
 	}
 
 	@GetMapping("/user/user_del_buddy/delete/{email}")
-	public String userDelBuddyDelete(@PathVariable String email, Authentication authentification) {
-		userService.delBuddy(email, authentification.getName());
+	public String userDelBuddyDelete(@PathVariable String email) {
+		userService.delBuddy(email, this.UserEmailSession);
 		return "redirect:/user/user_del_buddy";
 	}
 

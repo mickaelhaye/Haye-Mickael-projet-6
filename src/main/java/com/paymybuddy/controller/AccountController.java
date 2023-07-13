@@ -1,7 +1,6 @@
 package com.paymybuddy.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,8 +17,15 @@ public class AccountController {
 	@Autowired
 	private AccountService accountService;
 
+	@Autowired
+	private UserController userController;
+
 	@GetMapping("/account/account_create")
 	public String userAddAccount(Model model) {
+		if (accountService.userHaveAccount(userController.getUserEmailSession())) {
+			return "account/account_already";
+		}
+
 		// create account object to hold user form data
 		AccountModel account = new AccountModel();
 		model.addAttribute("account", account);
@@ -27,9 +33,9 @@ public class AccountController {
 	}
 
 	@PostMapping("/accounts") // à valider
-	public String saveAccount(@ModelAttribute("account") AccountModel account, Authentication authentification) {
+	public String saveAccount(@ModelAttribute("account") AccountModel account) {
 		try {
-			accountService.addAccountToUser(account, authentification.getName());
+			accountService.addAccountToUser(account, userController.getUserEmailSession());
 		} catch (Exception e) {
 
 			e.printStackTrace();
@@ -41,14 +47,14 @@ public class AccountController {
 	}
 
 	@GetMapping("/account/account_del")
-	public String accountDel(Model model, Authentication authentification) {
-		model.addAttribute("accounts", accountService.accountListfromUser(authentification.getName()));
+	public String accountDel(Model model) {
+		model.addAttribute("accounts", accountService.accountListfromUser(userController.getUserEmailSession()));
 		return "/account/account_del";
 	}
 
 	@GetMapping("/account/account_del_account/delete/{name}")
-	public String accountDelete(@PathVariable String name, Authentication authentification) {
-		accountService.delAccount(name, authentification.getName());
+	public String accountDelete(@PathVariable String name) {
+		accountService.delAccount(name, userController.getUserEmailSession());
 		return "redirect:/account/account_del";
 	}
 
