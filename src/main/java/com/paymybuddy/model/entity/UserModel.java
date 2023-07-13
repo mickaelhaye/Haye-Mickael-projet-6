@@ -63,13 +63,11 @@ public class UserModel implements UserDetails {
 	@JoinTable(name = "user_user", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "user2_id"))
 	private List<UserModel> users = new ArrayList<>();
 
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-	@JoinColumn(name = "user_id")
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "user_account")
 	private List<AccountModel> accounts = new ArrayList<>();
 
 	public void setAccountToList(AccountModel account) {
-		// est ce normal?
-		account.setUserId(getUserId());
 		this.accounts.add(account);
 	}
 

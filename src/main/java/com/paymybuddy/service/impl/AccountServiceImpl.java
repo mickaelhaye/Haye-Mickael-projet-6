@@ -69,6 +69,7 @@ public class AccountServiceImpl implements AccountService {
 		for (AccountModel accountTest : user.getAccounts()) {
 			if (accountTest.getName().equals(accountName)) {
 				user.removeAccountToAccountList(accountTest);
+				delAccount(accountTest);
 				break;
 			}
 		}
