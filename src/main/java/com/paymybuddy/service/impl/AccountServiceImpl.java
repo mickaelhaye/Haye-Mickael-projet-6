@@ -53,7 +53,7 @@ public class AccountServiceImpl implements AccountService {
 
 		user.setAccountToList(account);
 		try {
-			userService.updateUser(user);
+			addAccount(account);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -84,9 +84,8 @@ public class AccountServiceImpl implements AccountService {
 	@Override
 	public boolean AccountExistFromUser(String nameAccount, int userId) {
 
-		// return accountRepository.findByNameAndUserId(nameAccount,
-		// userId).isPresent();
-		return false;
+		Optional<AccountModel> optAccount = accountRepository.findByUserIdAndName(userId, nameAccount);
+		return accountRepository.findByUserIdAndName(userId, nameAccount).isPresent();
 	}
 
 	@Override

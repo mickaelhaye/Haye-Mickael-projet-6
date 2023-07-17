@@ -64,7 +64,7 @@ public class BankingOperationServiceImpl implements BankingOperationService {
 
 	@Override
 	public void addBankingOperationToAccount(BankingOperationModel bankingOperation, float amount, String description,
-			String userEmail, String typeTransation) {
+			String userBuddy, String userEmail, String typeTransation) {
 		bankingOperation.setAmount(amount);
 		bankingOperation.setDescription(description);
 		bankingOperation.setDate(calendarService.getDate());
@@ -76,13 +76,21 @@ public class BankingOperationServiceImpl implements BankingOperationService {
 
 		AccountModel account = user.getAccounts().get(0);
 		account.setBankingOperationsToList(bankingOperation);
+
+		if (userBuddy != "") {
+			Optional<UserModel> OptBuddy = userService.getUserByEmail(userBuddy);
+			UserModel buddy = OptBuddy.get();
+
+			AccountModel accountbuddy = buddy.getAccounts().get(0);
+			accountbuddy.setBankingOperationsToList(bankingOperation);
+		}
+
 		try {
-			accountService.addAccount(account);
+			addBankingOperation(bankingOperation);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
 
 	@Override

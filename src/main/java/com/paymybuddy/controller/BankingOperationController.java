@@ -48,7 +48,7 @@ public class BankingOperationController {
 		accountService.addMoney(bankingOperationAddMoney.getMoney(), userService.getUserEmailSession());
 		BankingOperationModel bankingOperation = new BankingOperationModel();
 		bankingOperationService.addBankingOperationToAccount(bankingOperation, bankingOperationAddMoney.getMoney(),
-				bankingOperationAddMoney.getDescription(), userService.getUserEmailSession(), "add money");
+				bankingOperationAddMoney.getDescription(), "", userService.getUserEmailSession(), "add money");
 		return "redirect:/bankingOperation/bankingOperation_add_money";
 	}
 
@@ -82,12 +82,8 @@ public class BankingOperationController {
 		BankingOperationModel sendBankingOperation = new BankingOperationModel();
 		bankingOperationService.addBankingOperationToAccount(sendBankingOperation, bankingOperationSendMoney.getMoney(),
 				bankingOperationSendMoney.getDescription(), userService.getUserEmailSession(),
-				"send money to " + bankingOperationSendMoney.getBuddy());
-
-		BankingOperationModel receiveBankingOperation = new BankingOperationModel();
-		bankingOperationService.addBankingOperationToAccount(receiveBankingOperation,
-				bankingOperationSendMoney.getMoney(), bankingOperationSendMoney.getDescription(),
-				bankingOperationSendMoney.getBuddy(), "receive money from " + userService.getUserEmailSession());
+				bankingOperationSendMoney.getBuddy(),
+				"send money to " + bankingOperationSendMoney.getBuddy() + " from " + userService.getUserEmailSession());
 
 		return "/bankingOperation/bankingOperation_successfull";
 	}

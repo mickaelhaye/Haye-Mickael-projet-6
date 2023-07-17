@@ -23,6 +23,7 @@ public class AccountController {
 
 	@GetMapping("/account/account_create")
 	public String userAddAccount(Model model) {
+
 		if (accountService.userHaveAccount(userService.getUserEmailSession())) {
 			return "account/account_already";
 		}
