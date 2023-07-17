@@ -1,13 +1,19 @@
 package com.paymybuddy.service.impl;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.paymybuddy.model.entity.AccountModel;
 import com.paymybuddy.model.entity.BankingOperationModel;
 import com.paymybuddy.model.entity.UserModel;
+import com.paymybuddy.repository.AccountRepository;
+import com.paymybuddy.repository.BankingOperationPageableRepository;
 import com.paymybuddy.repository.BankingOperationRepository;
 import com.paymybuddy.service.AccountService;
 import com.paymybuddy.service.BankingOperationService;
@@ -21,6 +27,9 @@ public class BankingOperationServiceImpl implements BankingOperationService {
 	private BankingOperationRepository bankingOperationRepository;
 
 	@Autowired
+	private BankingOperationPageableRepository bankingOperationPageableRepository;
+
+	@Autowired
 	private CalendarService calendarService;
 
 	@Autowired
@@ -28,6 +37,9 @@ public class BankingOperationServiceImpl implements BankingOperationService {
 
 	@Autowired
 	private AccountService accountService;
+
+	@Autowired
+	private AccountRepository accountRepository;
 
 	@Override
 	public Iterable<BankingOperationModel> getBankingOperations() {
@@ -72,4 +84,18 @@ public class BankingOperationServiceImpl implements BankingOperationService {
 		}
 
 	}
+
+	@Override
+	public List<BankingOperationModel> bankingOperationListfromUser(String userEmail) {
+		Optional<UserModel> OptUser = userService.getUserByEmail(userEmail);
+		UserModel user = OptUser.get();
+		return user.getAccounts().get(0).getBankingOperations();
+	}
+
+	@Override
+	public Page<BankingOperationModel> findPaginated(int pageNo, int pageSize) {
+		Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+		return bankingOperationPageableRepository.findAll(pageable);
+	}
+
 }
