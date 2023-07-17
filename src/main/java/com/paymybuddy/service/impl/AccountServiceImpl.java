@@ -83,7 +83,10 @@ public class AccountServiceImpl implements AccountService {
 
 	@Override
 	public boolean AccountExistFromUser(String nameAccount, int userId) {
-		return accountRepository.findByNameAndUserId(nameAccount, userId).isPresent();
+
+		// return accountRepository.findByNameAndUserId(nameAccount,
+		// userId).isPresent();
+		return false;
 	}
 
 	@Override

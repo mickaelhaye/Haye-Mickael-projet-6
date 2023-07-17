@@ -21,6 +21,7 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -31,6 +32,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @DynamicUpdate
 @Table(name = "user")
+@Transactional
 public class UserModel implements UserDetails {
 
 	@Id
@@ -64,7 +66,7 @@ public class UserModel implements UserDetails {
 	private List<UserModel> users = new ArrayList<>();
 
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name = "user_account")
+	@JoinColumn(name = "userId")
 	private List<AccountModel> accounts = new ArrayList<>();
 
 	public void setAccountToList(AccountModel account) {
