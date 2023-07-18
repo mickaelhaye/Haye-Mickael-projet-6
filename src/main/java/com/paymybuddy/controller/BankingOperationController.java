@@ -76,6 +76,10 @@ public class BankingOperationController {
 			return "/bankingOperation/bankingOperation_not_your_buddy";
 		}
 
+		if (!accountService.userHaveAccount(bankingOperationSendMoney.getBuddy())) {
+			return "/bankingOperation/bankingOperation_buddy_no_account";
+		}
+
 		accountService.delMoney(bankingOperationSendMoney.getMoney(), userService.getUserEmailSession());
 		accountService.addMoney(bankingOperationSendMoney.getMoney(), bankingOperationSendMoney.getBuddy());
 
