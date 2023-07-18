@@ -31,7 +31,7 @@
 		<div class="row ">
 
 
-			<form th:action="@{/buddys}" th:object="${userAddBuddy}" method="POST">
+			<form th:action="@{/user/buddys}" th:object="${userAddBuddy}" method="POST">
 				<div class="form-group mt-2 ">
 					<label> Email Buddy</label>
 					<input type="text" name="email" th:field="*{budddyEmail}" class="form-control "

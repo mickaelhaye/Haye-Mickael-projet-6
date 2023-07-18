@@ -28,7 +28,7 @@
 		<div class="row ">
 
 
-			<form th:action="@{/users}" th:object="${user}" method="POST">
+			<form th:action="@{/user/users}" th:object="${user}" method="POST">
 				<div class="form-group mt-2 ">
 					<label> User Name </label>
 					<input type="text" name="name" th:field="*{name}" class="form-control "

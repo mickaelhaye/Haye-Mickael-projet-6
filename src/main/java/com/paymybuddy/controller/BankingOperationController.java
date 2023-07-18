@@ -42,7 +42,7 @@ public class BankingOperationController {
 		return "/bankingOperation/bankingOperation_add_money";
 	}
 
-	@PostMapping("bankingOperation_add_money")
+	@PostMapping("/bankingOperation/bankingOperation_add_money_add")
 	public String saveBankingOperationAddMoney(
 			@ModelAttribute("bankingOperationAddMoney") BankingOperationAddMoneyModel bankingOperationAddMoney) {
 		accountService.addMoney(bankingOperationAddMoney.getMoney(), userService.getUserEmailSession());
@@ -64,7 +64,7 @@ public class BankingOperationController {
 		return "/bankingOperation/bankingOperation_send_money";
 	}
 
-	@PostMapping("bankingOperation_send_money")
+	@PostMapping("/bankingOperation/bankingOperation_send_money_send")
 	public String saveBankingOperationSendMoney(
 			@ModelAttribute("bankingOperationSendMoney") BankingOperationSendMoneyModel bankingOperationSendMoney) {
 

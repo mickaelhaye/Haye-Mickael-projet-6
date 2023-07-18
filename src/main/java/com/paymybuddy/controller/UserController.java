@@ -48,7 +48,7 @@ public class UserController {
 		return "/user/user_create";
 	}
 
-	@PostMapping("/users")
+	@PostMapping("/user/users")
 	public String saveUser(@ModelAttribute("user") UserModel user) {
 		try {
 			userService.addUser(user);
@@ -70,7 +70,7 @@ public class UserController {
 		return "/user/user_add_buddy";
 	}
 
-	@PostMapping("/buddys")
+	@PostMapping("/user/buddys")
 	public String saveUser(@ModelAttribute("recupValue") UserAddBuddyModel userAddBuddy) {
 
 		if (!userService.emailExists(userAddBuddy.getBudddyEmail())) {
@@ -112,7 +112,7 @@ public class UserController {
 		return "/user/user_update";
 	}
 
-	@PostMapping("/user_update")
+	@PostMapping("/user/user_update_update")
 	public String userUpdateUpdate(@ModelAttribute("user") UserModel user) {
 		boolean EmailModify = false;
 		try {
@@ -129,16 +129,16 @@ public class UserController {
 		return "/user/user_update_successfull_logout";
 	}
 
-	@GetMapping("/user/user_del_user")
+	@GetMapping("/user/admin/user_del_user")
 	public String userDelUser(Model model) {
 		model.addAttribute("users", userService.getUsers());
-		return "/user/user_del_buddy";
+		return "/user/admin/user_del_user";
 	}
 
-	@GetMapping("/user/user_del_user/delete/{email}")
+	@GetMapping("/user/admin/user_del_user/delete/{email}")
 	public String userDelUserDelete(@PathVariable String email) {
 		userService.delUserByEmail(email);
-		return "redirect:/user/user_del_user";
+		return "redirect:/user/admin/user_del_user";
 	}
 
 }

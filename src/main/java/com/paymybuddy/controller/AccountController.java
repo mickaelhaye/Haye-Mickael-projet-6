@@ -34,7 +34,7 @@ public class AccountController {
 		return "/account/account_create";
 	}
 
-	@PostMapping("/accounts") // à valider
+	@PostMapping("/account/accounts") // à valider
 	public String saveAccount(@ModelAttribute("account") AccountModel account) {
 		try {
 			accountService.addAccountToUser(account, userService.getUserEmailSession());
