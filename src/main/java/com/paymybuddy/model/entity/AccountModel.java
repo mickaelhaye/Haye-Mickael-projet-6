@@ -35,14 +35,14 @@ public class AccountModel {
 	@Column(name = "account_id")
 	private int accountId;
 
-	@Column(name = "name")
+	@Column(name = "account_name")
 	private String name;
 
 	@Column(name = "balance")
 	private float balance;
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinTable(name = "account_banking_operation", joinColumns = @JoinColumn(name = "account_id"), inverseJoinColumns = @JoinColumn(name = "banking_operation_id"))
+	@JoinTable(name = "account_banking_operation", joinColumns = @JoinColumn(name = "account_id2"), inverseJoinColumns = @JoinColumn(name = "banking_operation_id2"))
 	private List<BankingOperationModel> bankingOperations = new ArrayList<>();
 
 	public void setBankingOperationsToList(BankingOperationModel bankingOperation) {

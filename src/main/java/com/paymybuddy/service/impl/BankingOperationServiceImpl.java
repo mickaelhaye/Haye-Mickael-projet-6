@@ -12,10 +12,7 @@ import org.springframework.stereotype.Service;
 import com.paymybuddy.model.entity.AccountModel;
 import com.paymybuddy.model.entity.BankingOperationModel;
 import com.paymybuddy.model.entity.UserModel;
-import com.paymybuddy.repository.AccountRepository;
-import com.paymybuddy.repository.BankingOperationPageableRepository;
 import com.paymybuddy.repository.BankingOperationRepository;
-import com.paymybuddy.service.AccountService;
 import com.paymybuddy.service.BankingOperationService;
 import com.paymybuddy.service.CalendarService;
 import com.paymybuddy.service.UserService;
@@ -27,19 +24,10 @@ public class BankingOperationServiceImpl implements BankingOperationService {
 	private BankingOperationRepository bankingOperationRepository;
 
 	@Autowired
-	private BankingOperationPageableRepository bankingOperationPageableRepository;
-
-	@Autowired
 	private CalendarService calendarService;
 
 	@Autowired
 	private UserService userService;
-
-	@Autowired
-	private AccountService accountService;
-
-	@Autowired
-	private AccountRepository accountRepository;
 
 	@Override
 	public Iterable<BankingOperationModel> getBankingOperations() {
@@ -102,8 +90,9 @@ public class BankingOperationServiceImpl implements BankingOperationService {
 
 	@Override
 	public Page<BankingOperationModel> findPaginated(int pageNo, int pageSize) {
+
 		Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
-		return bankingOperationPageableRepository.findAll(pageable);
+		return bankingOperationRepository.findByEmail(userService.getUserEmailSession(), pageable);
 	}
 
 }

@@ -56,7 +56,7 @@ public class AccountController {
 
 	@GetMapping("/account/account_del_account/delete/{name}")
 	public String accountDelete(@PathVariable String name) {
-		accountService.delAccount(name, userService.getUserEmailSession());
+		accountService.delAccount(name);
 		return "redirect:/account/account_del";
 	}
 

@@ -21,7 +21,7 @@ public interface AccountService {
 
 	public List<AccountModel> accountListfromUser(String userEmail);
 
-	public void delAccount(String accountName, String userEmail);
+	public void delAccount(String accountName);
 
 	public boolean userHaveAccount(String userEmail);
 

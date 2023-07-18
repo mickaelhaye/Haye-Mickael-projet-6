@@ -66,7 +66,7 @@ public class UserModel implements UserDetails {
 	private List<UserModel> users = new ArrayList<>();
 
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name = "userId")
+	@JoinColumn(name = "userId2")
 	private List<AccountModel> accounts = new ArrayList<>();
 
 	public void setAccountToList(AccountModel account) {

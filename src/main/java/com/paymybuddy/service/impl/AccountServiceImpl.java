@@ -62,16 +62,16 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	@Override
-	public void delAccount(String accountName, String userEmail) {
-		Optional<UserModel> OptUser = userService.getUserByEmail(userEmail);
+	public void delAccount(String accountName) {
+		Optional<UserModel> OptUser = userService.getUserByEmail(userService.getUserEmailSession());
 		UserModel user = OptUser.get();
 
-		for (AccountModel accountTest : user.getAccounts()) {
-			if (accountTest.getName().equals(accountName)) {
-				user.removeAccountToAccountList(accountTest);
-				delAccount(accountTest);
-				break;
-			}
+		if (accountRepository.findByEmailAndAccountName(userService.getUserEmailSession(), accountName).isPresent()) {
+			Optional<AccountModel> OptAccount = accountRepository
+					.findByEmailAndAccountName(userService.getUserEmailSession(), accountName);
+			AccountModel account = OptAccount.get();
+			user.removeAccountToAccountList(account);
+			delAccount(account);
 		}
 
 		try {
@@ -84,7 +84,6 @@ public class AccountServiceImpl implements AccountService {
 	@Override
 	public boolean AccountExistFromUser(String nameAccount, int userId) {
 
-		Optional<AccountModel> optAccount = accountRepository.findByUserIdAndName(userId, nameAccount);
 		return accountRepository.findByUserIdAndName(userId, nameAccount).isPresent();
 	}
 

@@ -12,7 +12,10 @@ import com.paymybuddy.model.entity.AccountModel;
 @Repository
 public interface AccountRepository extends CrudRepository<AccountModel, Integer> {
 
-	@Query(value = "SELECT * FROM `account`  WHERE (`account`.`user_id`= :user_id AND `account`.`name`= :name )", nativeQuery = true)
+	@Query(value = "SELECT * FROM account WHERE (account.user_id2= :user_id AND account.account_name= :name )", nativeQuery = true)
 	public Optional<AccountModel> findByUserIdAndName(@Param("user_id") Integer userId, @Param("name") String name);
 
+	@Query(value = "SELECT * FROM account JOIN user ON (user.user_id = account.user_id2) WHERE (user.email = :email AND account.account_name = :accountname)", nativeQuery = true)
+	public Optional<AccountModel> findByEmailAndAccountName(@Param("email") String email,
+			@Param("accountname") String accountName);
 }
