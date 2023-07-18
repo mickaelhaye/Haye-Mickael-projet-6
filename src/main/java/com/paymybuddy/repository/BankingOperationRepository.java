@@ -12,7 +12,7 @@ import com.paymybuddy.model.entity.BankingOperationModel;
 @Repository
 public interface BankingOperationRepository extends CrudRepository<BankingOperationModel, Integer> {
 
-	@Query(value = "SELECT * FROM banking_operation JOIN account_banking_operation ON (banking_operation.banking_operation_id = account_banking_operation.banking_operation_id2) JOIN account ON (account.account_id = account_banking_operation.account_id2) JOIN user ON (user.user_id = account.user_id) WHERE (user.email = :email)", nativeQuery = true)
+	@Query(value = "SELECT * FROM banking_operation JOIN account_banking_operation ON (banking_operation.banking_operation_id = account_banking_operation.banking_operation_id2) JOIN account ON (account.account_id = account_banking_operation.account_id2) JOIN user ON (user.user_id = account.user_id2) WHERE (user.email = :email)", nativeQuery = true)
 	public Page<BankingOperationModel> findByEmail(@Param("email") String email, Pageable pageable);
 
 }
