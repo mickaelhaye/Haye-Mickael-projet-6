@@ -50,7 +50,7 @@ public class AccountController {
 
 	@GetMapping("/account/account_del")
 	public String accountDel(Model model) {
-		model.addAttribute("accounts", accountService.accountListfromUser(userService.getUserEmailSession()));
+		model.addAttribute("accounts", accountService.accountListfromUser());
 		return "/account/account_del";
 	}
 

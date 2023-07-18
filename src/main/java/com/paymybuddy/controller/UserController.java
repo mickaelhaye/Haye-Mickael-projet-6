@@ -107,22 +107,23 @@ public class UserController {
 	public String userUpdate(Model model) {
 
 		// create user object to hold user form data
-		model.addAttribute("user", userService.getUserByEmail());
+		UserModel user = userService.getUserByEmail();
+		model.addAttribute("user", user);
 		return "/user/user_update";
 	}
 
 	@PostMapping("/user_update")
 	public String userUpdateUpdate(@ModelAttribute("user") UserModel user) {
-		boolean EmailOrPasswordModify = false;
+		boolean EmailModify = false;
 		try {
-			EmailOrPasswordModify = userService.emailOrPasswordModify(user);
+			EmailModify = userService.emailModify(user);
 			userService.updateSomeParameters(user);
 		} catch (Exception e) {
 
 			e.printStackTrace();
 			return "/user/user_already_exist_update";
 		}
-		if (!EmailOrPasswordModify) {
+		if (!EmailModify) {
 			return "/user/user_update_successfull";
 		}
 		return "/user/user_update_successfull_logout";

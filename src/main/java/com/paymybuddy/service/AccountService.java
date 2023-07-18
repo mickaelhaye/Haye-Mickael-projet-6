@@ -19,7 +19,7 @@ public interface AccountService {
 
 	public boolean AccountExistFromUser(String nameAccount, int userId);
 
-	public List<AccountModel> accountListfromUser(String userEmail);
+	public List<AccountModel> accountListfromUser();
 
 	public void delAccount(String accountName);
 
@@ -27,8 +27,8 @@ public interface AccountService {
 
 	public void addMoney(float money, String userEmail);
 
-	public float balance(String userEmail);
+	public float balance();
 
-	public void delMoney(float money, String userEmail);
+	public void delMoney(float money);
 
 }

@@ -109,10 +109,8 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	@Override
-	public void delMoney(float money, String userEmail) {
-		Optional<UserModel> OptUser = userService.getUserByEmail(userEmail);
-		UserModel user = OptUser.get();
-
+	public void delMoney(float money) {
+		UserModel user = userService.getUserByEmail();
 		AccountModel account = user.getAccounts().get(0);
 		account.setBalance(account.getBalance() - money);
 		addAccount(account);
@@ -120,18 +118,15 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	@Override
-	public float balance(String userEmail) {
-		Optional<UserModel> OptUser = userService.getUserByEmail(userEmail);
-		UserModel user = OptUser.get();
-
+	public float balance() {
+		UserModel user = userService.getUserByEmail();
 		AccountModel account = user.getAccounts().get(0);
 		return account.getBalance();
 	}
 
 	@Override
-	public List<AccountModel> accountListfromUser(String userEmail) {
-		Optional<UserModel> OptUser = userService.getUserByEmail(userEmail);
-		UserModel user = OptUser.get();
+	public List<AccountModel> accountListfromUser() {
+		UserModel user = userService.getUserByEmail();
 		return user.getAccounts();
 	}
 }

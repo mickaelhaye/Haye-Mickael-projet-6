@@ -171,23 +171,17 @@ public class UserServiceImpl implements UserService {
 		userUpdate.setEmail(user.getEmail());
 		userUpdate.setBirthdate(user.getBirthdate());
 		userUpdate.setAddress(user.getAddress());
-		userUpdate.setPassword(passwordEncoder.encode(user.getPassword()));
 		updateUser(userUpdate);
 	}
 
 	@Override
-	public boolean emailOrPasswordModify(UserModel user) {
+	public boolean emailModify(UserModel user) {
 
 		UserModel userUpdate = getUserByEmail();
 		if (!userUpdate.getEmail().equals(user.getEmail())) {
 			return true;
 		}
-		String t = userUpdate.getPassword();
-		String u = passwordEncoder.encode(user.getPassword());
-		String v = user.getPassword();
-		if (!userUpdate.getPassword().equals(passwordEncoder.encode(user.getPassword()))) {
-			return true;
-		}
 		return false;
 	}
+
 }

@@ -37,7 +37,7 @@ public class BankingOperationController {
 		}
 		BankingOperationAddMoneyModel bankingOperationAddMoney = new BankingOperationAddMoneyModel();
 		bankingOperationAddMoney.setMoney(10);
-		bankingOperationAddMoney.setBalance(accountService.balance(userService.getUserEmailSession()));
+		bankingOperationAddMoney.setBalance(accountService.balance());
 		model.addAttribute("bankingOperationAddMoney", bankingOperationAddMoney);
 		return "/bankingOperation/bankingOperation_add_money";
 	}
@@ -59,7 +59,7 @@ public class BankingOperationController {
 		}
 		BankingOperationSendMoneyModel bankingOperationSendMoney = new BankingOperationSendMoneyModel();
 		bankingOperationSendMoney.setMoney(10);
-		bankingOperationSendMoney.setBalance(accountService.balance(userService.getUserEmailSession()));
+		bankingOperationSendMoney.setBalance(accountService.balance());
 		model.addAttribute("bankingOperationSendMoney", bankingOperationSendMoney);
 		return "/bankingOperation/bankingOperation_send_money";
 	}
@@ -68,7 +68,7 @@ public class BankingOperationController {
 	public String saveBankingOperationSendMoney(
 			@ModelAttribute("bankingOperationSendMoney") BankingOperationSendMoneyModel bankingOperationSendMoney) {
 
-		if (bankingOperationSendMoney.getMoney() > accountService.balance(userService.getUserEmailSession())) {
+		if (bankingOperationSendMoney.getMoney() > accountService.balance()) {
 			return "/bankingOperation/bankingOperation_not_enough_money";
 		}
 
@@ -80,7 +80,7 @@ public class BankingOperationController {
 			return "/bankingOperation/bankingOperation_buddy_no_account";
 		}
 
-		accountService.delMoney(bankingOperationSendMoney.getMoney(), userService.getUserEmailSession());
+		accountService.delMoney(bankingOperationSendMoney.getMoney());
 		accountService.addMoney(bankingOperationSendMoney.getMoney(), bankingOperationSendMoney.getBuddy());
 
 		BankingOperationModel sendBankingOperation = new BankingOperationModel();

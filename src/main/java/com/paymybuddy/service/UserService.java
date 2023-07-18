@@ -39,5 +39,6 @@ public interface UserService {
 
 	public void updateSomeParameters(UserModel user) throws Exception;
 
-	public boolean emailOrPasswordModify(UserModel user);
+	public boolean emailModify(UserModel user);
+
 }
