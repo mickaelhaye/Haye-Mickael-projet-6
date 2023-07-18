@@ -103,4 +103,29 @@ public class UserController {
 		return "redirect:/user/user_del_buddy";
 	}
 
+	@GetMapping("/user/user_update")
+	public String userUpdate(Model model) {
+
+		// create user object to hold user form data
+		model.addAttribute("user", userService.getUserByEmail());
+		return "/user/user_update";
+	}
+
+	@PostMapping("/user_update")
+	public String userUpdateUpdate(@ModelAttribute("user") UserModel user) {
+		boolean EmailOrPasswordModify = false;
+		try {
+			EmailOrPasswordModify = userService.emailOrPasswordModify(user);
+			userService.updateSomeParameters(user);
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			return "/user/user_already_exist_update";
+		}
+		if (!EmailOrPasswordModify) {
+			return "/user/user_update_successfull";
+		}
+		return "/user/user_update_successfull_logout";
+	}
+
 }

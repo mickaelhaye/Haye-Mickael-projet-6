@@ -48,6 +48,13 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	public UserModel getUserByEmail() {
+		Optional<UserModel> optUser = userRepository.findByEmail(getUserEmailSession());
+		UserModel user = optUser.get();
+		return user;
+	}
+
+	@Override
 	public UserModel addUser(UserModel user) throws Exception {
 		if (emailExists(user.getEmail())) {
 			throw new Exception("There is an account with that email address: " + user.getEmail());
@@ -148,5 +155,39 @@ public class UserServiceImpl implements UserService {
 		Optional<UserModel> OptUser = userRepository.findByEmail(userEmail);
 		UserModel user = OptUser.get();
 		return user.getUsers();
+	}
+
+	@Override
+	public void updateSomeParameters(UserModel user) throws Exception {
+
+		UserModel userUpdate = getUserByEmail();
+		if (!userUpdate.getEmail().equals(user.getEmail())) {
+			if (emailExists(user.getEmail())) {
+				throw new Exception("There is an account with that email address: " + user.getEmail());
+			}
+		}
+		userUpdate.setName(user.getName());
+		userUpdate.setFirstname(user.getFirstname());
+		userUpdate.setEmail(user.getEmail());
+		userUpdate.setBirthdate(user.getBirthdate());
+		userUpdate.setAddress(user.getAddress());
+		userUpdate.setPassword(passwordEncoder.encode(user.getPassword()));
+		updateUser(userUpdate);
+	}
+
+	@Override
+	public boolean emailOrPasswordModify(UserModel user) {
+
+		UserModel userUpdate = getUserByEmail();
+		if (!userUpdate.getEmail().equals(user.getEmail())) {
+			return true;
+		}
+		String t = userUpdate.getPassword();
+		String u = passwordEncoder.encode(user.getPassword());
+		String v = user.getPassword();
+		if (!userUpdate.getPassword().equals(passwordEncoder.encode(user.getPassword()))) {
+			return true;
+		}
+		return false;
 	}
 }

@@ -34,4 +34,10 @@ public interface UserService {
 	public String getUserEmailSession();
 
 	public void setUserEmailSession(String userEmailSession);
+
+	public UserModel getUserByEmail();
+
+	public void updateSomeParameters(UserModel user) throws Exception;
+
+	public boolean emailOrPasswordModify(UserModel user);
 }
