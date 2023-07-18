@@ -129,4 +129,16 @@ public class UserController {
 		return "/user/user_update_successfull_logout";
 	}
 
+	@GetMapping("/user/user_del_user")
+	public String userDelUser(Model model) {
+		model.addAttribute("users", userService.getUsers());
+		return "/user/user_del_buddy";
+	}
+
+	@GetMapping("/user/user_del_user/delete/{email}")
+	public String userDelUserDelete(@PathVariable String email) {
+		userService.delUserByEmail(email);
+		return "redirect:/user/user_del_user";
+	}
+
 }

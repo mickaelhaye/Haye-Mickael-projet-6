@@ -40,6 +40,8 @@ public class SecurityConfiguration {
                                 .requestMatchers("/user/user_add_buddy").authenticated()
                                 .requestMatchers("/user/user_del_buddy").authenticated()
                                 .requestMatchers("/user/user_del_buddy/delete/{email}").authenticated()
+                                .requestMatchers("/user/user_del_user").authenticated()
+                                .requestMatchers("/user/user_del_user/delete/{email}").authenticated()
                                 .requestMatchers("/user/user_update").authenticated()
                                 .requestMatchers("/user_update").authenticated()
                                 .requestMatchers("/buddys").authenticated()

@@ -55,6 +55,13 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	public void delUserByEmail(String email) {
+		Optional<UserModel> optUser = userRepository.findByEmail(email);
+		UserModel user = optUser.get();
+		delUser(user);
+	}
+
+	@Override
 	public UserModel addUser(UserModel user) throws Exception {
 		if (emailExists(user.getEmail())) {
 			throw new Exception("There is an account with that email address: " + user.getEmail());

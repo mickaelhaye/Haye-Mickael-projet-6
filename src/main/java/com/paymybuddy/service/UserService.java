@@ -41,4 +41,6 @@ public interface UserService {
 
 	public boolean emailModify(UserModel user);
 
+	public void delUserByEmail(String email);
+
 }

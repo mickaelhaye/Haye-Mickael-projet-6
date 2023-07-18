@@ -4,7 +4,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>user_del_user</title>
+	<title>user_del_buddy</title>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
 		integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 </head>
@@ -25,25 +25,29 @@
 
 		<div class="col text-center mt-2">
 			<h2 class="text-white bg-success bg-opacity-50 bg-gradient border rounded-3  text-center d-inline">
-				Delete User</h1>
+				Delete buddy</h1>
 		</div>
 
 		<div class="container">
 			<div class="row mt-4">
-				<h1 class=" text-white"> List Users </h1>
+				<h1 class=" text-white"> List Buddys </h1>
 			</div>
 			<table class="table table-striped table-bordered">
 				<thead >
 					<tr>
-						<th> User email</th>
+						<th> Buddy name</th>
+						<th> Buddy firstname</th>
+						<th> Buddy email</th>
 						<th> Actions</th>
 					</tr>
 				</thead> 
 				<tbody>
-					<tr th:each="user:${users}">
-						<td th:text ="${user.email}"></td>
+					<tr th:each="buddy:${buddys}">
+						<td th:text ="${buddy.name}"></td>
+						<td th:text ="${buddy.firstname}"></td>
+						<td th:text ="${buddy.email}"></td>
 						<td>
-							<a th:href = "@{/user/user_del_user/delete/{email}(email=${user.email})}"
+							<a th:href = "@{/user/user_del_buddy/delete/{email}(email=${buddy.email})}"
 							class="btn btn-danger">Delete</a>
 						</td>
 						
