@@ -31,6 +31,7 @@ public class SecurityConfiguration {
                                 .requestMatchers("/account/*").authenticated()
                                 .requestMatchers("/bankingOperation/*").authenticated()
                                 .requestMatchers("/user/*").authenticated()
+                                .requestMatchers("/account/account_del_account/delete/{name}").authenticated()
                                 .requestMatchers("/user/user_del_buddy/delete/{email}").authenticated()
                                 .requestMatchers("/user/admin/user_del_user/delete/{email}").authenticated()
                                 
