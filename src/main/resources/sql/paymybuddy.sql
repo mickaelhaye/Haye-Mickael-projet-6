@@ -24,11 +24,13 @@ DROP TABLE IF EXISTS `account`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `account` (
   `account_id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) NOT NULL,
-  `balance` int NOT NULL,
-  `user_id` int NOT NULL,
-  PRIMARY KEY (`account_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `balance` float DEFAULT NULL,
+  `account_name` varchar(255) DEFAULT NULL,
+  `user_id2` int DEFAULT NULL,
+  PRIMARY KEY (`account_id`),
+  KEY `FKsu21wnlwg0jsojk1lhrm60qu7` (`user_id2`),
+  CONSTRAINT `FKsu21wnlwg0jsojk1lhrm60qu7` FOREIGN KEY (`user_id2`) REFERENCES `user` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -48,8 +50,12 @@ DROP TABLE IF EXISTS `account_banking_operation`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `account_banking_operation` (
-  `account_id` int NOT NULL,
-  `banking_operation_id` int NOT NULL
+  `account_id2` int NOT NULL,
+  `banking_operation_id2` int NOT NULL,
+  KEY `FKa0f8wgdqcf2925gxbhrb8tr7h` (`banking_operation_id2`),
+  KEY `FK83ux42em5r35lhqwdq6hk02yf` (`account_id2`),
+  CONSTRAINT `FK83ux42em5r35lhqwdq6hk02yf` FOREIGN KEY (`account_id2`) REFERENCES `account` (`account_id`),
+  CONSTRAINT `FKa0f8wgdqcf2925gxbhrb8tr7h` FOREIGN KEY (`banking_operation_id2`) REFERENCES `banking_operation` (`banking_operation_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -71,13 +77,13 @@ DROP TABLE IF EXISTS `banking_operation`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `banking_operation` (
   `banking_operation_id` int NOT NULL AUTO_INCREMENT,
-  `date` varchar(10) NOT NULL,
-  `hour` varchar(8) NOT NULL,
-  `amount` int NOT NULL,
-  `description` varchar(500) NOT NULL,
-  `type_transaction` varchar(100) NOT NULL,
+  `amount` float DEFAULT NULL,
+  `date` varchar(255) DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `hour` varchar(255) DEFAULT NULL,
+  `type_transaction` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`banking_operation_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -98,15 +104,15 @@ DROP TABLE IF EXISTS `user`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user` (
   `user_id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) NOT NULL,
-  `firstname` varchar(50) NOT NULL,
-  `birthdate` varchar(10) NOT NULL,
-  `address` varchar(100) NOT NULL,
-  `password` varchar(100) NOT NULL,
-  `role` varchar(10) NOT NULL,
-  `email` varchar(100) NOT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `birthdate` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `firstname` varchar(255) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `role` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=73 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -115,7 +121,6 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (68,'essais','','','','$2a$10$OSYJEeuHMFy8Jl.SMY8fb.NT8XC3q8Xe25ImiCNhDgoe1k31oXbvy','user','a@a'),(69,'qzesrfz','','','','$2a$10$JF.ssbfgsujHPCfg4Fbonuqnhi7/vdGpll2r1nx8oIhWky/0Fs0ka','user','b@b'),(70,'frrr','','','','$2a$10$ocbMMsapDH2ngCrEeduid.HWVroBLbg0XXktNIzUVu0YcPEHxSIjW','user','c@c'),(71,'zeaze','','','','$2a$10$WdEJ.ARPT4RVdY5kE8ZH2OLrJ5n.JYb4RaacmpauwqDAznPlLwuNu','user','d@d'),(72,'rezt','','','','$2a$10$CsdllKdN8NIiiOIT00YLoevrwt/X23Mjy6EXSVv9Xdb5WxEv.ESoe','user','m@m');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -128,7 +133,11 @@ DROP TABLE IF EXISTS `user_user`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user_user` (
   `user_id` int NOT NULL,
-  `user2_id` int NOT NULL
+  `user2_id` int NOT NULL,
+  KEY `FKe3eh4miqtjbv5p7o8opvq3but` (`user2_id`),
+  KEY `FKewu8a78thkqv37l3ww3e94oqv` (`user_id`),
+  CONSTRAINT `FKe3eh4miqtjbv5p7o8opvq3but` FOREIGN KEY (`user2_id`) REFERENCES `user` (`user_id`),
+  CONSTRAINT `FKewu8a78thkqv37l3ww3e94oqv` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -150,4 +159,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-07-07 16:26:16
+-- Dump completed on 2023-07-19  8:55:49
