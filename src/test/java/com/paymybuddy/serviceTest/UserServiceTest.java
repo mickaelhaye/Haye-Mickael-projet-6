@@ -143,19 +143,6 @@ class UserServiceTest {
 	}
 
 	@Test
-	void emailModifyTest() {
-		userService.setUserEmailSession("John.boyd@gmail.com");
-		UserModel user = new UserModel();
-		user.setEmail("John@gmail.fr");
-		userService.emailModify(user);
-		assertTrue(userService.emailModify(user));
-		user.setEmail("John.boyd@gmail.com");
-		userService.emailModify(user);
-		assertFalse(userService.emailModify(user));
-
-	}
-
-	@Test
 	void buddyExistsTest() {
 		userService.setUserEmailSession("John.boyd@gmail.com");
 		assertTrue(userService.buddyExists("lily.cooper@hotmail.fr", "John.boyd@gmail.com"));

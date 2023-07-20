@@ -39,8 +39,6 @@ public interface UserService {
 
 	public void updateSomeParameters(UserModel user) throws Exception;
 
-	public boolean emailModify(UserModel user);
-
 	public void delUserByEmail(String email);
 
 }

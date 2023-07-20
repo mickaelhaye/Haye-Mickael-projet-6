@@ -168,27 +168,12 @@ public class UserServiceImpl implements UserService {
 	public void updateSomeParameters(UserModel user) throws Exception {
 
 		UserModel userUpdate = getUserByEmail();
-		if (!userUpdate.getEmail().equals(user.getEmail())) {
-			if (emailExists(user.getEmail())) {
-				throw new Exception("There is an account with that email address: " + user.getEmail());
-			}
-		}
+
 		userUpdate.setName(user.getName());
 		userUpdate.setFirstname(user.getFirstname());
-		userUpdate.setEmail(user.getEmail());
 		userUpdate.setBirthdate(user.getBirthdate());
 		userUpdate.setAddress(user.getAddress());
 		updateUser(userUpdate);
-	}
-
-	@Override
-	public boolean emailModify(UserModel user) {
-
-		UserModel userUpdate = getUserByEmail();
-		if (!userUpdate.getEmail().equals(user.getEmail())) {
-			return true;
-		}
-		return false;
 	}
 
 }
