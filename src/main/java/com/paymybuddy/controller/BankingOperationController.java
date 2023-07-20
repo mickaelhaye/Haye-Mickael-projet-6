@@ -93,7 +93,7 @@ public class BankingOperationController {
 	}
 
 	@GetMapping("/bankingOperation/bankingOperation_history")
-	public String accountDel(Model model) {
+	public String bankingOperationHistory(Model model) {
 		if (!accountService.userHaveAccount(userService.getUserEmailSession())) {
 			return "/bankingOperation/bankingOperation_account_not_created";
 		}
