@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.33, for Linux (x86_64)
 --
--- Host: localhost    Database: pay_my_buddy
+-- Host: localhost    Database: pay_my_buddy_test
 -- ------------------------------------------------------
 -- Server version	8.0.33-0ubuntu0.22.04.2
 
@@ -115,7 +115,7 @@ CREATE TABLE `user` (
   `password` varchar(255) DEFAULT NULL,
   `role` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -124,7 +124,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'39 rue de bel air, 49300 Cholet','1990-05-29','John.boyd@gmail.com','John','Boyd','$2a$10$tSl/CREV0RkvrlXl77xyuuXFXzHa8rzuTco3Gp9Rr6n1sUVkjYzeC','USER'),(2,'19 squere de begrolles,49300 cholet','1983-05-02','lily.cooper@hotmail.fr','Lily','Cooper','$2a$10$OgKoPd7jlXXR/c680sPaHujE7NUtusAfIYWe6ztmak53n5u6IiODC','USER');
+INSERT INTO `user` VALUES (1,'39 rue de bel air, 49300 Cholet','1990-05-29','John.boyd@gmail.com','John','Boyd','$2a$10$tSl/CREV0RkvrlXl77xyuuXFXzHa8rzuTco3Gp9Rr6n1sUVkjYzeC','USER'),(2,'19 squere de begrolles,49300 cholet','1983-05-02','lily.cooper@hotmail.fr','Lily','Cooper','$2a$10$OgKoPd7jlXXR/c680sPaHujE7NUtusAfIYWe6ztmak53n5u6IiODC','USER'),(6,'','2021-05-04','UserWithoutCount@gmail.com','','UserWithoutCount','$2a$10$UfhLJ.q9yGsnYKYz6bgvRuSp5t5XA3B5D7OudxVBiwsIYQlgwxj1C','USER');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -164,4 +164,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-07-19  9:16:33
+-- Dump completed on 2023-07-19 11:24:16
