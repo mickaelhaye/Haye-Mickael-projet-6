@@ -1,7 +1,9 @@
 package com.paymybuddy.serviceTest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 import java.util.Optional;
@@ -146,18 +148,18 @@ class UserServiceTest {
 		UserModel user = new UserModel();
 		user.setEmail("John@gmail.fr");
 		userService.emailModify(user);
-		assertEquals(true, userService.emailModify(user));
+		assertTrue(userService.emailModify(user));
 		user.setEmail("John.boyd@gmail.com");
 		userService.emailModify(user);
-		assertEquals(false, userService.emailModify(user));
+		assertFalse(userService.emailModify(user));
 
 	}
 
 	@Test
 	void buddyExistsTest() {
 		userService.setUserEmailSession("John.boyd@gmail.com");
-		assertEquals(true, userService.buddyExists("lily.cooper@hotmail.fr", "John.boyd@gmail.com"));
-		assertEquals(false, userService.buddyExists("John@gmail.fr", "John.boyd@gmail.com"));
+		assertTrue(userService.buddyExists("lily.cooper@hotmail.fr", "John.boyd@gmail.com"));
+		assertFalse(userService.buddyExists("John@gmail.fr", "John.boyd@gmail.com"));
 	}
 
 	@Test
