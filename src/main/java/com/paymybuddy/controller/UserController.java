@@ -63,7 +63,7 @@ public class UserController {
 	}
 
 	@GetMapping("/user/user_add_buddy")
-	public String userAddBody(Model model) {
+	public String userAddBuddy(Model model) {
 		// add buddy
 		UserAddBuddyModel userAddBuddy = new UserAddBuddyModel();
 		model.addAttribute("userAddBuddy", userAddBuddy);
@@ -114,19 +114,16 @@ public class UserController {
 
 	@PostMapping("/user/user_update_update")
 	public String userUpdateUpdate(@ModelAttribute("user") UserModel user) {
-		boolean EmailModify = false;
-		try {
-			EmailModify = userService.emailModify(user);
-			userService.updateSomeParameters(user);
-		} catch (Exception e) {
 
+		try {
+			userService.updateSomeParameters(user);
+		} catch (
+
+		Exception e) {
 			e.printStackTrace();
 			return "/user/user_already_exist_update";
 		}
-		if (!EmailModify) {
-			return "/user/user_update_successfull";
-		}
-		return "/user/user_update_successfull_logout";
+		return "/user/user_update_successfull";
 	}
 
 	@GetMapping("/user/admin/user_del_user")
