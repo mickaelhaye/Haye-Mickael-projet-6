@@ -36,6 +36,10 @@ public class UserController {
 		HomepageModel homepage = new HomepageModel();
 		homepage.setUserEmailSession("user :" + userService.getUserEmailSession());
 		model.addAttribute("homepage", homepage);
+
+		if (userService.getRoleOfUserSessionIsAdmin()) {
+			return "/homepageAdmin";
+		}
 		return "/homepage";
 	}
 

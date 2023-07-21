@@ -176,4 +176,12 @@ public class UserServiceImpl implements UserService {
 		updateUser(userUpdate);
 	}
 
+	@Override
+	public boolean getRoleOfUserSessionIsAdmin() {
+		UserModel user = getUserByEmail();
+		if (user.getRole().equals("ROLE_ADMIN")) {
+			return true;
+		}
+		return false;
+	}
 }

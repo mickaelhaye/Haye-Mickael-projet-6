@@ -41,4 +41,6 @@ public interface UserService {
 
 	public void delUserByEmail(String email);
 
+	public boolean getRoleOfUserSessionIsAdmin();
+
 }
