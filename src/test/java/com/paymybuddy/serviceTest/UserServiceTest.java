@@ -61,6 +61,22 @@ class UserServiceTest {
 	}
 
 	@Test
+	void addUserAlreadyExistTest() {
+		List<UserModel> users = (List<UserModel>) userService.getUsers();
+		int usersCount = users.size();
+		UserModel user = new UserModel();
+		user.setEmail("John.boyd@gmail.com");
+		user.setPassword("11");
+		try {
+			userService.addUser(user);
+		} catch (Exception e) {
+			List<UserModel> usersNew = (List<UserModel>) userService.getUsers();
+			int usersNewCount = usersNew.size();
+			assertEquals(usersCount, usersNewCount);
+		}
+	}
+
+	@Test
 	void addAndDelBuddyTest() {
 		List<UserModel> buddyCount = userService.buddyListfromUser("John.boyd@gmail.com");
 		int buddysCount = buddyCount.size();
