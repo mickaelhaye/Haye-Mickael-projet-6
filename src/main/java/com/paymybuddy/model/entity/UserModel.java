@@ -59,7 +59,7 @@ public class UserModel implements UserDetails {
 	private String password;
 
 	@Column(name = "role")
-	private String role = "USER";
+	private String role = "ROLE_USER";
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinTable(name = "user_user", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "user2_id"))

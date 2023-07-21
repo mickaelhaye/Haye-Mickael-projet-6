@@ -22,7 +22,7 @@ public class SecurityConfiguration {
         http
                 .authorizeHttpRequests((authorizeHttpRequests) ->
                         authorizeHttpRequests
-                        .requestMatchers("/user/admin/*").authenticated()
+                        .requestMatchers("/user/admin/*").hasRole("ADMIN")
                         		.requestMatchers("/paymybuddy").permitAll()
                                 .requestMatchers("/user/user_create").permitAll()
                                 .requestMatchers("/user/users").permitAll()
