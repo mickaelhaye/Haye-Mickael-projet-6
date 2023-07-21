@@ -165,7 +165,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void updateSomeParameters(UserModel user) throws Exception {
+	public void updateSomeParameters(UserModel user) {
 
 		UserModel userUpdate = getUserByEmail();
 

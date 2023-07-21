@@ -75,7 +75,7 @@ public class UserController {
 	}
 
 	@PostMapping("/user/buddys")
-	public String saveUser(@ModelAttribute("recupValue") UserAddBuddyModel userAddBuddy) {
+	public String saveBuddy(@ModelAttribute("recupValue") UserAddBuddyModel userAddBuddy) {
 
 		if (!userService.emailExists(userAddBuddy.getBudddyEmail())) {
 			return "user/user_buddy_no_exist";
@@ -118,15 +118,7 @@ public class UserController {
 
 	@PostMapping("/user/user_update_update")
 	public String userUpdateUpdate(@ModelAttribute("user") UserModel user) {
-
-		try {
-			userService.updateSomeParameters(user);
-		} catch (
-
-		Exception e) {
-			e.printStackTrace();
-			return "/user/user_already_exist_update";
-		}
+		userService.updateSomeParameters(user);
 		return "/user/user_update_successfull";
 	}
 

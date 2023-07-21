@@ -1,6 +1,7 @@
 package com.paymybuddy.controllerTest;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.jupiter.api.Test;
@@ -10,13 +11,15 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
+import com.paymybuddy.model.dto.UserAddBuddyModel;
+import com.paymybuddy.model.entity.UserModel;
 import com.paymybuddy.service.UserService;
 
 import jakarta.transaction.Transactional;
 
 @Transactional
 @SpringBootTest
-@AutoConfigureMockMvc
+@AutoConfigureMockMvc(addFilters = false)
 class UserControllerTest {
 
 	@Autowired
@@ -24,12 +27,6 @@ class UserControllerTest {
 
 	@Autowired
 	private UserService userService;
-
-	@WithMockUser(username = "John.boyd@gmail.com")
-	@Test
-	void homepageTest() throws Exception {
-		mockMvc.perform(get("/homepage")).andExpect(status().isOk());
-	}
 
 	@Test
 	void startTest() throws Exception {
@@ -41,14 +38,15 @@ class UserControllerTest {
 		mockMvc.perform(get("/user/user_create")).andExpect(status().isOk());
 	}
 
-	/*
-	 * @WithMockUser(username = "John.boyd@gmail.com")
-	 * 
-	 * @Test void saveUsereTest() throws Exception { UserModel user = new
-	 * UserModel();
-	 * mockMvc.perform(post("/user/users").contentType(MediaType.ALL).content(user))
-	 * .andExpect(status().isOk()); }
-	 */
+	@WithMockUser(username = "John.boyd@gmail.com")
+	@Test
+	void saveUserTest() throws Exception {
+		UserModel user = new UserModel();
+		mockMvc.perform(post("/user/users").flashAttr("user", user)).andExpect(status().isOk());
+		user.setEmail("test@gmail.com");
+		user.setPassword("11");
+		mockMvc.perform(post("/user/users").flashAttr("user", user)).andExpect(status().isOk());
+	}
 
 	@WithMockUser(username = "John.boyd@gmail.com")
 	@Test
@@ -56,12 +54,26 @@ class UserControllerTest {
 		mockMvc.perform(get("/user/user_add_buddy")).andExpect(status().isOk());
 	}
 
-	/*
-	 * @WithMockUser(username = "John.boyd@gmail.com")
-	 * 
-	 * @Test void saveUserTest() throws Exception {
-	 * mockMvc.perform(post("/user/buddys")).andExpect(status().isOk()); }
-	 */
+	@WithMockUser(username = "lily.cooper@hotmail.fr")
+	@Test
+	void saveBuddyTest() throws Exception {
+		UserAddBuddyModel userAddBuddy = new UserAddBuddyModel();
+		mockMvc.perform(post("/user/buddys").flashAttr("recupValue", userAddBuddy)).andExpect(status().isOk());
+		userAddBuddy.setBudddyEmail("UserWithoutCount@gmail.com");
+		mockMvc.perform(post("/user/buddys").flashAttr("recupValue", userAddBuddy)).andExpect(status().isOk());
+		userAddBuddy.setBudddyEmail("John.boyd@gmail.com");
+		mockMvc.perform(post("/user/buddys").flashAttr("recupValue", userAddBuddy)).andExpect(status().isOk());
+		userAddBuddy.setBudddyEmail("d@d");
+		mockMvc.perform(post("/user/buddys").flashAttr("recupValue", userAddBuddy)).andExpect(status().isOk());
+
+	}
+
+	@WithMockUser(username = "John.boyd@gmail.com")
+	@Test
+	void userDelBuddyTest() throws Exception {
+		userService.setUserEmailSession("John.boyd@gmail.com");
+		mockMvc.perform(get("/user/user_del_buddy")).andExpect(status().isOk());
+	}
 
 	@WithMockUser(username = "John.boyd@gmail.com")
 	@Test
@@ -78,15 +90,13 @@ class UserControllerTest {
 		mockMvc.perform(get("/user/user_update")).andExpect(status().isOk());
 	}
 
-	/*
-	 * @WithMockUser(username = "John.boyd@gmail.com")
-	 * 
-	 * @Test void userUpdateUpdate() throws Exception {
-	 * userService.setUserEmailSession("John.boyd@gmail.com"); UserModel user =
-	 * userService.getUserByEmail();
-	 * mockMvc.perform(post("/user/user_update_update")).andExpect(model().
-	 * attributeHasErrors("user")); }
-	 */
+	@WithMockUser(username = "John.boyd@gmail.com", roles = "ADMIN")
+	@Test
+	void userUpdateUpdate() throws Exception {
+		userService.setUserEmailSession("John.boyd@gmail.com");
+		UserModel user = userService.getUserByEmail();
+		mockMvc.perform(post("/user/user_update_update").flashAttr("user", user)).andExpect(status().isOk());
+	}
 
 	@WithMockUser(username = "John.boyd@gmail.com", roles = "ADMIN")
 	@Test

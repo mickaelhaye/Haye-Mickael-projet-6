@@ -37,7 +37,7 @@ public interface UserService {
 
 	public UserModel getUserByEmail();
 
-	public void updateSomeParameters(UserModel user) throws Exception;
+	public void updateSomeParameters(UserModel user);
 
 	public void delUserByEmail(String email);
 
