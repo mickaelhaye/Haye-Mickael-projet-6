@@ -30,7 +30,7 @@ CREATE TABLE `account` (
   PRIMARY KEY (`account_id`),
   KEY `FKsu21wnlwg0jsojk1lhrm60qu7` (`user_id2`),
   CONSTRAINT `FKsu21wnlwg0jsojk1lhrm60qu7` FOREIGN KEY (`user_id2`) REFERENCES `user` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=106 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,7 +39,7 @@ CREATE TABLE `account` (
 
 LOCK TABLES `account` WRITE;
 /*!40000 ALTER TABLE `account` DISABLE KEYS */;
-INSERT INTO `account` VALUES (1,5200,'moncomptelily',2),(3,300,'mon compte John',1);
+INSERT INTO `account` VALUES (1,5200,'moncomptelily',2),(3,300,'mon compte John',1),(54,0,'d',55);
 /*!40000 ALTER TABLE `account` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -85,7 +85,7 @@ CREATE TABLE `banking_operation` (
   `hour` varchar(255) DEFAULT NULL,
   `type_transaction` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`banking_operation_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=144 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -115,7 +115,7 @@ CREATE TABLE `user` (
   `password` varchar(255) DEFAULT NULL,
   `role` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=93 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -124,7 +124,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'39 rue de bel air, 49300 Cholet','1990-05-29','John.boyd@gmail.com','John','Boyd','$2a$10$tSl/CREV0RkvrlXl77xyuuXFXzHa8rzuTco3Gp9Rr6n1sUVkjYzeC','ROLE_ADMIN'),(2,'19 squere de begrolles,49300 cholet','1983-05-02','lily.cooper@hotmail.fr','Lily','Cooper','$2a$10$OgKoPd7jlXXR/c680sPaHujE7NUtusAfIYWe6ztmak53n5u6IiODC','ROLE_USER'),(6,'','2021-05-04','UserWithoutCount@gmail.com','','UserWithoutCount','$2a$10$UfhLJ.q9yGsnYKYz6bgvRuSp5t5XA3B5D7OudxVBiwsIYQlgwxj1C','ROLE_USER');
+INSERT INTO `user` VALUES (1,'39 rue de bel air, 49300 Cholet','1990-05-29','John.boyd@gmail.com','John','Boyd','$2a$10$tSl/CREV0RkvrlXl77xyuuXFXzHa8rzuTco3Gp9Rr6n1sUVkjYzeC','ROLE_ADMIN'),(2,'19 squere de begrolles,49300 cholet','1983-05-02','lily.cooper@hotmail.fr','Lily','Cooper','$2a$10$OgKoPd7jlXXR/c680sPaHujE7NUtusAfIYWe6ztmak53n5u6IiODC','ROLE_USER'),(6,'','2021-05-04','UserWithoutCount@gmail.com','','UserWithoutCount','$2a$10$UfhLJ.q9yGsnYKYz6bgvRuSp5t5XA3B5D7OudxVBiwsIYQlgwxj1C','ROLE_USER'),(55,'','','d@d','','d','$2a$10$xFX1EqBbUQvkLq42xP/jGeVtbU13JrZhYjtojA27V2lU3RnNmMxPy','ROLE_USER'),(76,'','','a@a','','a','$2a$10$IUXxsPejZvnJ9o6zdgNyD.9/nOS3r2x30IGM7O/sWaMXWAHUBuBVC','ROLE_USER');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -151,7 +151,7 @@ CREATE TABLE `user_user` (
 
 LOCK TABLES `user_user` WRITE;
 /*!40000 ALTER TABLE `user_user` DISABLE KEYS */;
-INSERT INTO `user_user` VALUES (1,2);
+INSERT INTO `user_user` VALUES (1,2),(1,76);
 /*!40000 ALTER TABLE `user_user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -164,4 +164,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-07-21 11:57:13
+-- Dump completed on 2023-07-21 15:58:01
