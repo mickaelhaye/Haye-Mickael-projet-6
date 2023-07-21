@@ -88,7 +88,7 @@ class UserControllerTest {
 	 * attributeHasErrors("user")); }
 	 */
 
-	@WithMockUser(username = "John.boyd@gmail.com")
+	@WithMockUser(username = "John.boyd@gmail.com", roles = "ADMIN")
 	@Test
 	void userDelUserTest() throws Exception {
 		userService.setUserEmailSession("John.boyd@gmail.com");
