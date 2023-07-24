@@ -71,6 +71,18 @@ public class UserServiceImpl<Objet> implements UserService {
 	public void delUserByEmail(String email) {
 		Optional<UserModel> optUser = userRepository.findByEmail(email);
 		UserModel user = optUser.get();
+		List<UserModel> usersList = (List<UserModel>) getUsers();
+
+		// Suppression de l'utilisateur de la liste des amis des autres utilisateurs
+		for (UserModel userTest : usersList) {
+			for (UserModel userBuddyTest : userTest.getUsers()) {
+				if (user.getEmail().equals(userBuddyTest.getEmail())) {
+					userTest.removeBuddyToUserList(userBuddyTest);
+					break;
+				}
+			}
+		}
+
 		delUser(user);
 	}
 
@@ -211,6 +223,8 @@ public class UserServiceImpl<Objet> implements UserService {
 				if (!emailExists(email)) {
 					UserModel user = new UserModel();
 					user.setEmail(email);
+					user.setName((String) mapTest.get("family_name"));
+
 					try {
 						updateUser(user);
 
