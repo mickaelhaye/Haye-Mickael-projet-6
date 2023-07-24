@@ -37,6 +37,8 @@ public interface UserService {
 
 	public void setUserEmailSession(Authentication authentification);
 
+	public void setUserEmailSession(String email);
+
 	public UserModel getUserByEmail();
 
 	public void updateSomeParameters(UserModel user);

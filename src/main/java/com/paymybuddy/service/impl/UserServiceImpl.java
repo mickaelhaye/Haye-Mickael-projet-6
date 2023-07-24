@@ -46,6 +46,11 @@ public class UserServiceImpl<Objet> implements UserService {
 	}
 
 	@Override
+	public void setUserEmailSession(String email) {
+		UserEmailSession = email;
+	}
+
+	@Override
 	public Iterable<UserModel> getUsers() {
 		return userRepository.findAll();
 	}
