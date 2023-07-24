@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.paymybuddy.model.dto.HomepageModel;
 import com.paymybuddy.model.dto.UserAddBuddyModel;
+import com.paymybuddy.model.entity.AccountModel;
 import com.paymybuddy.model.entity.UserModel;
 import com.paymybuddy.service.AccountService;
 import com.paymybuddy.service.UserService;
@@ -56,6 +57,11 @@ public class UserController {
 	public String saveUser(@ModelAttribute("user") UserModel user) {
 		try {
 			userService.addUser(user);
+			// Create account by default
+			AccountModel account = new AccountModel();
+			account.setName("account of " + user.getEmail());
+			accountService.addAccountToUser(account, user.getEmail());
+
 		} catch (Exception e) {
 
 			e.printStackTrace();
