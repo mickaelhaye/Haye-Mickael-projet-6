@@ -15,6 +15,11 @@ import com.paymybuddy.model.entity.UserModel;
 import com.paymybuddy.repository.UserRepository;
 import com.paymybuddy.service.UserService;
 
+/**
+ * userService is the class to manage service for user entity
+ * 
+ * @author Mickael Hayé
+ */
 @Service
 public class UserServiceImpl<Objet> implements UserService {
 
@@ -26,11 +31,17 @@ public class UserServiceImpl<Objet> implements UserService {
 
 	private String UserEmailSession;
 
+	/**
+	 * recover the email of the session
+	 */
 	@Override
 	public String getUserEmailSession() {
 		return UserEmailSession;
 	}
 
+	/**
+	 * put the email of the session with the authentification
+	 */
 	@Override
 	public void setUserEmailSession(Authentication authentification) {
 		if (OAuth2AuthenticationToken.class.isInstance(authentification)) {
@@ -45,26 +56,41 @@ public class UserServiceImpl<Objet> implements UserService {
 		}
 	}
 
+	/**
+	 * put the email of the session with an email
+	 */
 	@Override
 	public void setUserEmailSession(String email) {
 		UserEmailSession = email;
 	}
 
+	/**
+	 * recovers all users
+	 */
 	@Override
 	public Iterable<UserModel> getUsers() {
 		return userRepository.findAll();
 	}
 
+	/**
+	 * recover user by id
+	 */
 	@Override
 	public Optional<UserModel> getUserById(Integer id) {
 		return userRepository.findById(id);
 	}
 
+	/**
+	 * recover user by an email
+	 */
 	@Override
 	public Optional<UserModel> getUserByEmail(String email) {
 		return userRepository.findByEmail(email);
 	}
 
+	/**
+	 * recover user by email session
+	 */
 	@Override
 	public UserModel getUserByEmail() {
 		Optional<UserModel> optUser = userRepository.findByEmail(getUserEmailSession());
@@ -72,13 +98,17 @@ public class UserServiceImpl<Objet> implements UserService {
 		return user;
 	}
 
+	/**
+	 * delete user by email
+	 */
 	@Override
 	public void delUserByEmail(String email) {
 		Optional<UserModel> optUser = userRepository.findByEmail(email);
 		UserModel user = optUser.get();
 		List<UserModel> usersList = (List<UserModel>) getUsers();
 
-		// Suppression de l'utilisateur de la liste des amis des autres utilisateurs
+		// Remove user from other users' buddy list
+
 		for (UserModel userTest : usersList) {
 			for (UserModel userBuddyTest : userTest.getUsers()) {
 				if (user.getEmail().equals(userBuddyTest.getEmail())) {
@@ -91,6 +121,9 @@ public class UserServiceImpl<Objet> implements UserService {
 		delUser(user);
 	}
 
+	/**
+	 * add an user
+	 */
 	@Override
 	public UserModel addUser(UserModel user) throws Exception {
 		if (emailExists(user.getEmail())) {
@@ -101,11 +134,17 @@ public class UserServiceImpl<Objet> implements UserService {
 
 	}
 
+	/**
+	 * update an user
+	 */
 	@Override
 	public UserModel updateUser(UserModel user) {
 		return userRepository.save(user);
 	}
 
+	/**
+	 * add buddy
+	 */
 	@Override
 	public void addBuddy(String buddyEmail, String userEmail) throws Exception {
 
@@ -136,6 +175,9 @@ public class UserServiceImpl<Objet> implements UserService {
 		}
 	}
 
+	/**
+	 * delete buddy
+	 */
 	@Override
 	public void delBuddy(String buddyEmail, String userEmail) {
 		Optional<UserModel> OptUser = userRepository.findByEmail(userEmail);
@@ -155,16 +197,25 @@ public class UserServiceImpl<Objet> implements UserService {
 		}
 	}
 
+	/**
+	 * to know if an user have already this email
+	 */
 	@Override
 	public boolean emailExists(String email) {
 		return userRepository.findByEmail(email).isPresent();
 	}
 
+	/**
+	 * delete user
+	 */
 	@Override
 	public void delUser(UserModel user) {
 		userRepository.delete(user);
 	}
 
+	/**
+	 * to know if a buddy exit with user objet
+	 */
 	@Override
 	public boolean buddyExists(String buddyEmail, UserModel user) {
 		for (UserModel userTest : user.getUsers()) {
@@ -175,6 +226,9 @@ public class UserServiceImpl<Objet> implements UserService {
 		return false;
 	}
 
+	/**
+	 * to know if a buddy exit with email
+	 */
 	@Override
 	public boolean buddyExists(String buddyEmail, String userEmail) {
 		Optional<UserModel> OptUser = userRepository.findByEmail(userEmail);
@@ -188,6 +242,9 @@ public class UserServiceImpl<Objet> implements UserService {
 		return false;
 	}
 
+	/**
+	 * to know if buddy is already in the list
+	 */
 	@Override
 	public List<UserModel> buddyListfromUser(String userEmail) {
 		Optional<UserModel> OptUser = userRepository.findByEmail(userEmail);
@@ -195,6 +252,9 @@ public class UserServiceImpl<Objet> implements UserService {
 		return user.getUsers();
 	}
 
+	/**
+	 * to update some parameters of an user
+	 */
 	@Override
 	public void updateSomeParameters(UserModel user) {
 
@@ -207,6 +267,9 @@ public class UserServiceImpl<Objet> implements UserService {
 		updateUser(userUpdate);
 	}
 
+	/**
+	 * to know if the role of the user is admin
+	 */
 	@Override
 	public boolean getRoleOfUserSessionIsAdmin() {
 		UserModel user = getUserByEmail();
@@ -216,6 +279,9 @@ public class UserServiceImpl<Objet> implements UserService {
 		return false;
 	}
 
+	/**
+	 * to create an user if the the new user is a google user
+	 */
 	@Override
 	public void createUserAuth2(Authentication authentification) {
 		if (OAuth2AuthenticationToken.class.isInstance(authentification)) {
@@ -244,6 +310,9 @@ public class UserServiceImpl<Objet> implements UserService {
 		}
 	}
 
+	/**
+	 * to know if it's a new google user
+	 */
 	@Override
 	public boolean NewuserTestOAuth2(Authentication authentification) {
 		if (OAuth2AuthenticationToken.class.isInstance(authentification)) {

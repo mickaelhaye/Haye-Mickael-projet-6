@@ -12,6 +12,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * bankingOperationModel is the class for the entity bankingOperation
+ * 
+ * @author Mickael Hayé
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

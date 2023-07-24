@@ -17,6 +17,12 @@ import com.paymybuddy.service.BankingOperationService;
 import com.paymybuddy.service.CalendarService;
 import com.paymybuddy.service.UserService;
 
+/**
+ * bankingOperationService is the class to manage service for bankingOperation
+ * entity
+ * 
+ * @author Mickael Hayé
+ */
 @Service
 public class BankingOperationServiceImpl implements BankingOperationService {
 
@@ -29,27 +35,42 @@ public class BankingOperationServiceImpl implements BankingOperationService {
 	@Autowired
 	private UserService userService;
 
+	/**
+	 * recovers all bankingOperations
+	 */
 	@Override
 	public Iterable<BankingOperationModel> getBankingOperations() {
 		return bankingOperationRepository.findAll();
 	}
 
+	/**
+	 * recovers bankingOperations by an id
+	 */
 	@Override
 	public Optional<BankingOperationModel> getBankingOperationById(Integer id) {
 		return bankingOperationRepository.findById(id);
 	}
 
+	/**
+	 * add an banking operation
+	 */
 	@Override
 	public BankingOperationModel addBankingOperation(BankingOperationModel bankingOperation) {
 		return bankingOperationRepository.save(bankingOperation);
 	}
 
+	/**
+	 * delete a banking operation
+	 */
 	@Override
 	public void delBankingOperation(BankingOperationModel bankingOperation) {
 		bankingOperationRepository.delete(bankingOperation);
 
 	}
 
+	/**
+	 * ada a banking operation to an account
+	 */
 	@Override
 	public void addBankingOperationToAccount(BankingOperationModel bankingOperation, float amount, String description,
 			String userBuddy, String userEmail, String typeTransation) {
@@ -81,6 +102,9 @@ public class BankingOperationServiceImpl implements BankingOperationService {
 		}
 	}
 
+	/**
+	 * banking operation list from an account
+	 */
 	@Override
 	public List<BankingOperationModel> bankingOperationListfromUser(String userEmail) {
 		Optional<UserModel> OptUser = userService.getUserByEmail(userEmail);
@@ -88,6 +112,9 @@ public class BankingOperationServiceImpl implements BankingOperationService {
 		return user.getAccounts().get(0).getBankingOperations();
 	}
 
+	/**
+	 * pagination for the banking list of an account
+	 */
 	@Override
 	public Page<BankingOperationModel> findPaginated(int pageNo, int pageSize) {
 

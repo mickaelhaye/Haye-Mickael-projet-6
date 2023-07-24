@@ -16,6 +16,11 @@ import com.paymybuddy.model.entity.UserModel;
 import com.paymybuddy.service.AccountService;
 import com.paymybuddy.service.UserService;
 
+/**
+ * UserController is the class to manage web page call for user
+ * 
+ * @author Mickael Hayé
+ */
 @Controller
 public class UserController {
 
@@ -25,12 +30,23 @@ public class UserController {
 	@Autowired
 	private AccountService accountService;
 
+	/**
+	 * manage the call to the first web page
+	 * 
+	 * @return the web page paymybuddy
+	 */
 	@GetMapping("/paymybuddy")
 	public String start() {
 		return "/paymybuddy";
 	}
 
-	// est ce nécessaire?
+	/**
+	 * manage the call to the web page to the homepage
+	 * 
+	 * @param model            = contains data for homepage
+	 * @param authentification
+	 * @return the web page homepage
+	 */
 	@GetMapping("/homepage")
 	public String homepage(Model model, Authentication authentification) {
 		userService.setUserEmailSession(authentification);
@@ -58,6 +74,12 @@ public class UserController {
 		return "/homepage";
 	}
 
+	/**
+	 * manage the call to the web page user_create
+	 * 
+	 * @param model = contains data for the new user
+	 * @return the web page user_create
+	 */
 	@GetMapping("/user/user_create")
 	public String userCreate(Model model) {
 
@@ -67,6 +89,12 @@ public class UserController {
 		return "/user/user_create";
 	}
 
+	/**
+	 * manage the data of the new user
+	 * 
+	 * @param user = data for the new user
+	 * @return the web page user_create_successfull or user_already_exist
+	 */
 	@PostMapping("/user/users")
 	public String saveUser(@ModelAttribute("user") UserModel user) {
 		try {
@@ -86,6 +114,12 @@ public class UserController {
 
 	}
 
+	/**
+	 * manage the call to the web page user_add_buddy
+	 * 
+	 * @param model = contains data to add a buddy
+	 * @return the web page user_add_buddy
+	 */
 	@GetMapping("/user/user_add_buddy")
 	public String userAddBuddy(Model model) {
 		// add buddy
@@ -93,6 +127,14 @@ public class UserController {
 		model.addAttribute("userAddBuddy", userAddBuddy);
 		return "/user/user_add_buddy";
 	}
+
+	/**
+	 * manage the data of the new buddy
+	 * 
+	 * @param userAddBuddy = data for the new buddy
+	 * @return the web page user_buddy_add_successfull or user_buddy_add_successfull
+	 *         or user_buddy_no_account or user_bad_buddy
+	 */
 
 	@PostMapping("/user/buddys")
 	public String saveBuddy(@ModelAttribute("recupValue") UserAddBuddyModel userAddBuddy) {
@@ -115,18 +157,36 @@ public class UserController {
 		return "/user/user_buddy_add_successfull";
 	}
 
+	/**
+	 * manage the call to the web page to del a buddy
+	 * 
+	 * @param model = buddy list of the user
+	 * @return the web page buddy del
+	 */
 	@GetMapping("/user/user_del_buddy")
 	public String userDelBuddy(Model model) {
 		model.addAttribute("buddys", userService.buddyListfromUser(userService.getUserEmailSession()));
 		return "/user/user_del_buddy";
 	}
 
+	/**
+	 * manage the call to the web page to send the buddy deleting
+	 * 
+	 * @param email = email of the buddy to be deleted
+	 * @return the web page user_del_buddy
+	 */
 	@GetMapping("/user/user_del_buddy/delete/{email}")
 	public String userDelBuddyDelete(@PathVariable String email) {
 		userService.delBuddy(email, userService.getUserEmailSession());
 		return "redirect:/user/user_del_buddy";
 	}
 
+	/**
+	 * manage the call to the web page to update an user
+	 * 
+	 * @param model = data of an user
+	 * @return the web page user_update
+	 */
 	@GetMapping("/user/user_update")
 	public String userUpdate(Model model) {
 
@@ -136,18 +196,36 @@ public class UserController {
 		return "/user/user_update";
 	}
 
+	/**
+	 * manage the call to the web page to update an user
+	 * 
+	 * @param user = data of an user update
+	 * @return the web page user_update_successfull
+	 */
 	@PostMapping("/user/user_update_update")
 	public String userUpdateUpdate(@ModelAttribute("user") UserModel user) {
 		userService.updateSomeParameters(user);
 		return "/user/user_update_successfull";
 	}
 
+	/**
+	 * manage the call to the web page to delete an user
+	 * 
+	 * @param model = List of all users
+	 * @return the web page user_del_user
+	 */
 	@GetMapping("/user/admin/user_del_user")
 	public String userDelUser(Model model) {
 		model.addAttribute("users", userService.getUsers());
 		return "/user/admin/user_del_user";
 	}
 
+	/**
+	 * manage the call to the web page to send a new account
+	 * 
+	 * @param email = user to be deleted
+	 * @return the web page user_del_user
+	 */
 	@GetMapping("/user/admin/user_del_user/delete/{email}")
 	public String userDelUserDelete(@PathVariable String email) {
 		userService.delUserByEmail(email);

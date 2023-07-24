@@ -4,6 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * BankingOperationSendMoneyModel is the model class with data to sending money
+ * 
+ * @author Mickael Hayé
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

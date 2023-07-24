@@ -9,9 +9,17 @@ import org.springframework.stereotype.Service;
 
 import com.paymybuddy.service.CalendarService;
 
+/**
+ * CalendarService is the class to recover the date and the hour
+ * 
+ * @author Mickael Hayé
+ */
 @Service
 public class CalendarServiceImpl implements CalendarService {
 
+	/**
+	 * recover the date
+	 */
 	@Override
 	public String getDate() {
 		// récupération date actuelle
@@ -23,6 +31,9 @@ public class CalendarServiceImpl implements CalendarService {
 		return dateActuelle;
 	}
 
+	/**
+	 * recover the hour
+	 */
 	@Override
 	public String getHour() {
 		// récupération date actuelle

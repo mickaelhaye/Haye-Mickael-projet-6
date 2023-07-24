@@ -18,6 +18,12 @@ import com.paymybuddy.service.AccountService;
 import com.paymybuddy.service.BankingOperationService;
 import com.paymybuddy.service.UserService;
 
+/**
+ * BankingOperationController is the class to manage web page call for
+ * BankingOperation
+ * 
+ * @author Mickael Hayé
+ */
 @Controller
 public class BankingOperationController {
 
@@ -30,6 +36,12 @@ public class BankingOperationController {
 	@Autowired
 	private UserService userService;
 
+	/**
+	 * manage the call to the web page to add money by default the value is 10
+	 * 
+	 * @param model = contains data to add money
+	 * @return the web page bankingOpaeration add money
+	 */
 	@GetMapping("/bankingOperation/bankingOperation_add_money")
 	public String bankingOperationAddMoney(Model model) {
 		if (!accountService.userHaveAccount(userService.getUserEmailSession())) {
@@ -42,6 +54,12 @@ public class BankingOperationController {
 		return "/bankingOperation/bankingOperation_add_money";
 	}
 
+	/**
+	 * manage the data of the new bankingOperation add money
+	 * 
+	 * @param bankingOperationAddMoney = contains data for the operation
+	 * @return the web page bankingOpaeration add money
+	 */
 	@PostMapping("/bankingOperation/bankingOperation_add_money_add")
 	public String saveBankingOperationAddMoney(
 			@ModelAttribute("bankingOperationAddMoney") BankingOperationAddMoneyModel bankingOperationAddMoney) {
@@ -52,6 +70,12 @@ public class BankingOperationController {
 		return "redirect:/bankingOperation/bankingOperation_add_money";
 	}
 
+	/**
+	 * manage the call to the web page to send money by default the value is 10
+	 * 
+	 * @param model = contains data to send money
+	 * @return the web page bankingOpaeration send money
+	 */
 	@GetMapping("/bankingOperation/bankingOperation_send_money")
 	public String bankingOperationSendMoney(Model model) {
 		if (!accountService.userHaveAccount(userService.getUserEmailSession())) {
@@ -64,6 +88,12 @@ public class BankingOperationController {
 		return "/bankingOperation/bankingOperation_send_money";
 	}
 
+	/**
+	 * manage the data of the new bankingOperation send money
+	 * 
+	 * @param bankingOperationSendMoney = contains data to send money
+	 * @return the web page bankingOpaeration send money
+	 */
 	@PostMapping("/bankingOperation/bankingOperation_send_money_send")
 	public String saveBankingOperationSendMoney(
 			@ModelAttribute("bankingOperationSendMoney") BankingOperationSendMoneyModel bankingOperationSendMoney) {
@@ -92,6 +122,12 @@ public class BankingOperationController {
 		return "/bankingOperation/bankingOperation_successfull";
 	}
 
+	/**
+	 * manage the call to the web page to bankingOperation history
+	 * 
+	 * @param model = contains list of history from the user
+	 * @return the web page bankingOperation_history
+	 */
 	@GetMapping("/bankingOperation/bankingOperation_history")
 	public String bankingOperationHistory(Model model) {
 		if (!accountService.userHaveAccount(userService.getUserEmailSession())) {
@@ -100,6 +136,11 @@ public class BankingOperationController {
 		return findPaginated(1, model);
 	}
 
+	/**
+	 * @param pageNo = page to be displayed
+	 * @param model  = = contains list of history from the user
+	 * @return the web page bankingOperation_history
+	 */
 	@GetMapping("/bankingOperation/bankingOperation_history/page/{pageNo}")
 	public String findPaginated(@PathVariable(value = "pageNo") int pageNo, Model model) {
 		int pageSize = 4;

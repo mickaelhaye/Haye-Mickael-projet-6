@@ -9,6 +9,12 @@ import org.springframework.stereotype.Repository;
 
 import com.paymybuddy.model.entity.AccountModel;
 
+/**
+ * AccountRepository is an interface which allows to exchange with database for
+ * the entity account
+ * 
+ * @author Mickael Hayé
+ */
 @Repository
 public interface AccountRepository extends CrudRepository<AccountModel, Integer> {
 

@@ -1,0 +1,11 @@
+com.paymybuddy
+com.paymybuddy.configuration
+com.paymybuddy.controller
+com.paymybuddy.controllerTest
+com.paymybuddy.model.dto
+com.paymybuddy.model.entity
+com.paymybuddy.modelTest
+com.paymybuddy.repository
+com.paymybuddy.service
+com.paymybuddy.service.impl
+com.paymybuddy.serviceTest

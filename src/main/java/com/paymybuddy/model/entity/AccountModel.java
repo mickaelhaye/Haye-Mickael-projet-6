@@ -21,6 +21,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * accountModel is the class for the entity account
+ * 
+ * @author Mickael Hayé
+ */
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

@@ -26,6 +26,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * UserModel is the class for the entity user
+ * 
+ * @author Mickael Hayé
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

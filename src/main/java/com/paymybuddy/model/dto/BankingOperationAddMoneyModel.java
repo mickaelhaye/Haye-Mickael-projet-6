@@ -4,6 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * BankingOperationAddMoneyModel is the model class with data to adding money
+ * 
+ * @author Mickael Hayé
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

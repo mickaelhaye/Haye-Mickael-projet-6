@@ -12,6 +12,12 @@ import com.paymybuddy.model.entity.AccountModel;
 import com.paymybuddy.service.AccountService;
 import com.paymybuddy.service.UserService;
 
+/**
+ * accountController is the class to manage web page call for account
+ * 
+ * @author Mickael Hayé
+ */
+
 @Controller
 public class AccountController {
 
@@ -21,6 +27,12 @@ public class AccountController {
 	@Autowired
 	private UserService userService;
 
+	/**
+	 * manage the call to the web page to create a new account
+	 * 
+	 * @param model = contains data for an account
+	 * @return the web page account create or account already exist
+	 */
 	@GetMapping("/account/account_create")
 	public String userAddAccount(Model model) {
 
@@ -34,7 +46,13 @@ public class AccountController {
 		return "/account/account_create";
 	}
 
-	@PostMapping("/account/accounts") // à valider
+	/**
+	 * manage the call to the web page to send a new account
+	 * 
+	 * @param account = entity for new account
+	 * @return the web page account create successfull or account already exist
+	 */
+	@PostMapping("/account/accounts")
 	public String saveAccount(@ModelAttribute("account") AccountModel account) {
 		try {
 			accountService.addAccountToUser(account, userService.getUserEmailSession());
@@ -48,12 +66,24 @@ public class AccountController {
 
 	}
 
+	/**
+	 * manage the call to the web page to del an account
+	 * 
+	 * @param model = account list of the user
+	 * @return the web page account del
+	 */
 	@GetMapping("/account/account_del")
 	public String accountDel(Model model) {
 		model.addAttribute("accounts", accountService.accountListfromUser());
 		return "/account/account_del";
 	}
 
+	/**
+	 * manage the call to the web page to send the account deleting
+	 * 
+	 * @param name = name of account to be deleted
+	 * @return the web page account del
+	 */
 	@GetMapping("/account/account_del_account/delete/{name}")
 	public String accountDelete(@PathVariable String name) {
 		accountService.delAccount(name);

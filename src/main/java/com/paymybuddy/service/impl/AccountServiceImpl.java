@@ -3,6 +3,8 @@ package com.paymybuddy.service.impl;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,8 +14,15 @@ import com.paymybuddy.repository.AccountRepository;
 import com.paymybuddy.service.AccountService;
 import com.paymybuddy.service.UserService;
 
+/**
+ * accountService is the class to manage service for account entity
+ * 
+ * @author Mickael Hayé
+ */
 @Service
 public class AccountServiceImpl implements AccountService {
+
+	private static Logger logger = LoggerFactory.getLogger(AccountServiceImpl.class);
 
 	@Autowired
 	private AccountRepository accountRepository;
@@ -21,27 +30,42 @@ public class AccountServiceImpl implements AccountService {
 	@Autowired
 	private UserService userService;
 
+	/**
+	 * recovers all accounts
+	 */
 	@Override
 	public Iterable<AccountModel> getAccounts() {
 		return accountRepository.findAll();
 	}
 
+	/**
+	 * recovers account by an id
+	 */
 	@Override
 	public Optional<AccountModel> getAccountById(Integer id) {
 		return accountRepository.findById(id);
 	}
 
+	/**
+	 * add an account
+	 */
 	@Override
 	public AccountModel addAccount(AccountModel account) {
 		return accountRepository.save(account);
 	}
 
+	/**
+	 * delete an account
+	 */
 	@Override
 	public void delAccount(AccountModel account) {
 		accountRepository.delete(account);
 
 	}
 
+	/**
+	 * add account to user
+	 */
 	@Override
 	public void addAccountToUser(AccountModel account, String email) throws Exception {
 		Optional<UserModel> OptUser = userService.getUserByEmail(email);
@@ -61,6 +85,9 @@ public class AccountServiceImpl implements AccountService {
 
 	}
 
+	/**
+	 * delete account to user
+	 */
 	@Override
 	public void delAccount(String accountName) {
 		Optional<UserModel> OptUser = userService.getUserByEmail(userService.getUserEmailSession());
@@ -81,12 +108,18 @@ public class AccountServiceImpl implements AccountService {
 		}
 	}
 
+	/**
+	 * to know if an account name exist fom an user
+	 */
 	@Override
 	public boolean AccountExistFromUser(String nameAccount, int userId) {
 
 		return accountRepository.findByUserIdAndName(userId, nameAccount).isPresent();
 	}
 
+	/**
+	 * to know if an user have an account
+	 */
 	@Override
 	public boolean userHaveAccount(String userEmail) {
 		Optional<UserModel> OptUser = userService.getUserByEmail(userEmail);
@@ -97,6 +130,9 @@ public class AccountServiceImpl implements AccountService {
 		return true;
 	}
 
+	/**
+	 * to add money to an account
+	 */
 	@Override
 	public void addMoney(float money, String userEmail) {
 		Optional<UserModel> OptUser = userService.getUserByEmail(userEmail);
@@ -108,6 +144,9 @@ public class AccountServiceImpl implements AccountService {
 
 	}
 
+	/**
+	 * to delete money to an account
+	 */
 	@Override
 	public void delMoney(float money) {
 		UserModel user = userService.getUserByEmail();
@@ -117,6 +156,9 @@ public class AccountServiceImpl implements AccountService {
 
 	}
 
+	/**
+	 * to know how much an user have in his account
+	 */
 	@Override
 	public float balance() {
 		UserModel user = userService.getUserByEmail();
@@ -125,6 +167,9 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	@Override
+	/**
+	 * account list for an user
+	 */
 	public List<AccountModel> accountListfromUser() {
 		UserModel user = userService.getUserByEmail();
 		return user.getAccounts();

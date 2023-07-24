@@ -9,6 +9,12 @@ import org.springframework.stereotype.Repository;
 
 import com.paymybuddy.model.entity.BankingOperationModel;
 
+/**
+ * BankingOperationRepository is an interface which allows to exchange with
+ * database for the entity BankingOperation
+ * 
+ * @author Mickael Hayé
+ */
 @Repository
 public interface BankingOperationRepository extends CrudRepository<BankingOperationModel, Integer> {
 
