@@ -33,7 +33,21 @@ public class UserController {
 	// est ce nécessaire?
 	@GetMapping("/homepage")
 	public String homepage(Model model, Authentication authentification) {
-		userService.setUserEmailSession(authentification.getName());
+		userService.setUserEmailSession(authentification);
+		if (userService.NewuserTestOAuth2(authentification)) {
+			userService.createUserAuth2(authentification);
+			// Create account by default
+			UserModel user = userService.getUserByEmail();
+			AccountModel account = new AccountModel();
+			account.setName("account of " + user.getEmail());
+			try {
+				accountService.addAccountToUser(account, user.getEmail());
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
 		HomepageModel homepage = new HomepageModel();
 		homepage.setUserEmailSession("user :" + userService.getUserEmailSession());
 		model.addAttribute("homepage", homepage);

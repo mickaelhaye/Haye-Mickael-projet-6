@@ -3,6 +3,8 @@ package com.paymybuddy.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.security.core.Authentication;
+
 import com.paymybuddy.model.entity.UserModel;
 
 public interface UserService {
@@ -33,7 +35,7 @@ public interface UserService {
 
 	public String getUserEmailSession();
 
-	public void setUserEmailSession(String userEmailSession);
+	public void setUserEmailSession(Authentication authentification);
 
 	public UserModel getUserByEmail();
 
@@ -42,5 +44,9 @@ public interface UserService {
 	public void delUserByEmail(String email);
 
 	public boolean getRoleOfUserSessionIsAdmin();
+
+	public void createUserAuth2(Authentication authentification);
+
+	public boolean NewuserTestOAuth2(Authentication authentification);
 
 }

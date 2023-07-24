@@ -1,10 +1,14 @@
 package com.paymybuddy.service.impl;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 import org.springframework.stereotype.Service;
 
 import com.paymybuddy.model.entity.UserModel;
@@ -12,7 +16,7 @@ import com.paymybuddy.repository.UserRepository;
 import com.paymybuddy.service.UserService;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl<Objet> implements UserService {
 
 	@Autowired
 	private UserRepository userRepository;
@@ -28,8 +32,17 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void setUserEmailSession(String userEmailSession) {
-		UserEmailSession = userEmailSession;
+	public void setUserEmailSession(Authentication authentification) {
+		if (OAuth2AuthenticationToken.class.isInstance(authentification)) {
+			DefaultOidcUser test = (DefaultOidcUser) authentification.getPrincipal();
+
+			Map<String, Object> mapTest = test.getAttributes();
+			if (mapTest.containsKey("email")) {
+				UserEmailSession = (String) mapTest.get("email");
+			}
+		} else {
+			UserEmailSession = authentification.getName();
+		}
 	}
 
 	@Override
@@ -182,6 +195,50 @@ public class UserServiceImpl implements UserService {
 		UserModel user = getUserByEmail();
 		if (user.getRole().equals("ROLE_ADMIN")) {
 			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public void createUserAuth2(Authentication authentification) {
+		if (OAuth2AuthenticationToken.class.isInstance(authentification)) {
+			DefaultOidcUser test = (DefaultOidcUser) authentification.getPrincipal();
+
+			Map<String, Object> mapTest = test.getAttributes();
+			if (mapTest.containsKey("email")) {
+				String email = (String) mapTest.get("email");
+
+				if (!emailExists(email)) {
+					UserModel user = new UserModel();
+					user.setEmail(email);
+					try {
+						updateUser(user);
+
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+
+			}
+
+		}
+	}
+
+	@Override
+	public boolean NewuserTestOAuth2(Authentication authentification) {
+		if (OAuth2AuthenticationToken.class.isInstance(authentification)) {
+			DefaultOidcUser test = (DefaultOidcUser) authentification.getPrincipal();
+
+			Map<String, Object> mapTest = test.getAttributes();
+			if (mapTest.containsKey("email")) {
+				String email = (String) mapTest.get("email");
+
+				if (!emailExists(email)) {
+					return true;
+				}
+			}
+
 		}
 		return false;
 	}
