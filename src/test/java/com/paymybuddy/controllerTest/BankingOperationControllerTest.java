@@ -29,6 +29,15 @@ class BankingOperationControllerTest {
 
 	@WithMockUser(username = "John.boyd@gmail.com")
 	@Test
+	void bankingOperationSendMoneyToMyExternAcccountTest() throws Exception {
+		userService.setUserEmailSession("John.boyd@gmail.com");
+		mockMvc.perform(get("/bankingOperation/bankingOperation_send_bank_extern_account")).andExpect(status().isOk());
+		userService.setUserEmailSession("UserWithoutCount@gmail.com");
+		mockMvc.perform(get("/bankingOperation/bankingOperation_send_bank_extern_account")).andExpect(status().isOk());
+	}
+
+	@WithMockUser(username = "John.boyd@gmail.com")
+	@Test
 	void bankingOperationAddMoneyTest() throws Exception {
 		userService.setUserEmailSession("John.boyd@gmail.com");
 		mockMvc.perform(get("/bankingOperation/bankingOperation_add_money")).andExpect(status().isOk());
@@ -80,6 +89,15 @@ class BankingOperationControllerTest {
 	@WithMockUser(username = "John.boyd@gmail.com")
 	@Test
 	void saveBankingOperationAddMoneyTest() throws Exception {
+		userService.setUserEmailSession("John.boyd@gmail.com");
+		BankingOperationAddMoneyModel bankingOperationAddMoney = new BankingOperationAddMoneyModel();
+		mockMvc.perform(post("/bankingOperation/bankingOperation_send_money_extern_account")
+				.flashAttr("bankingOperationAddMoney", bankingOperationAddMoney)).andExpect(status().isOk());
+	}
+
+	@WithMockUser(username = "John.boyd@gmail.com")
+	@Test
+	void saveBankingOperationSendMoneyExternAccountTest() throws Exception {
 		userService.setUserEmailSession("John.boyd@gmail.com");
 		BankingOperationAddMoneyModel bankingOperationAddMoney = new BankingOperationAddMoneyModel();
 		mockMvc.perform(post("/bankingOperation/bankingOperation_add_money_add").flashAttr("bankingOperationAddMoney",

@@ -86,7 +86,7 @@ class AccountServiceTest {
 		assertNotEquals(balance, newBalance);
 		accountService.delMoney(200);
 		newBalance = accountService.balance();
-		assertEquals(balance + 300, newBalance);
+		assertEquals(balance + (500 * 0.95) - 200, newBalance);
 	}
 
 	@Test
