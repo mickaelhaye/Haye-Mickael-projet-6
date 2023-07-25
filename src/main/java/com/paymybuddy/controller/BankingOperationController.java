@@ -2,6 +2,8 @@ package com.paymybuddy.controller;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -27,6 +29,8 @@ import com.paymybuddy.service.UserService;
 @Controller
 public class BankingOperationController {
 
+	private static Logger logger = LoggerFactory.getLogger(BankingOperationController.class);
+
 	@Autowired
 	private BankingOperationService bankingOperationService;
 
@@ -44,6 +48,7 @@ public class BankingOperationController {
 	 */
 	@GetMapping("/bankingOperation/bankingOperation_add_money")
 	public String bankingOperationAddMoney(Model model) {
+		logger.debug("bankingOperationAddMoney");
 		if (!accountService.userHaveAccount(userService.getUserEmailSession())) {
 			return "/bankingOperation/bankingOperation_account_not_created";
 		}
@@ -63,6 +68,7 @@ public class BankingOperationController {
 	@PostMapping("/bankingOperation/bankingOperation_add_money_add")
 	public String saveBankingOperationAddMoney(
 			@ModelAttribute("bankingOperationAddMoney") BankingOperationAddMoneyModel bankingOperationAddMoney) {
+		logger.debug("saveBankingOperationAddMoney bankingOperationAddMoney=" + bankingOperationAddMoney);
 		accountService.addMoney(bankingOperationAddMoney.getMoney(), userService.getUserEmailSession());
 		BankingOperationModel bankingOperation = new BankingOperationModel();
 		bankingOperationService.addBankingOperationToAccount(bankingOperation, bankingOperationAddMoney.getMoney(),
@@ -78,6 +84,7 @@ public class BankingOperationController {
 	 */
 	@GetMapping("/bankingOperation/bankingOperation_send_money")
 	public String bankingOperationSendMoney(Model model) {
+		logger.debug("bankingOperationSendMoney");
 		if (!accountService.userHaveAccount(userService.getUserEmailSession())) {
 			return "/bankingOperation/bankingOperation_account_not_created";
 		}
@@ -97,7 +104,7 @@ public class BankingOperationController {
 	@PostMapping("/bankingOperation/bankingOperation_send_money_send")
 	public String saveBankingOperationSendMoney(
 			@ModelAttribute("bankingOperationSendMoney") BankingOperationSendMoneyModel bankingOperationSendMoney) {
-
+		logger.debug("saveBankingOperationSendMoney bankingOperationSendMoney=" + bankingOperationSendMoney);
 		if (bankingOperationSendMoney.getMoney() > accountService.balance()) {
 			return "/bankingOperation/bankingOperation_not_enough_money";
 		}
@@ -130,6 +137,7 @@ public class BankingOperationController {
 	 */
 	@GetMapping("/bankingOperation/bankingOperation_history")
 	public String bankingOperationHistory(Model model) {
+		logger.debug("bankingOperationHistory");
 		if (!accountService.userHaveAccount(userService.getUserEmailSession())) {
 			return "/bankingOperation/bankingOperation_account_not_created";
 		}
@@ -143,6 +151,7 @@ public class BankingOperationController {
 	 */
 	@GetMapping("/bankingOperation/bankingOperation_history/page/{pageNo}")
 	public String findPaginated(@PathVariable(value = "pageNo") int pageNo, Model model) {
+		logger.debug("findPaginated pageNo=" + pageNo);
 		int pageSize = 4;
 		Page<BankingOperationModel> page = bankingOperationService.findPaginated(pageNo, pageSize);
 		List<BankingOperationModel> ListBankingOperations = page.getContent();

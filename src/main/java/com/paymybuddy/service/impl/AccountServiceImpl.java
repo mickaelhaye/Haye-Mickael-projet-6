@@ -35,6 +35,7 @@ public class AccountServiceImpl implements AccountService {
 	 */
 	@Override
 	public Iterable<AccountModel> getAccounts() {
+		logger.debug("getAccounts");
 		return accountRepository.findAll();
 	}
 
@@ -43,6 +44,7 @@ public class AccountServiceImpl implements AccountService {
 	 */
 	@Override
 	public Optional<AccountModel> getAccountById(Integer id) {
+		logger.debug("getAccountById id=" + id);
 		return accountRepository.findById(id);
 	}
 
@@ -51,6 +53,7 @@ public class AccountServiceImpl implements AccountService {
 	 */
 	@Override
 	public AccountModel addAccount(AccountModel account) {
+		logger.debug("addAccount account=" + account);
 		return accountRepository.save(account);
 	}
 
@@ -59,6 +62,7 @@ public class AccountServiceImpl implements AccountService {
 	 */
 	@Override
 	public void delAccount(AccountModel account) {
+		logger.debug("delAccount account=" + account);
 		accountRepository.delete(account);
 
 	}
@@ -68,6 +72,7 @@ public class AccountServiceImpl implements AccountService {
 	 */
 	@Override
 	public void addAccountToUser(AccountModel account, String email) throws Exception {
+		logger.debug("addAccountToUser account=" + account + " email=" + email);
 		Optional<UserModel> OptUser = userService.getUserByEmail(email);
 		UserModel user = OptUser.get();
 
@@ -90,6 +95,7 @@ public class AccountServiceImpl implements AccountService {
 	 */
 	@Override
 	public void delAccount(String accountName) {
+		logger.debug("delAccount accountName=" + accountName);
 		Optional<UserModel> OptUser = userService.getUserByEmail(userService.getUserEmailSession());
 		UserModel user = OptUser.get();
 
@@ -113,7 +119,7 @@ public class AccountServiceImpl implements AccountService {
 	 */
 	@Override
 	public boolean AccountExistFromUser(String nameAccount, int userId) {
-
+		logger.debug("AccountExistFromUser nameAccount=" + nameAccount + " userId=" + userId);
 		return accountRepository.findByUserIdAndName(userId, nameAccount).isPresent();
 	}
 
@@ -122,6 +128,7 @@ public class AccountServiceImpl implements AccountService {
 	 */
 	@Override
 	public boolean userHaveAccount(String userEmail) {
+		logger.debug("userHaveAccount userEmail=" + userEmail);
 		Optional<UserModel> OptUser = userService.getUserByEmail(userEmail);
 		UserModel user = OptUser.get();
 		if (user.getAccounts().isEmpty()) {
@@ -135,6 +142,7 @@ public class AccountServiceImpl implements AccountService {
 	 */
 	@Override
 	public void addMoney(float money, String userEmail) {
+		logger.debug("addMoney money=" + money + " userEmail=" + userEmail);
 		Optional<UserModel> OptUser = userService.getUserByEmail(userEmail);
 		UserModel user = OptUser.get();
 
@@ -149,6 +157,7 @@ public class AccountServiceImpl implements AccountService {
 	 */
 	@Override
 	public void delMoney(float money) {
+		logger.debug("delMoney money=" + money);
 		UserModel user = userService.getUserByEmail();
 		AccountModel account = user.getAccounts().get(0);
 		account.setBalance(account.getBalance() - money);
@@ -161,6 +170,7 @@ public class AccountServiceImpl implements AccountService {
 	 */
 	@Override
 	public float balance() {
+		logger.debug("balance");
 		UserModel user = userService.getUserByEmail();
 		AccountModel account = user.getAccounts().get(0);
 		return account.getBalance();
@@ -171,6 +181,7 @@ public class AccountServiceImpl implements AccountService {
 	 * account list for an user
 	 */
 	public List<AccountModel> accountListfromUser() {
+		logger.debug("accountListfromUser");
 		UserModel user = userService.getUserByEmail();
 		return user.getAccounts();
 	}

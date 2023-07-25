@@ -5,6 +5,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.paymybuddy.service.CalendarService;
@@ -17,11 +19,14 @@ import com.paymybuddy.service.CalendarService;
 @Service
 public class CalendarServiceImpl implements CalendarService {
 
+	private static Logger logger = LoggerFactory.getLogger(CalendarServiceImpl.class);
+
 	/**
 	 * recover the date
 	 */
 	@Override
 	public String getDate() {
+		logger.debug("getDate");
 		// récupération date actuelle
 		Calendar calendar = new GregorianCalendar();
 		calendar.setTime(new Date());
@@ -36,6 +41,7 @@ public class CalendarServiceImpl implements CalendarService {
 	 */
 	@Override
 	public String getHour() {
+		logger.debug("getHour");
 		// récupération date actuelle
 		Calendar calendar = new GregorianCalendar();
 		calendar.setTime(new Date());

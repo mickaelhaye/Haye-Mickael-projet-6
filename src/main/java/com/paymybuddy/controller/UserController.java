@@ -1,5 +1,7 @@
 package com.paymybuddy.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -24,6 +26,8 @@ import com.paymybuddy.service.UserService;
 @Controller
 public class UserController {
 
+	private static Logger logger = LoggerFactory.getLogger(UserController.class);
+
 	@Autowired
 	private UserService userService;
 
@@ -37,6 +41,7 @@ public class UserController {
 	 */
 	@GetMapping("/paymybuddy")
 	public String start() {
+		// logger.debug("start");
 		return "/paymybuddy";
 	}
 
@@ -49,6 +54,7 @@ public class UserController {
 	 */
 	@GetMapping("/homepage")
 	public String homepage(Model model, Authentication authentification) {
+		logger.debug("homepage");
 		userService.setUserEmailSession(authentification);
 		if (userService.NewuserTestOAuth2(authentification)) {
 			userService.createUserAuth2(authentification);
@@ -82,7 +88,7 @@ public class UserController {
 	 */
 	@GetMapping("/user/user_create")
 	public String userCreate(Model model) {
-
+		logger.debug("userCreate");
 		// create user object to hold user form data
 		UserModel user = new UserModel();
 		model.addAttribute("user", user);
@@ -97,6 +103,7 @@ public class UserController {
 	 */
 	@PostMapping("/user/users")
 	public String saveUser(@ModelAttribute("user") UserModel user) {
+		logger.debug("saveUser + user=" + user);
 		try {
 			userService.addUser(user);
 			// Create account by default
@@ -122,6 +129,7 @@ public class UserController {
 	 */
 	@GetMapping("/user/user_add_buddy")
 	public String userAddBuddy(Model model) {
+		logger.debug("userAddBuddy");
 		// add buddy
 		UserAddBuddyModel userAddBuddy = new UserAddBuddyModel();
 		model.addAttribute("userAddBuddy", userAddBuddy);
@@ -138,7 +146,7 @@ public class UserController {
 
 	@PostMapping("/user/buddys")
 	public String saveBuddy(@ModelAttribute("recupValue") UserAddBuddyModel userAddBuddy) {
-
+		logger.debug("saveBuddy userAddBuddy=" + userAddBuddy);
 		if (!userService.emailExists(userAddBuddy.getBudddyEmail())) {
 			return "user/user_buddy_no_exist";
 		}
@@ -166,6 +174,7 @@ public class UserController {
 	@GetMapping("/user/user_del_buddy")
 	public String userDelBuddy(Model model) {
 		model.addAttribute("buddys", userService.buddyListfromUser(userService.getUserEmailSession()));
+		logger.debug("userDelBuddy");
 		return "/user/user_del_buddy";
 	}
 
@@ -177,6 +186,7 @@ public class UserController {
 	 */
 	@GetMapping("/user/user_del_buddy/delete/{email}")
 	public String userDelBuddyDelete(@PathVariable String email) {
+		logger.debug("userDelBuddyDelete email=" + email);
 		userService.delBuddy(email, userService.getUserEmailSession());
 		return "redirect:/user/user_del_buddy";
 	}
@@ -189,7 +199,7 @@ public class UserController {
 	 */
 	@GetMapping("/user/user_update")
 	public String userUpdate(Model model) {
-
+		logger.debug("userUpdate");
 		// create user object to hold user form data
 		UserModel user = userService.getUserByEmail();
 		model.addAttribute("user", user);
@@ -204,6 +214,7 @@ public class UserController {
 	 */
 	@PostMapping("/user/user_update_update")
 	public String userUpdateUpdate(@ModelAttribute("user") UserModel user) {
+		logger.debug("userUpdateUpdate user=" + user);
 		userService.updateSomeParameters(user);
 		return "/user/user_update_successfull";
 	}
@@ -216,6 +227,7 @@ public class UserController {
 	 */
 	@GetMapping("/user/admin/user_del_user")
 	public String userDelUser(Model model) {
+		logger.debug("userDelUser");
 		model.addAttribute("users", userService.getUsers());
 		return "/user/admin/user_del_user";
 	}
@@ -228,6 +240,7 @@ public class UserController {
 	 */
 	@GetMapping("/user/admin/user_del_user/delete/{email}")
 	public String userDelUserDelete(@PathVariable String email) {
+		logger.debug("userDelUserDelete email=" + email);
 		userService.delUserByEmail(email);
 		return "redirect:/user/admin/user_del_user";
 	}

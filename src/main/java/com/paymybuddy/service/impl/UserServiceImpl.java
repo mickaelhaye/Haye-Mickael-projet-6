@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,6 +25,8 @@ import com.paymybuddy.service.UserService;
 @Service
 public class UserServiceImpl<Objet> implements UserService {
 
+	private static Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
+
 	@Autowired
 	private UserRepository userRepository;
 
@@ -36,6 +40,7 @@ public class UserServiceImpl<Objet> implements UserService {
 	 */
 	@Override
 	public String getUserEmailSession() {
+		logger.debug("getUserEmailSession");
 		return UserEmailSession;
 	}
 
@@ -44,6 +49,7 @@ public class UserServiceImpl<Objet> implements UserService {
 	 */
 	@Override
 	public void setUserEmailSession(Authentication authentification) {
+		logger.debug("setUserEmailSession");
 		if (OAuth2AuthenticationToken.class.isInstance(authentification)) {
 			DefaultOidcUser test = (DefaultOidcUser) authentification.getPrincipal();
 
@@ -61,6 +67,7 @@ public class UserServiceImpl<Objet> implements UserService {
 	 */
 	@Override
 	public void setUserEmailSession(String email) {
+		logger.debug("setUserEmailSession email=" + email);
 		UserEmailSession = email;
 	}
 
@@ -69,6 +76,7 @@ public class UserServiceImpl<Objet> implements UserService {
 	 */
 	@Override
 	public Iterable<UserModel> getUsers() {
+		logger.debug("getUsers");
 		return userRepository.findAll();
 	}
 
@@ -77,6 +85,7 @@ public class UserServiceImpl<Objet> implements UserService {
 	 */
 	@Override
 	public Optional<UserModel> getUserById(Integer id) {
+		logger.debug("getUserById id=" + id);
 		return userRepository.findById(id);
 	}
 
@@ -85,6 +94,7 @@ public class UserServiceImpl<Objet> implements UserService {
 	 */
 	@Override
 	public Optional<UserModel> getUserByEmail(String email) {
+		logger.debug("getUserByEmail email=" + email);
 		return userRepository.findByEmail(email);
 	}
 
@@ -93,6 +103,7 @@ public class UserServiceImpl<Objet> implements UserService {
 	 */
 	@Override
 	public UserModel getUserByEmail() {
+		logger.debug("getUserByEmail");
 		Optional<UserModel> optUser = userRepository.findByEmail(getUserEmailSession());
 		UserModel user = optUser.get();
 		return user;
@@ -103,6 +114,7 @@ public class UserServiceImpl<Objet> implements UserService {
 	 */
 	@Override
 	public void delUserByEmail(String email) {
+		logger.debug("delUserByEmail email=" + email);
 		Optional<UserModel> optUser = userRepository.findByEmail(email);
 		UserModel user = optUser.get();
 		List<UserModel> usersList = (List<UserModel>) getUsers();
@@ -126,6 +138,7 @@ public class UserServiceImpl<Objet> implements UserService {
 	 */
 	@Override
 	public UserModel addUser(UserModel user) throws Exception {
+		logger.debug("addUser user=" + user);
 		if (emailExists(user.getEmail())) {
 			throw new Exception("There is an account with that email address: " + user.getEmail());
 		}
@@ -139,6 +152,7 @@ public class UserServiceImpl<Objet> implements UserService {
 	 */
 	@Override
 	public UserModel updateUser(UserModel user) {
+		logger.debug("updateUser user=" + user);
 		return userRepository.save(user);
 	}
 
@@ -147,7 +161,7 @@ public class UserServiceImpl<Objet> implements UserService {
 	 */
 	@Override
 	public void addBuddy(String buddyEmail, String userEmail) throws Exception {
-
+		logger.debug("addBuddy buddyEmail=" + buddyEmail + " userEmail=" + userEmail);
 		if (!emailExists(buddyEmail)) {
 			throw new Exception("This user doesn't exit: " + buddyEmail);
 		}
@@ -180,6 +194,7 @@ public class UserServiceImpl<Objet> implements UserService {
 	 */
 	@Override
 	public void delBuddy(String buddyEmail, String userEmail) {
+		logger.debug("delBuddy buddyEmail=" + buddyEmail + " userEmail=" + userEmail);
 		Optional<UserModel> OptUser = userRepository.findByEmail(userEmail);
 		UserModel user = OptUser.get();
 
@@ -202,6 +217,7 @@ public class UserServiceImpl<Objet> implements UserService {
 	 */
 	@Override
 	public boolean emailExists(String email) {
+		logger.debug("emailExists email=" + email);
 		return userRepository.findByEmail(email).isPresent();
 	}
 
@@ -210,6 +226,7 @@ public class UserServiceImpl<Objet> implements UserService {
 	 */
 	@Override
 	public void delUser(UserModel user) {
+		logger.debug("delUser user=" + user);
 		userRepository.delete(user);
 	}
 
@@ -218,6 +235,7 @@ public class UserServiceImpl<Objet> implements UserService {
 	 */
 	@Override
 	public boolean buddyExists(String buddyEmail, UserModel user) {
+		logger.debug("buddyExists buddyEmail=" + buddyEmail + " user=" + user);
 		for (UserModel userTest : user.getUsers()) {
 			if (userTest.getEmail().equals(buddyEmail)) {
 				return true;
@@ -231,6 +249,7 @@ public class UserServiceImpl<Objet> implements UserService {
 	 */
 	@Override
 	public boolean buddyExists(String buddyEmail, String userEmail) {
+		logger.debug("buddyExists buddyEmail=" + buddyEmail + " userEmail=" + userEmail);
 		Optional<UserModel> OptUser = userRepository.findByEmail(userEmail);
 		UserModel user = OptUser.get();
 
@@ -247,6 +266,7 @@ public class UserServiceImpl<Objet> implements UserService {
 	 */
 	@Override
 	public List<UserModel> buddyListfromUser(String userEmail) {
+		logger.debug("buddyListfromUser userEmail=" + userEmail);
 		Optional<UserModel> OptUser = userRepository.findByEmail(userEmail);
 		UserModel user = OptUser.get();
 		return user.getUsers();
@@ -257,9 +277,8 @@ public class UserServiceImpl<Objet> implements UserService {
 	 */
 	@Override
 	public void updateSomeParameters(UserModel user) {
-
+		logger.debug("updateSomeParameters user=" + user);
 		UserModel userUpdate = getUserByEmail();
-
 		userUpdate.setName(user.getName());
 		userUpdate.setFirstname(user.getFirstname());
 		userUpdate.setBirthdate(user.getBirthdate());
@@ -272,6 +291,7 @@ public class UserServiceImpl<Objet> implements UserService {
 	 */
 	@Override
 	public boolean getRoleOfUserSessionIsAdmin() {
+		logger.debug("getRoleOfUserSessionIsAdmin");
 		UserModel user = getUserByEmail();
 		if (user.getRole().equals("ROLE_ADMIN")) {
 			return true;
@@ -284,6 +304,7 @@ public class UserServiceImpl<Objet> implements UserService {
 	 */
 	@Override
 	public void createUserAuth2(Authentication authentification) {
+		logger.debug("createUserAuth2");
 		if (OAuth2AuthenticationToken.class.isInstance(authentification)) {
 			DefaultOidcUser test = (DefaultOidcUser) authentification.getPrincipal();
 
@@ -315,6 +336,7 @@ public class UserServiceImpl<Objet> implements UserService {
 	 */
 	@Override
 	public boolean NewuserTestOAuth2(Authentication authentification) {
+		logger.debug("NewuserTestOAuth2");
 		if (OAuth2AuthenticationToken.class.isInstance(authentification)) {
 			DefaultOidcUser test = (DefaultOidcUser) authentification.getPrincipal();
 

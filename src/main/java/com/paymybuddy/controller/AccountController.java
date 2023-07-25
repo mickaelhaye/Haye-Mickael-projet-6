@@ -1,5 +1,7 @@
 package com.paymybuddy.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +23,8 @@ import com.paymybuddy.service.UserService;
 @Controller
 public class AccountController {
 
+	private static Logger logger = LoggerFactory.getLogger(AccountController.class);
+
 	@Autowired
 	private AccountService accountService;
 
@@ -35,7 +39,7 @@ public class AccountController {
 	 */
 	@GetMapping("/account/account_create")
 	public String userAddAccount(Model model) {
-
+		logger.debug("userAddAccount");
 		if (accountService.userHaveAccount(userService.getUserEmailSession())) {
 			return "account/account_already";
 		}
@@ -54,6 +58,7 @@ public class AccountController {
 	 */
 	@PostMapping("/account/accounts")
 	public String saveAccount(@ModelAttribute("account") AccountModel account) {
+		logger.debug("saveAccount account=" + account);
 		try {
 			accountService.addAccountToUser(account, userService.getUserEmailSession());
 		} catch (Exception e) {
@@ -74,6 +79,7 @@ public class AccountController {
 	 */
 	@GetMapping("/account/account_del")
 	public String accountDel(Model model) {
+		logger.debug("accountDel");
 		model.addAttribute("accounts", accountService.accountListfromUser());
 		return "/account/account_del";
 	}
@@ -86,6 +92,7 @@ public class AccountController {
 	 */
 	@GetMapping("/account/account_del_account/delete/{name}")
 	public String accountDelete(@PathVariable String name) {
+		logger.debug("accountDelete name=" + name);
 		accountService.delAccount(name);
 		return "redirect:/account/account_del";
 	}
