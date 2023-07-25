@@ -115,19 +115,21 @@ public class UserServiceImpl<Objet> implements UserService {
 	@Override
 	public void delUserByEmail(String email) {
 		logger.debug("delUserByEmail email=" + email);
-		Optional<UserModel> optUser = userRepository.findByEmail(email);
-		UserModel user = optUser.get();
-		List<UserModel> usersList = (List<UserModel>) getUsers();
-		// Remove user from other users buddy list
-		for (UserModel userTest : usersList) {
-			for (UserModel userBuddyTest : userTest.getUsers()) {
-				if (user.getEmail().equals(userBuddyTest.getEmail())) {
-					userTest.removeBuddyToUserList(userBuddyTest);
-					break;
+		if (!getUserEmailSession().equals(email)) {
+			Optional<UserModel> optUser = userRepository.findByEmail(email);
+			UserModel user = optUser.get();
+			List<UserModel> usersList = (List<UserModel>) getUsers();
+			// Remove user from other users buddy list
+			for (UserModel userTest : usersList) {
+				for (UserModel userBuddyTest : userTest.getUsers()) {
+					if (user.getEmail().equals(userBuddyTest.getEmail())) {
+						userTest.removeBuddyToUserList(userBuddyTest);
+						break;
+					}
 				}
 			}
+			delUser(user);
 		}
-		delUser(user);
 	}
 
 	/**
