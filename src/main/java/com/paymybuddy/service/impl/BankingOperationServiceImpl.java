@@ -77,7 +77,7 @@ public class BankingOperationServiceImpl implements BankingOperationService {
 	}
 
 	/**
-	 * ada a banking operation to an account
+	 * add a banking operation to an account
 	 */
 	@Override
 	public void addBankingOperationToAccount(BankingOperationModel bankingOperation, float amount, String description,

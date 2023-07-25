@@ -146,6 +146,8 @@ public class AccountServiceImpl implements AccountService {
 		Optional<UserModel> OptUser = userService.getUserByEmail(userEmail);
 		UserModel user = OptUser.get();
 		AccountModel account = user.getAccounts().get(0);
+		// prelevement 0.05%
+		money = (float) (money * 0.95);
 		account.setBalance(account.getBalance() + money);
 		addAccount(account);
 
