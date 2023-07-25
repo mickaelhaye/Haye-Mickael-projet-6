@@ -90,17 +90,18 @@ public class BankingOperationServiceImpl implements BankingOperationService {
 		bankingOperation.setDate(calendarService.getDate());
 		bankingOperation.setHour(calendarService.getHour());
 		bankingOperation.setTypeTransaction(typeTransation);
-
+		// find the user
 		Optional<UserModel> OptUser = userService.getUserByEmail(userEmail);
 		UserModel user = OptUser.get();
-
+		// find the account of the user
 		AccountModel account = user.getAccounts().get(0);
 		account.setBankingOperationsToList(bankingOperation);
 
 		if (userBuddy != "") {
+			// find the buddy
 			Optional<UserModel> OptBuddy = userService.getUserByEmail(userBuddy);
 			UserModel buddy = OptBuddy.get();
-
+			// find the account of the buddy
 			AccountModel accountbuddy = buddy.getAccounts().get(0);
 			accountbuddy.setBankingOperationsToList(bankingOperation);
 		}

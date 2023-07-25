@@ -27,7 +27,7 @@ public class CalendarServiceImpl implements CalendarService {
 	@Override
 	public String getDate() {
 		logger.debug("getDate");
-		// récupération date actuelle
+		// recovery current date
 		Calendar calendar = new GregorianCalendar();
 		calendar.setTime(new Date());
 		String formatDate = "dd/MM/yyyy";
@@ -42,7 +42,7 @@ public class CalendarServiceImpl implements CalendarService {
 	@Override
 	public String getHour() {
 		logger.debug("getHour");
-		// récupération date actuelle
+		// recovery hour
 		Calendar calendar = new GregorianCalendar();
 		calendar.setTime(new Date());
 		String formatDate = "hh:mm:ss";

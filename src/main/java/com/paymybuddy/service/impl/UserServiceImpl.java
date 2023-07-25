@@ -50,9 +50,9 @@ public class UserServiceImpl<Objet> implements UserService {
 	@Override
 	public void setUserEmailSession(Authentication authentification) {
 		logger.debug("setUserEmailSession");
+		// test if authentification is in instance of OAuth2
 		if (OAuth2AuthenticationToken.class.isInstance(authentification)) {
 			DefaultOidcUser test = (DefaultOidcUser) authentification.getPrincipal();
-
 			Map<String, Object> mapTest = test.getAttributes();
 			if (mapTest.containsKey("email")) {
 				UserEmailSession = (String) mapTest.get("email");
@@ -118,9 +118,7 @@ public class UserServiceImpl<Objet> implements UserService {
 		Optional<UserModel> optUser = userRepository.findByEmail(email);
 		UserModel user = optUser.get();
 		List<UserModel> usersList = (List<UserModel>) getUsers();
-
-		// Remove user from other users' buddy list
-
+		// Remove user from other users buddy list
 		for (UserModel userTest : usersList) {
 			for (UserModel userBuddyTest : userTest.getUsers()) {
 				if (user.getEmail().equals(userBuddyTest.getEmail())) {
@@ -129,7 +127,6 @@ public class UserServiceImpl<Objet> implements UserService {
 				}
 			}
 		}
-
 		delUser(user);
 	}
 
@@ -139,12 +136,12 @@ public class UserServiceImpl<Objet> implements UserService {
 	@Override
 	public UserModel addUser(UserModel user) throws Exception {
 		logger.debug("addUser user=" + user);
+		// test if the email is already using
 		if (emailExists(user.getEmail())) {
 			throw new Exception("There is an account with that email address: " + user.getEmail());
 		}
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		return userRepository.save(user);
-
 	}
 
 	/**
@@ -165,21 +162,17 @@ public class UserServiceImpl<Objet> implements UserService {
 		if (!emailExists(buddyEmail)) {
 			throw new Exception("This user doesn't exit: " + buddyEmail);
 		}
-
 		if (buddyEmail.equals(userEmail)) {
 			throw new Exception("you are this user");
 		}
-
 		Optional<UserModel> OptUser = userRepository.findByEmail(userEmail);
 		UserModel user = OptUser.get();
-
 		if (buddyExists(buddyEmail, user)) {
 			throw new Exception("This email is already your buddy");
 		}
-
 		Optional<UserModel> OptBuddy = userRepository.findByEmail(buddyEmail);
 		UserModel buddy = OptBuddy.get();
-
+		// add the buddy to the list
 		user.setBuddyToUserList(buddy);
 		try {
 			updateUser(user);
@@ -197,7 +190,7 @@ public class UserServiceImpl<Objet> implements UserService {
 		logger.debug("delBuddy buddyEmail=" + buddyEmail + " userEmail=" + userEmail);
 		Optional<UserModel> OptUser = userRepository.findByEmail(userEmail);
 		UserModel user = OptUser.get();
-
+		// find the buddy for deleting it
 		for (UserModel userTest : user.getUsers()) {
 			if (userTest.getEmail().equals(buddyEmail)) {
 				user.removeBuddyToUserList(userTest);
@@ -252,7 +245,6 @@ public class UserServiceImpl<Objet> implements UserService {
 		logger.debug("buddyExists buddyEmail=" + buddyEmail + " userEmail=" + userEmail);
 		Optional<UserModel> OptUser = userRepository.findByEmail(userEmail);
 		UserModel user = OptUser.get();
-
 		for (UserModel userTest : user.getUsers()) {
 			if (userTest.getEmail().equals(buddyEmail)) {
 				return true;
@@ -307,27 +299,21 @@ public class UserServiceImpl<Objet> implements UserService {
 		logger.debug("createUserAuth2");
 		if (OAuth2AuthenticationToken.class.isInstance(authentification)) {
 			DefaultOidcUser test = (DefaultOidcUser) authentification.getPrincipal();
-
 			Map<String, Object> mapTest = test.getAttributes();
 			if (mapTest.containsKey("email")) {
 				String email = (String) mapTest.get("email");
-
 				if (!emailExists(email)) {
 					UserModel user = new UserModel();
 					user.setEmail(email);
 					user.setName((String) mapTest.get("family_name"));
-
 					try {
 						updateUser(user);
-
 					} catch (Exception e) {
 						e.printStackTrace();
 						logger.error("update user error" + e);
 					}
 				}
-
 			}
-
 		}
 	}
 
@@ -339,16 +325,13 @@ public class UserServiceImpl<Objet> implements UserService {
 		logger.debug("NewuserTestOAuth2");
 		if (OAuth2AuthenticationToken.class.isInstance(authentification)) {
 			DefaultOidcUser test = (DefaultOidcUser) authentification.getPrincipal();
-
 			Map<String, Object> mapTest = test.getAttributes();
 			if (mapTest.containsKey("email")) {
 				String email = (String) mapTest.get("email");
-
 				if (!emailExists(email)) {
 					return true;
 				}
 			}
-
 		}
 		return false;
 	}

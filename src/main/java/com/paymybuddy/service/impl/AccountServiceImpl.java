@@ -75,11 +75,11 @@ public class AccountServiceImpl implements AccountService {
 		logger.debug("addAccountToUser account=" + account + " email=" + email);
 		Optional<UserModel> OptUser = userService.getUserByEmail(email);
 		UserModel user = OptUser.get();
-
+		// test if the user have already an account with the same name
 		if (AccountExistFromUser(account.getName(), user.getUserId())) {
 			throw new Exception("This account aleady exist: " + account.getName() + " " + user.getUserId());
 		}
-
+		// add the account to the user
 		user.setAccountToList(account);
 		try {
 			addAccount(account);
@@ -98,7 +98,7 @@ public class AccountServiceImpl implements AccountService {
 		logger.debug("delAccount accountName=" + accountName);
 		Optional<UserModel> OptUser = userService.getUserByEmail(userService.getUserEmailSession());
 		UserModel user = OptUser.get();
-
+		// test if the account is present into the account list of the user
 		if (accountRepository.findByEmailAndAccountName(userService.getUserEmailSession(), accountName).isPresent()) {
 			Optional<AccountModel> OptAccount = accountRepository
 					.findByEmailAndAccountName(userService.getUserEmailSession(), accountName);
@@ -106,7 +106,6 @@ public class AccountServiceImpl implements AccountService {
 			user.removeAccountToAccountList(account);
 			delAccount(account);
 		}
-
 		try {
 			userService.updateUser(user);
 		} catch (Exception e) {
@@ -146,7 +145,6 @@ public class AccountServiceImpl implements AccountService {
 		logger.debug("addMoney money=" + money + " userEmail=" + userEmail);
 		Optional<UserModel> OptUser = userService.getUserByEmail(userEmail);
 		UserModel user = OptUser.get();
-
 		AccountModel account = user.getAccounts().get(0);
 		account.setBalance(account.getBalance() + money);
 		addAccount(account);
@@ -163,7 +161,6 @@ public class AccountServiceImpl implements AccountService {
 		AccountModel account = user.getAccounts().get(0);
 		account.setBalance(account.getBalance() - money);
 		addAccount(account);
-
 	}
 
 	/**
@@ -177,10 +174,10 @@ public class AccountServiceImpl implements AccountService {
 		return account.getBalance();
 	}
 
-	@Override
 	/**
 	 * account list for an user
 	 */
+	@Override
 	public List<AccountModel> accountListfromUser() {
 		logger.debug("accountListfromUser");
 		UserModel user = userService.getUserByEmail();
