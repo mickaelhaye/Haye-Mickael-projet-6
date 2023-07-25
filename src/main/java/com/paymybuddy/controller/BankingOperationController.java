@@ -41,6 +41,49 @@ public class BankingOperationController {
 	private UserService userService;
 
 	/**
+	 * manage the call to the web page to send money to my extern account
+	 * 
+	 * @param model = contains data to add money
+	 * @return the web page bankingOpaeration send money to my extern account
+	 */
+	@GetMapping("/bankingOperation/bankingOperation_send_bank_extern_account")
+	public String bankingOperationSendMoneyToMyExternAcccount(Model model) {
+		logger.debug("bankingOperationSendMoneyToMyExternAcccount");
+		if (!accountService.userHaveAccount(userService.getUserEmailSession())) {
+			logger.info("/bankingOperation/bankingOperation_account_not_created");
+			return "/bankingOperation/bankingOperation_account_not_created";
+		}
+		BankingOperationAddMoneyModel bankingOperationAddMoney = new BankingOperationAddMoneyModel();
+		bankingOperationAddMoney.setBalance(accountService.balance());
+		model.addAttribute("bankingOperationAddMoney", bankingOperationAddMoney);
+		logger.info("/bankingOperation/bankingOperation_send_bank_extern_account");
+		return "/bankingOperation/bankingOperation_send_bank_extern_account";
+	}
+
+	/**
+	 * manage the data of the new bankingOperation send money to my extern account
+	 * 
+	 * @param bankingOperationAddMoney = contains data for the operation
+	 * @return the web page bankingOpaeration send money to my extern account
+	 */
+	@PostMapping("/bankingOperation/bankingOperation_send_money_extern_account")
+	public String saveBankingOperationSendMoneyExternAccount(
+			@ModelAttribute("bankingOperationAddMoney") BankingOperationAddMoneyModel bankingOperationAddMoney) {
+		logger.debug("saveBankingOperationAddMoney bankingOperationAddMoney=" + bankingOperationAddMoney);
+		if (bankingOperationAddMoney.getMoney() > accountService.balance()) {
+			logger.info("/bankingOperation/bankingOperation_not_enough_money_extern_account");
+			return "/bankingOperation/bankingOperation_not_enough_money_extern_account";
+		}
+		accountService.delMoney(bankingOperationAddMoney.getMoney());
+		BankingOperationModel bankingOperation = new BankingOperationModel();
+		bankingOperationService.addBankingOperationToAccount(bankingOperation, bankingOperationAddMoney.getMoney(),
+				bankingOperationAddMoney.getDescription(), "", userService.getUserEmailSession(),
+				"send money to my extern account");
+		logger.info("/bankingOperation/bankingOperation_successfull");
+		return "/bankingOperation/bankingOperation_successfull";
+	}
+
+	/**
 	 * manage the call to the web page to add money by default the value is 10
 	 * 
 	 * @param model = contains data to add money
