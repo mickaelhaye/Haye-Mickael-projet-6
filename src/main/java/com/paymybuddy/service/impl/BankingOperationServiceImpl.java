@@ -108,8 +108,8 @@ public class BankingOperationServiceImpl implements BankingOperationService {
 		try {
 			addBankingOperation(bankingOperation);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			logger.error("add banking operation error" + e);
 		}
 	}
 

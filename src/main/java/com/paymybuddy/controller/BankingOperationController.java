@@ -50,12 +50,14 @@ public class BankingOperationController {
 	public String bankingOperationAddMoney(Model model) {
 		logger.debug("bankingOperationAddMoney");
 		if (!accountService.userHaveAccount(userService.getUserEmailSession())) {
+			logger.info("/bankingOperation/bankingOperation_account_not_created");
 			return "/bankingOperation/bankingOperation_account_not_created";
 		}
 		BankingOperationAddMoneyModel bankingOperationAddMoney = new BankingOperationAddMoneyModel();
 		bankingOperationAddMoney.setMoney(10);
 		bankingOperationAddMoney.setBalance(accountService.balance());
 		model.addAttribute("bankingOperationAddMoney", bankingOperationAddMoney);
+		logger.info("/bankingOperation/bankingOperation_add_money");
 		return "/bankingOperation/bankingOperation_add_money";
 	}
 
@@ -73,6 +75,7 @@ public class BankingOperationController {
 		BankingOperationModel bankingOperation = new BankingOperationModel();
 		bankingOperationService.addBankingOperationToAccount(bankingOperation, bankingOperationAddMoney.getMoney(),
 				bankingOperationAddMoney.getDescription(), "", userService.getUserEmailSession(), "add money");
+		logger.info("redirect:/bankingOperation/bankingOperation_add_money");
 		return "redirect:/bankingOperation/bankingOperation_add_money";
 	}
 
@@ -86,12 +89,14 @@ public class BankingOperationController {
 	public String bankingOperationSendMoney(Model model) {
 		logger.debug("bankingOperationSendMoney");
 		if (!accountService.userHaveAccount(userService.getUserEmailSession())) {
+			logger.info("/bankingOperation/bankingOperation_account_not_created");
 			return "/bankingOperation/bankingOperation_account_not_created";
 		}
 		BankingOperationSendMoneyModel bankingOperationSendMoney = new BankingOperationSendMoneyModel();
 		bankingOperationSendMoney.setMoney(10);
 		bankingOperationSendMoney.setBalance(accountService.balance());
 		model.addAttribute("bankingOperationSendMoney", bankingOperationSendMoney);
+		logger.info("/bankingOperation/bankingOperation_send_money");
 		return "/bankingOperation/bankingOperation_send_money";
 	}
 
@@ -106,14 +111,17 @@ public class BankingOperationController {
 			@ModelAttribute("bankingOperationSendMoney") BankingOperationSendMoneyModel bankingOperationSendMoney) {
 		logger.debug("saveBankingOperationSendMoney bankingOperationSendMoney=" + bankingOperationSendMoney);
 		if (bankingOperationSendMoney.getMoney() > accountService.balance()) {
+			logger.info("/bankingOperation/bankingOperation_not_enough_money");
 			return "/bankingOperation/bankingOperation_not_enough_money";
 		}
 
 		if (!userService.buddyExists(bankingOperationSendMoney.getBuddy(), userService.getUserEmailSession())) {
+			logger.info("/bankingOperation/bankingOperation_not_your_buddy");
 			return "/bankingOperation/bankingOperation_not_your_buddy";
 		}
 
 		if (!accountService.userHaveAccount(bankingOperationSendMoney.getBuddy())) {
+			logger.info("/bankingOperation/bankingOperation_buddy_no_account");
 			return "/bankingOperation/bankingOperation_buddy_no_account";
 		}
 
@@ -125,7 +133,7 @@ public class BankingOperationController {
 				bankingOperationSendMoney.getDescription(), userService.getUserEmailSession(),
 				bankingOperationSendMoney.getBuddy(),
 				"send money to " + bankingOperationSendMoney.getBuddy() + " from " + userService.getUserEmailSession());
-
+		logger.info("/bankingOperation/bankingOperation_successfull");
 		return "/bankingOperation/bankingOperation_successfull";
 	}
 
@@ -139,6 +147,7 @@ public class BankingOperationController {
 	public String bankingOperationHistory(Model model) {
 		logger.debug("bankingOperationHistory");
 		if (!accountService.userHaveAccount(userService.getUserEmailSession())) {
+			logger.info("/bankingOperation/bankingOperation_account_not_created");
 			return "/bankingOperation/bankingOperation_account_not_created";
 		}
 		return findPaginated(1, model);
@@ -159,6 +168,7 @@ public class BankingOperationController {
 		model.addAttribute("totalPages", page.getTotalPages());
 		model.addAttribute("totalItems", page.getTotalElements());
 		model.addAttribute("bankingoperations", ListBankingOperations);
+		logger.info("/bankingOperation/bankingOperation_history");
 		return "/bankingOperation/bankingOperation_history";
 
 	}

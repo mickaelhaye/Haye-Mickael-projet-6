@@ -184,7 +184,7 @@ public class UserServiceImpl<Objet> implements UserService {
 		try {
 			updateUser(user);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			logger.error("update user error" + e);
 			e.printStackTrace();
 		}
 	}
@@ -207,7 +207,7 @@ public class UserServiceImpl<Objet> implements UserService {
 		try {
 			updateUser(user);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			logger.error("update user error" + e);
 			e.printStackTrace();
 		}
 	}
@@ -321,8 +321,8 @@ public class UserServiceImpl<Objet> implements UserService {
 						updateUser(user);
 
 					} catch (Exception e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
+						logger.error("update user error" + e);
 					}
 				}
 

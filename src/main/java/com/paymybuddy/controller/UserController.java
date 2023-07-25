@@ -41,7 +41,8 @@ public class UserController {
 	 */
 	@GetMapping("/paymybuddy")
 	public String start() {
-		// logger.debug("start");
+		logger.debug("start");
+		logger.info("/paymybuddy");
 		return "/paymybuddy";
 	}
 
@@ -75,8 +76,10 @@ public class UserController {
 		model.addAttribute("homepage", homepage);
 
 		if (userService.getRoleOfUserSessionIsAdmin()) {
+			logger.info("/homepageAdmin");
 			return "/homepageAdmin";
 		}
+		logger.info("/homepage");
 		return "/homepage";
 	}
 
@@ -92,6 +95,7 @@ public class UserController {
 		// create user object to hold user form data
 		UserModel user = new UserModel();
 		model.addAttribute("user", user);
+		logger.info("/user/user_create");
 		return "/user/user_create";
 	}
 
@@ -114,9 +118,10 @@ public class UserController {
 		} catch (Exception e) {
 
 			e.printStackTrace();
+			logger.info("/user/user_already_exist");
 			return "/user/user_already_exist";
 		}
-
+		logger.info("/user/user_create_successfull");
 		return "/user/user_create_successfull";
 
 	}
@@ -133,6 +138,7 @@ public class UserController {
 		// add buddy
 		UserAddBuddyModel userAddBuddy = new UserAddBuddyModel();
 		model.addAttribute("userAddBuddy", userAddBuddy);
+		logger.info("/user/user_add_buddy");
 		return "/user/user_add_buddy";
 	}
 
@@ -148,20 +154,23 @@ public class UserController {
 	public String saveBuddy(@ModelAttribute("recupValue") UserAddBuddyModel userAddBuddy) {
 		logger.debug("saveBuddy userAddBuddy=" + userAddBuddy);
 		if (!userService.emailExists(userAddBuddy.getBudddyEmail())) {
-			return "user/user_buddy_no_exist";
+			logger.info("/user/user_buddy_no_exist");
+			return "/user/user_buddy_no_exist";
 		}
 
 		if (!accountService.userHaveAccount(userAddBuddy.getBudddyEmail())) {
-			return "user/user_buddy_no_account";
+			logger.info("/user/user_buddy_no_account");
+			return "/user/user_buddy_no_account";
 		}
 
 		try {
 			userService.addBuddy(userAddBuddy.getBudddyEmail(), userService.getUserEmailSession());
 		} catch (Exception e) {
-
 			e.printStackTrace();
+			logger.info("/user/user_bad_buddy");
 			return "/user/user_bad_buddy";
 		}
+		logger.info("/user/user_buddy_add_successfull");
 		return "/user/user_buddy_add_successfull";
 	}
 
@@ -175,6 +184,7 @@ public class UserController {
 	public String userDelBuddy(Model model) {
 		model.addAttribute("buddys", userService.buddyListfromUser(userService.getUserEmailSession()));
 		logger.debug("userDelBuddy");
+		logger.info("/user/user_del_buddy");
 		return "/user/user_del_buddy";
 	}
 
@@ -188,6 +198,7 @@ public class UserController {
 	public String userDelBuddyDelete(@PathVariable String email) {
 		logger.debug("userDelBuddyDelete email=" + email);
 		userService.delBuddy(email, userService.getUserEmailSession());
+		logger.info("redirect:/user/user_del_buddy");
 		return "redirect:/user/user_del_buddy";
 	}
 
@@ -203,6 +214,7 @@ public class UserController {
 		// create user object to hold user form data
 		UserModel user = userService.getUserByEmail();
 		model.addAttribute("user", user);
+		logger.info("/user/user_update");
 		return "/user/user_update";
 	}
 
@@ -216,6 +228,7 @@ public class UserController {
 	public String userUpdateUpdate(@ModelAttribute("user") UserModel user) {
 		logger.debug("userUpdateUpdate user=" + user);
 		userService.updateSomeParameters(user);
+		logger.info("/user/user_update_successfull");
 		return "/user/user_update_successfull";
 	}
 
@@ -229,6 +242,7 @@ public class UserController {
 	public String userDelUser(Model model) {
 		logger.debug("userDelUser");
 		model.addAttribute("users", userService.getUsers());
+		logger.info("/user/admin/user_del_user");
 		return "/user/admin/user_del_user";
 	}
 
@@ -242,6 +256,7 @@ public class UserController {
 	public String userDelUserDelete(@PathVariable String email) {
 		logger.debug("userDelUserDelete email=" + email);
 		userService.delUserByEmail(email);
+		logger.info("redirect:/user/admin/user_del_user");
 		return "redirect:/user/admin/user_del_user";
 	}
 

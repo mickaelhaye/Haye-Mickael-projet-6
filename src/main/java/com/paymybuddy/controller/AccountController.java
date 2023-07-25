@@ -41,12 +41,14 @@ public class AccountController {
 	public String userAddAccount(Model model) {
 		logger.debug("userAddAccount");
 		if (accountService.userHaveAccount(userService.getUserEmailSession())) {
+			logger.info("account/account_already");
 			return "account/account_already";
 		}
 
 		// create account object to hold user form data
 		AccountModel account = new AccountModel();
 		model.addAttribute("account", account);
+		logger.info("/account/account_create");
 		return "/account/account_create";
 	}
 
@@ -64,9 +66,10 @@ public class AccountController {
 		} catch (Exception e) {
 
 			e.printStackTrace();
+			logger.info("/account/account_already_exist");
 			return "/account/account_already_exist";
 		}
-
+		logger.info("/account/account_create_successfull");
 		return "/account/account_create_successfull";
 
 	}
@@ -81,6 +84,7 @@ public class AccountController {
 	public String accountDel(Model model) {
 		logger.debug("accountDel");
 		model.addAttribute("accounts", accountService.accountListfromUser());
+		logger.info("/account/account_del");
 		return "/account/account_del";
 	}
 
@@ -94,6 +98,7 @@ public class AccountController {
 	public String accountDelete(@PathVariable String name) {
 		logger.debug("accountDelete name=" + name);
 		accountService.delAccount(name);
+		logger.info("redirect:/account/account_del");
 		return "redirect:/account/account_del";
 	}
 

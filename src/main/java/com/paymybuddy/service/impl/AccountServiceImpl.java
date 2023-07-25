@@ -84,8 +84,8 @@ public class AccountServiceImpl implements AccountService {
 		try {
 			addAccount(account);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			logger.error("add account error" + e);
 		}
 
 	}
@@ -109,8 +109,9 @@ public class AccountServiceImpl implements AccountService {
 
 		try {
 			userService.updateUser(user);
-		} catch (Exception e) { // TODO Auto-generated catch block
+		} catch (Exception e) {
 			e.printStackTrace();
+			logger.error("update user error" + e);
 		}
 	}
 
