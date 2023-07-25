@@ -5,7 +5,6 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
 
 import com.paymybuddy.model.entity.AccountModel;
 
@@ -15,7 +14,6 @@ import com.paymybuddy.model.entity.AccountModel;
  * 
  * @author Mickael Hayé
  */
-@Repository
 public interface AccountRepository extends CrudRepository<AccountModel, Integer> {
 
 	@Query(value = "SELECT * FROM account WHERE (account.user_id2= :user_id AND account.account_name= :name )", nativeQuery = true)

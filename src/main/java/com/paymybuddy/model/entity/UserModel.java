@@ -31,6 +31,7 @@ import lombok.NoArgsConstructor;
  * 
  * @author Mickael Hayé
  */
+@SuppressWarnings("serial")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
