@@ -167,6 +167,7 @@ class UserServiceTest {
 
 	@Test
 	void delUserByEmailTest() {
+		userService.setUserEmailSession("lily.cooper@hotmail.fr");
 		List<UserModel> users = (List<UserModel>) userService.getUsers();
 		int usersCount = users.size();
 
