@@ -4,6 +4,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -27,7 +28,7 @@ public class SecurityConfiguration {
         http
                 .authorizeHttpRequests((authorizeHttpRequests) ->
                         authorizeHttpRequests
-                        		.requestMatchers("/images/**").permitAll()
+                        		.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                         		.requestMatchers("/user/admin/*").hasRole("ADMIN")
                         		.requestMatchers("/paymybuddy").permitAll()
                                 .requestMatchers("/user/user_create").permitAll()
