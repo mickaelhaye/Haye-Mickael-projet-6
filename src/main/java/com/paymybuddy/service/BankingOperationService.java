@@ -24,4 +24,6 @@ public interface BankingOperationService {
 
 	public Page<BankingOperationModel> findPaginated(int pageNo, int pageSize);
 
+	public void DeleteBankingOperationOrphan();
+
 }

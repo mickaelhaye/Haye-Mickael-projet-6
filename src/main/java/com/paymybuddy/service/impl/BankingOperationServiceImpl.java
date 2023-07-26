@@ -135,4 +135,11 @@ public class BankingOperationServiceImpl implements BankingOperationService {
 		return bankingOperationRepository.findByEmail(userService.getUserEmailSession(), pageable);
 	}
 
+	@Override
+	public void DeleteBankingOperationOrphan() {
+		List<BankingOperationModel> bankingOperationList = bankingOperationRepository.BankingOperationOrphan();
+		for (BankingOperationModel bankingOperationTest : bankingOperationList) {
+			delBankingOperation(bankingOperationTest);
+		}
+	}
 }

@@ -16,6 +16,7 @@ import com.paymybuddy.model.dto.UserAddBuddyModel;
 import com.paymybuddy.model.entity.AccountModel;
 import com.paymybuddy.model.entity.UserModel;
 import com.paymybuddy.service.AccountService;
+import com.paymybuddy.service.BankingOperationService;
 import com.paymybuddy.service.UserService;
 
 /**
@@ -33,6 +34,9 @@ public class UserController {
 
 	@Autowired
 	private AccountService accountService;
+
+	@Autowired
+	private BankingOperationService bankingOperationService;
 
 	/**
 	 * manage the call to the first web page
@@ -256,6 +260,7 @@ public class UserController {
 	public String userDelUserDelete(@PathVariable String email) {
 		logger.debug("userDelUserDelete email=" + email);
 		userService.delUserByEmail(email);
+		bankingOperationService.DeleteBankingOperationOrphan();
 		logger.info("redirect:/user/admin/user_del_user");
 		return "redirect:/user/admin/user_del_user";
 	}
