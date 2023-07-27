@@ -13,6 +13,12 @@ import org.springframework.security.web.SecurityFilterChain;
 
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Spring Security filter chain
+ * 
+ * @author Mickael Hayé
+ */
+
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor

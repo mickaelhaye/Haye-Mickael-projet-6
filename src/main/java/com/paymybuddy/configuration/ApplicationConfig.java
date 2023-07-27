@@ -18,6 +18,11 @@ import com.paymybuddy.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Configures authentication via database objects
+ * 
+ * @author Mickael Hayé
+ */
 @Configuration
 @RequiredArgsConstructor
 public class ApplicationConfig {
