@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeLeaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>BankingOperation_send_bank_extern_account</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+</head>
+
+<body>
+	<div class="container bg-success bg-opacity-25  bg-gradient border rounded-2 mt-5"
+		style="height:600px; width:600px;">
+
+
+		<div class="col mt-2">
+			<a th:href="@{/homepage}" class="btn btn-primary btn-sl"> back </a>
+		</div>
+
+		<div class="col text-center ">
+			<img width="370px" th:src="@{/images/Logo.png}" />
+		</div>
+
+		<div class="col text-center mt-2">
+			<h2 class="text-white bg-success bg-opacity-50 bg-gradient border rounded-3  text-center d-inline">
+				BankingOperation send to my extern bank account</h2>
+		</div>
+
+		<div class="container">
+			<form th:action="@{/bankingOperation/bankingOperation_send_money_extern_account}" th:object="${bankingOperationAddMoney}" method="POST">
+				<div class="row  mt-5">
+					<div class="col form-group">
+						<h4 class="text-white text-start">balance:</h4>
+					</div>
+					<div class="col form-group">
+						<input th:field="*{balance}" class="form-control w-100 bg-success bg-opacity-25 bg-gradient"
+							disabled />
+					</div>
+					<div class="col">
+					</div>
+					<div class="col">
+					</div>
+				</div>
+				<div class="row mt-3 ">
+					<h4 class=" text-white"> How Much money do you want to send to your extern account ? </h4>
+				</div>
+				<div class="row mt-1">
+					<div class="col form-group ">
+						<input type="number" step="any" th:field="*{money}" min="0" max="9999"
+							class="form-control w-100" />
+
+					</div>
+					<div class="col form-group">
+						<button type="submit" class="btn btn-primary w-100">
+							SendMoney
+						</button>
+					</div>
+					<div class="col">
+					</div>
+					<div class="col">
+					</div>
+				</div>
+
+
+
+				<div class="row  mt-3">
+					<div class="col form-group">
+						<h4 class="text-white text-start">description:</h4>
+					</div>
+				</div>
+				<div class="row  mt-1">
+					<div class="col form-group">
+						<input th:field="*{description}" class="form-control" />
+					</div>
+				</div>
+			</form>
+
+		</div>
+
+
+	</div>
+
+
+
+</body>
+
+</html>
