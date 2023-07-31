@@ -204,7 +204,7 @@ public class BankingOperationController {
 	@GetMapping("/bankingOperation/bankingOperation_history/page/{pageNo}")
 	public String findPaginated(@PathVariable(value = "pageNo") int pageNo, Model model) {
 		logger.debug("findPaginated pageNo=" + pageNo);
-		int pageSize = 4;
+		int pageSize = 3;
 		Page<BankingOperationModel> page = bankingOperationService.findPaginated(pageNo, pageSize);
 		List<BankingOperationModel> ListBankingOperations = page.getContent();
 		model.addAttribute("currentPage", pageNo);
