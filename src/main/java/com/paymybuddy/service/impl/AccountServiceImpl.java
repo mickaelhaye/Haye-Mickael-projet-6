@@ -14,6 +14,8 @@ import com.paymybuddy.repository.AccountRepository;
 import com.paymybuddy.service.AccountService;
 import com.paymybuddy.service.UserService;
 
+import jakarta.transaction.Transactional;
+
 /**
  * accountService is the class to manage service for account entity
  * 
@@ -34,6 +36,7 @@ public class AccountServiceImpl implements AccountService {
 	 * recovers all accounts
 	 */
 	@Override
+	@Transactional
 	public Iterable<AccountModel> getAccounts() {
 		logger.debug("getAccounts");
 		return accountRepository.findAll();
@@ -43,6 +46,7 @@ public class AccountServiceImpl implements AccountService {
 	 * recovers account by an id
 	 */
 	@Override
+	@Transactional
 	public Optional<AccountModel> getAccountById(Integer id) {
 		logger.debug("getAccountById id=" + id);
 		return accountRepository.findById(id);
@@ -52,6 +56,7 @@ public class AccountServiceImpl implements AccountService {
 	 * add an account
 	 */
 	@Override
+	@Transactional
 	public AccountModel addAccount(AccountModel account) {
 		logger.debug("addAccount account=" + account);
 		return accountRepository.save(account);
@@ -61,6 +66,7 @@ public class AccountServiceImpl implements AccountService {
 	 * delete an account
 	 */
 	@Override
+	@Transactional
 	public void delAccount(AccountModel account) {
 		logger.debug("delAccount account=" + account);
 		accountRepository.delete(account);
@@ -94,6 +100,7 @@ public class AccountServiceImpl implements AccountService {
 	 * delete account to user
 	 */
 	@Override
+	@Transactional
 	public void delAccount(String accountName) {
 		logger.debug("delAccount accountName=" + accountName);
 		Optional<UserModel> OptUser = userService.getUserByEmail(userService.getUserEmailSession());
@@ -118,6 +125,7 @@ public class AccountServiceImpl implements AccountService {
 	 * to know if an account name exist fom an user
 	 */
 	@Override
+	@Transactional
 	public boolean AccountExistFromUser(String nameAccount, int userId) {
 		logger.debug("AccountExistFromUser nameAccount=" + nameAccount + " userId=" + userId);
 		return accountRepository.findByUserIdAndName(userId, nameAccount).isPresent();

@@ -17,6 +17,8 @@ import com.paymybuddy.model.entity.UserModel;
 import com.paymybuddy.repository.UserRepository;
 import com.paymybuddy.service.UserService;
 
+import jakarta.transaction.Transactional;
+
 /**
  * userService is the class to manage service for user entity
  * 
@@ -75,6 +77,7 @@ public class UserServiceImpl<Objet> implements UserService {
 	 * recovers all users
 	 */
 	@Override
+	@Transactional
 	public Iterable<UserModel> getUsers() {
 		logger.debug("getUsers");
 		return userRepository.findAll();
@@ -84,6 +87,7 @@ public class UserServiceImpl<Objet> implements UserService {
 	 * recover user by id
 	 */
 	@Override
+	@Transactional
 	public Optional<UserModel> getUserById(Integer id) {
 		logger.debug("getUserById id=" + id);
 		return userRepository.findById(id);
@@ -93,6 +97,7 @@ public class UserServiceImpl<Objet> implements UserService {
 	 * recover user by an email
 	 */
 	@Override
+	@Transactional
 	public Optional<UserModel> getUserByEmail(String email) {
 		logger.debug("getUserByEmail email=" + email);
 		return userRepository.findByEmail(email);
@@ -102,6 +107,7 @@ public class UserServiceImpl<Objet> implements UserService {
 	 * recover user by email session
 	 */
 	@Override
+	@Transactional
 	public UserModel getUserByEmail() {
 		logger.debug("getUserByEmail");
 		Optional<UserModel> optUser = userRepository.findByEmail(getUserEmailSession());
@@ -113,6 +119,7 @@ public class UserServiceImpl<Objet> implements UserService {
 	 * delete user by email
 	 */
 	@Override
+	@Transactional
 	public void delUserByEmail(String email) {
 		logger.debug("delUserByEmail email=" + email);
 		if (!getUserEmailSession().equals(email)) {
@@ -136,6 +143,7 @@ public class UserServiceImpl<Objet> implements UserService {
 	 * add an user
 	 */
 	@Override
+	@Transactional
 	public UserModel addUser(UserModel user) throws Exception {
 		logger.debug("addUser user=" + user);
 		// test if the email is already using
@@ -150,6 +158,7 @@ public class UserServiceImpl<Objet> implements UserService {
 	 * update an user
 	 */
 	@Override
+	@Transactional
 	public UserModel updateUser(UserModel user) {
 		logger.debug("updateUser user=" + user);
 		return userRepository.save(user);
@@ -159,6 +168,7 @@ public class UserServiceImpl<Objet> implements UserService {
 	 * add buddy
 	 */
 	@Override
+	@Transactional
 	public void addBuddy(String buddyEmail, String userEmail) throws Exception {
 		logger.debug("addBuddy buddyEmail=" + buddyEmail + " userEmail=" + userEmail);
 		if (!emailExists(buddyEmail)) {
@@ -188,6 +198,7 @@ public class UserServiceImpl<Objet> implements UserService {
 	 * delete buddy
 	 */
 	@Override
+	@Transactional
 	public void delBuddy(String buddyEmail, String userEmail) {
 		logger.debug("delBuddy buddyEmail=" + buddyEmail + " userEmail=" + userEmail);
 		Optional<UserModel> OptUser = userRepository.findByEmail(userEmail);
@@ -211,6 +222,7 @@ public class UserServiceImpl<Objet> implements UserService {
 	 * to know if an user have already this email
 	 */
 	@Override
+	@Transactional
 	public boolean emailExists(String email) {
 		logger.debug("emailExists email=" + email);
 		return userRepository.findByEmail(email).isPresent();
@@ -220,6 +232,7 @@ public class UserServiceImpl<Objet> implements UserService {
 	 * delete user
 	 */
 	@Override
+	@Transactional
 	public void delUser(UserModel user) {
 		logger.debug("delUser user=" + user);
 		userRepository.delete(user);
@@ -243,6 +256,7 @@ public class UserServiceImpl<Objet> implements UserService {
 	 * to know if a buddy exit with email
 	 */
 	@Override
+	@Transactional
 	public boolean buddyExists(String buddyEmail, String userEmail) {
 		logger.debug("buddyExists buddyEmail=" + buddyEmail + " userEmail=" + userEmail);
 		Optional<UserModel> OptUser = userRepository.findByEmail(userEmail);
@@ -259,6 +273,7 @@ public class UserServiceImpl<Objet> implements UserService {
 	 * to know if buddy is already in the list
 	 */
 	@Override
+	@Transactional
 	public List<UserModel> buddyListfromUser(String userEmail) {
 		logger.debug("buddyListfromUser userEmail=" + userEmail);
 		Optional<UserModel> OptUser = userRepository.findByEmail(userEmail);
