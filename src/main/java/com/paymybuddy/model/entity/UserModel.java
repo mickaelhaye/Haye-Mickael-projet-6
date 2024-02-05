@@ -36,7 +36,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @DynamicUpdate
-@Table(name = "user")
+@Table(name = "app_user")
 public class UserModel implements UserDetails {
 
 	@Id
